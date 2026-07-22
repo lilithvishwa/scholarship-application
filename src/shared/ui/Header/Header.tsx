@@ -11,7 +11,7 @@ function Header() {
   };
 
   return (
-    <header className="flex justify-between items-center bg-pale-blue px-10 w-full h-20.5">
+    <header className="flex justify-between items-center border-b border-hairline bg-pale-blue px-10 w-full h-20.5">
       <div className="">
         <img src="/header_login.svg" alt="logo" />
       </div>
