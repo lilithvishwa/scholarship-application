@@ -12,6 +12,7 @@ import type {
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
+  LogoutResponse,
 } from "@/types/auth.type";
 
 /**
@@ -54,5 +55,10 @@ export const signupUser = async (
     payload,
   );
 
+  return response.data;
+};
+
+export const logoutUser = async (): Promise<LogoutResponse> => {
+  const response = await apiClient.get<LogoutResponse>(AUTH_ENDPOINTS.LOGOUT);
   return response.data;
 };
