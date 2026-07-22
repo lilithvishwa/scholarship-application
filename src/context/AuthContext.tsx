@@ -3,7 +3,6 @@
  * Stores the logged-in user, authentication status, and exposes
  * methods for fetching user information and managing auth state.
  */
-
 import {
   createContext,
   useCallback,
@@ -11,8 +10,10 @@ import {
   useState,
   type ReactNode,
 } from "react";
-
-import { getCurrentUser } from "../features/auth/services/auth.service";
+import {
+  getCurrentUser,
+  logoutUser,
+} from "../features/auth/services/auth.service";
 import type { AuthUser } from "@/types/auth.type";
 
 interface AuthContextType {
@@ -20,7 +21,7 @@ interface AuthContextType {
   loading: boolean;
   isAuthenticated: boolean;
   fetchCurrentUser: () => Promise<void>;
-  logout?: () => void;
+  logout: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -47,15 +48,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, []);
 
-  // const logout = () => {
-  //   setUser(null);
-  // };
+  const logout = useCallback(async () => {
+    try {
+      await logoutUser();
+      console.log("Logged Out Successfully..."); // hits an endpoint to clear server-side session/cookie
+    } catch (error) {
+      // even if the API call fails, clear local state so the UI reflects logged-out
+      console.error(error);
+    } finally {
+      setUser(null);
+    }
+  }, []);
 
   useEffect(() => {
     fetchCurrentUser();
   }, [fetchCurrentUser]);
-
-  // console.log(user);
 
   return (
     <AuthContext.Provider
@@ -64,7 +71,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         loading,
         isAuthenticated: !!user,
         fetchCurrentUser,
-        // logout,
+        logout,
       }}
     >
       {children}

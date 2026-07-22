@@ -35,3 +35,7 @@ export interface AuthUser {
 export interface ErrorResponse {
   status: number;
 }
+
+export interface LogoutResponse {
+  message: string;
+}

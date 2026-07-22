@@ -10,4 +10,5 @@ export const AUTH_ENDPOINTS = {
   GOOGLE_LOGIN: "/auth/login/google",
   MICROSOFT_LOGIN: "/auth/login/microsoft",
   USER: "/auth/me",
+  LOGOUT: "/auth/logout",
 } as const;
