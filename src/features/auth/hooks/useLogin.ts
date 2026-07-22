@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/auth.service";
-import { useAuth } from "./useAuth";
+import { useAuth } from "../../../context/hooks/useAuth";
 import type { LoginRequest, ErrorResponse } from "@/types/auth.type";
 import axios from "axios";
 

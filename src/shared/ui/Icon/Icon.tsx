@@ -3,10 +3,10 @@ import clsx from "clsx";
 
 interface IconProps {
   name: string;
-  size: number;
-  width: number;
-  height: number;
-  className: string;
+  size?: number;
+  width?: number;
+  height?: number;
+  className?: string;
 }
 
 function Icon({ name, size, width, height, className }: IconProps) {
