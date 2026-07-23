@@ -2,7 +2,7 @@ import { Icon, Button } from "@/shared/ui";
 
 function BuilderHeader() {
   return (
-    <header className="flex h-18 items-center justify-between border-b border-hairline bg-white px-6">
+    <header className="flex h-18 items-center justify-between border-b border-hairline px-6">
       {/* Left */}
       <div className="flex items-center gap-4">
         <button className="flex h-8 w-8 items-center justify-center rounded hover:bg-gray-100">

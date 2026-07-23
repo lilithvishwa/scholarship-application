@@ -50,7 +50,7 @@ function FormSidebar() {
     },
   ];
   return (
-    <div className="space-y-8 w-69.75 p-4">
+    <div className="space-y-8 p-4">
       <div className="space-y-2">
         <h3 className="px-2 caption text-body-muted">TEXT & NUMBERS</h3>
         {textFields.map((field) => (

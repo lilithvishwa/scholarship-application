@@ -5,8 +5,8 @@ function PropertiesPanel() {
   const [enabled, setEnabled] = useState(true);
 
   return (
-    <div className="w-79.75 p-6 flex flex-col gap-8 ">
-      <div className="w-67.75 flex flex-col gap-6 ">
+    <div className="p-6 flex flex-col gap-8 ">
+      <div className="flex flex-col gap-6 ">
         <p className="body">PROPERTIES</p>
         <Input label="FIELD LABEL" placeholder="Email Address" />
 
@@ -25,7 +25,7 @@ function PropertiesPanel() {
 
       <hr className="border border-hairline" />
 
-      <div className="w-67.75 flex flex-col gap-6  ">
+      <div className="flex flex-col gap-6  ">
         <p className="body">VALIDATION RULES</p>
         <span>
           <label className="caption text-body-muted">FORMAT</label>
