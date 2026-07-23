@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 // import { AuthContext } from "@/context/AuthContext";
-import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useAuth } from "@/context/hooks/useAuth";
 
 // Header components imports
 import ProfileDropdown from "./ProfileDropdown";

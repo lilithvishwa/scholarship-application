@@ -1,18 +1,17 @@
-
 /* ==========================================
    Font Families
 ========================================== */
 
 .font-space {
-  font-family: "Space Grotesk", sans-serif;
+    font-family: "Space Grotesk", sans-serif;
 }
 
 .font-public {
-  font-family: "Public Sans", sans-serif;
+    font-family: "Public Sans", sans-serif;
 }
 
 .font-mono {
-  font-family: "IBM Plex Mono", monospace;
+    font-family: "IBM Plex Mono", monospace;
 }
 
 /* ==========================================
@@ -20,19 +19,19 @@
 ========================================== */
 
 .portal-hero {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 96px;
-  font-weight: 400;
-  line-height: 96px;
-  letter-spacing: -0.02em;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 96px;
+    font-weight: 400;
+    line-height: 96px;
+    letter-spacing: -0.02em;
 }
 
 .scholarship-display {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 72px;
-  font-weight: 400;
-  line-height: 72px;
-  letter-spacing: -0.02em;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 72px;
+    font-weight: 400;
+    line-height: 72px;
+    letter-spacing: -0.02em;
 }
 
 /* ==========================================
@@ -40,71 +39,78 @@
 ========================================== */
 
 .page-heading {
-  font-family: "Public Sans", sans-serif;
-  font-size: 60px;
-  font-weight: 400;
-  line-height: 60px;
-  letter-spacing: -0.02em;
+    font-family: "Public Sans", sans-serif;
+    font-size: 60px;
+    font-weight: 400;
+    line-height: 60px;
+    letter-spacing: -0.02em;
 }
 
 .form-step-heading {
-  font-family: "Public Sans", sans-serif;
-  font-size: 48px;
-  font-weight: 400;
-  line-height: 57.6px;
-  letter-spacing: -0.01em;
+    font-family: "Public Sans", sans-serif;
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 57.6px;
+    letter-spacing: -0.01em;
 }
 
 .application-card-heading {
-  font-family: "Public Sans", sans-serif;
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 38.4px;
-  letter-spacing: -0.01em;
+    font-family: "Public Sans", sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 38.4px;
+    letter-spacing: -0.01em;
 }
 
 .field-group-heading {
-  font-family: "Public Sans", sans-serif;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 31.2px;
-  letter-spacing: 0;
+    font-family: "Public Sans", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 31.2px;
+    letter-spacing: 0;
 }
 
 /* ==========================================
    Body Text
 ========================================== */
 
-.instruction-text {
-  font-family: "Public Sans", sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 25.2px;
-  letter-spacing: 0;
+/*.instruction-text  -- body-large */
+/*.input-text  -- body */
+/*.helper-text  -- caption */
+
+.instruction-text,
+.body-large {
+    font-family: "Public Sans", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 25.2px;
+    letter-spacing: 0;
 }
 
-.input-text {
-  font-family: "Public Sans", sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0;
+.input-text,
+.body {
+    font-family: "Public Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0;
 }
 
-.helper-text {
-  font-family: "Public Sans", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 19.6px;
-  letter-spacing: 0;
+.helper-text,
+.caption {
+    font-family: "Public Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19.6px;
+    letter-spacing: 0;
 }
 
 .disclaimer-text {
-  font-family: "Public Sans", sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 16.8px;
-  letter-spacing: 0;
+    font-family: "Public Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16.8px;
+    letter-spacing: 0;
 }
 
 /* ==========================================
@@ -112,11 +118,11 @@
 ========================================== */
 
 .action-button {
-  font-family: "Public Sans", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: 0;
+    font-family: "Public Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0;
 }
 
 /* ==========================================
@@ -124,9 +130,9 @@
 ========================================== */
 
 .reference-id {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 19.6px;
-  letter-spacing: 0.02em;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19.6px;
+    letter-spacing: 0.02em;
 }
