@@ -9,7 +9,10 @@ interface InputProps {
 function Input({ label, placeholder, type, onChange, value }: InputProps) {
   return (
     <div className="flex flex-col space-y-2 action-button">
-      <label>{label}</label>
+      {/*<label>{label}</label>*/}
+      {label && (
+        <label className="caption text-body-muted uppercase">{label}</label>
+      )}
       <input
         type={type}
         placeholder={placeholder}

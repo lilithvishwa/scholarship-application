@@ -1,10 +1,11 @@
-import { BuilderHeader, FormSidebar } from "../components";
+import { BuilderHeader, FormSidebar, PropertiesPanel } from "../components";
 
 function BuilderPage() {
   return (
     <>
       <BuilderHeader />
       <FormSidebar />
+      <PropertiesPanel />
     </>
   );
 }
