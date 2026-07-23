@@ -83,7 +83,7 @@
   letter-spacing: 0;
 }
 
-.input-text {
+.input-text, .body {
   font-family: "Public Sans", sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -91,7 +91,7 @@
   letter-spacing: 0;
 }
 
-.helper-text {
+.helper-text, .caption {
   font-family: "Public Sans", sans-serif;
   font-size: 14px;
   font-weight: 400;

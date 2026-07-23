@@ -1,0 +1,77 @@
+import FieldItem from "./FieldItem";
+
+function FormSidebar() {
+  const textFields = [
+    {
+      label: "Short Text",
+      icon: "mdi:text-short",
+      type: "short-text",
+    },
+    {
+      label: "Long Text",
+      icon: "mdi:text-long",
+      type: "long-text",
+    },
+    {
+      label: "Number",
+      icon: "mdi:numeric",
+      type: "number",
+    },
+    {
+      label: "Date Picker",
+      icon: "mdi:calendar",
+      type: "date",
+    },
+  ];
+
+  const choicesFields = [
+    {
+      label: "Dropdown",
+      icon: "cuida:dropdown-outline",
+      type: "dropdown",
+    },
+    {
+      label: "Radio Buttons",
+      icon: "fluent:radio-button-20-filled",
+      type: "radio-button",
+    },
+    {
+      label: "Checkboxes",
+      icon: "mingcute:checkbox-fill",
+      type: "check-box",
+    },
+  ];
+
+  const documentField = [
+    {
+      label: "File Upload",
+      icon: "material-symbols:upload-file-outline",
+      type: "file-upload",
+    },
+  ];
+  return (
+    <div className="space-y-8 w-69.75 p-4">
+      <div className="space-y-2">
+        <h3 className="px-2 caption text-body-muted">TEXT & NUMBERS</h3>
+        {textFields.map((field) => (
+          <FieldItem key={field.type} icon={field.icon} label={field.label} />
+        ))}
+      </div>
+
+      <div className="space-y-2">
+        <h3 className="px-2 caption text-body-muted">CHOICES</h3>
+        {choicesFields.map((field) => (
+          <FieldItem key={field.type} icon={field.icon} label={field.label} />
+        ))}
+      </div>
+      <div className="space-y-2">
+        <h3 className="px-2 caption text-body-muted">DOCUMENTS</h3>
+        {documentField.map((field) => (
+          <FieldItem key={field.type} icon={field.icon} label={field.label} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default FormSidebar;
