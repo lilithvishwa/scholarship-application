@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   BuilderHeader,
   FormSidebar,
@@ -5,7 +6,16 @@ import {
   Canvas,
 } from "../components";
 
+interface FormField {
+  id: string;
+  type: "text" | "textarea" | "number" | "date";
+  label: string;
+  placeholder: string;
+  required: boolean;
+}
+
 function BuilderPage() {
+  const [fields, setFields] = useState<FormField[]>([]);
   return (
     <div className="flex h-screen flex-col bg-white">
       <BuilderHeader />

@@ -25,11 +25,9 @@ function LoginForm() {
         }
       />
       {error && <p className="text-error text-sm">{error}</p>}
-      <Button
-        name={isLoading ? "Logging in..." : "Login"}
-        type="submit"
-        disabled={isLoading}
-      />
+      <Button type="submit" disabled={isLoading}>
+        {isLoading ? "Logging in..." : "Login"}
+      </Button>
     </form>
   );
 }

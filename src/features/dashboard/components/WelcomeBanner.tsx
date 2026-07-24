@@ -29,7 +29,7 @@ export function WelcomeBanner({ name, profileCompletion }: WelcomeBannerProps) {
       </div>
 
       <div className="ml-8 shrink-0">
-        <Button name="Complete My Profile" />
+        <Button>Complete My Profile </Button>
       </div>
     </div>
   );
