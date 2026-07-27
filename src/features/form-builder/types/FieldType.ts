@@ -14,5 +14,6 @@ export interface FormField {
   label: string;
   helperText: string;
   required: boolean;
-  validation: Record<string, any>;
+  option: Record<string, any>[];
+  validation: Record<string, any>[];
 }

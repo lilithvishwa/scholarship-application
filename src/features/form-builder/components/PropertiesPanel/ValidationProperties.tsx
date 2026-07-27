@@ -5,7 +5,7 @@ import DropdownValidation from "./validations/DropdownValidation";
 import CheckboxValidation from "./validations/CheckboxValidation";
 import FileUploadValidation from "./validations/FileUploadValidation";
 
-import type { FormField } from "./FieldType";
+import type { FormField } from "../../types/FieldType";
 
 interface Props {
   field: FormField;

@@ -1,16 +1,21 @@
 import FieldItem from "./FieldItem";
+import type { FieldType } from "../../types/FieldType";
 
-function FormSidebar() {
+interface FormSidebarProps {
+  onAddField: (type: FieldType) => void;
+}
+
+function FormSidebar({ onAddField }: FormSidebarProps) {
   const textFields = [
     {
       label: "Short Text",
       icon: "mdi:text-short",
-      type: "short-text",
+      type: "shorttext",
     },
     {
       label: "Long Text",
       icon: "mdi:text-long",
-      type: "long-text",
+      type: "longtext",
     },
     {
       label: "Number",
@@ -54,20 +59,35 @@ function FormSidebar() {
       <div className="space-y-2">
         <h3 className="px-2 caption text-body-muted">TEXT & NUMBERS</h3>
         {textFields.map((field) => (
-          <FieldItem key={field.type} icon={field.icon} label={field.label} />
+          <FieldItem
+            key={field.type}
+            icon={field.icon}
+            label={field.label}
+            onClick={() => onAddField(field.type)}
+          />
         ))}
       </div>
 
       <div className="space-y-2">
         <h3 className="px-2 caption text-body-muted">CHOICES</h3>
         {choicesFields.map((field) => (
-          <FieldItem key={field.type} icon={field.icon} label={field.label} />
+          <FieldItem
+            key={field.type}
+            icon={field.icon}
+            label={field.label}
+            onClick={() => onAddField(field.type)}
+          />
         ))}
       </div>
       <div className="space-y-2">
         <h3 className="px-2 caption text-body-muted">DOCUMENTS</h3>
         {documentField.map((field) => (
-          <FieldItem key={field.type} icon={field.icon} label={field.label} />
+          <FieldItem
+            key={field.type}
+            icon={field.icon}
+            label={field.label}
+            onClick={() => onAddField(field.type)}
+          />
         ))}
       </div>
     </div>

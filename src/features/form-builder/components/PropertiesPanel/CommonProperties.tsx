@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Input, ToggleSwitch, Icon } from "@shared/ui";
-import type { FormField } from "./FieldType";
+import type { FormField } from "../../types/FieldType";
 
 interface Props {
   field: FormField;
