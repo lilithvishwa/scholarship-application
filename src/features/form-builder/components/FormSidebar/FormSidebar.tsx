@@ -10,12 +10,12 @@ function FormSidebar({ onAddField }: FormSidebarProps) {
     {
       label: "Short Text",
       icon: "mdi:text-short",
-      type: "shorttext",
+      type: "text",
     },
     {
       label: "Long Text",
       icon: "mdi:text-long",
-      type: "longtext",
+      type: "textarea",
     },
     {
       label: "Number",
@@ -38,12 +38,12 @@ function FormSidebar({ onAddField }: FormSidebarProps) {
     {
       label: "Radio Buttons",
       icon: "fluent:radio-button-20-filled",
-      type: "radio-button",
+      type: "radio",
     },
     {
       label: "Checkboxes",
       icon: "mingcute:checkbox-fill",
-      type: "check-box",
+      type: "checkbox",
     },
   ];
 
@@ -51,7 +51,7 @@ function FormSidebar({ onAddField }: FormSidebarProps) {
     {
       label: "File Upload",
       icon: "material-symbols:upload-file-outline",
-      type: "file-upload",
+      type: "file",
     },
   ];
   return (

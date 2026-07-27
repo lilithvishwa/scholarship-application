@@ -12,8 +12,8 @@ interface Props {
 }
 
 const validationMap = {
-  shorttext: () => <TextValidation showFormat={true} />,
-  longtext: () => <TextValidation showFormat={false} />,
+  text: () => <TextValidation showFormat={true} />,
+  textarea: () => <TextValidation showFormat={false} />,
   number: NumberValidation,
   date: DateValidation,
   dropdown: DropdownValidation,

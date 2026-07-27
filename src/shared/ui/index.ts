@@ -1,4 +1,6 @@
+//Input Fields ui exports
 export { default as Input } from "./Input/Input.tsx";
+export { default as Textarea } from "./Input/Textarea.tsx";
 
 // icon export
 export { default as Icon } from "./Icon/Icon.tsx";

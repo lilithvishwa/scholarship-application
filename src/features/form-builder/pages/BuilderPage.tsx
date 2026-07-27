@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FieldsEmptyState } from "@assets";
 import {
   BuilderHeader,
   FormSidebar,
@@ -44,12 +45,18 @@ function BuilderPage() {
         <main className="flex-1 overflow-y-auto">
           {fields.length === 0 ? (
             <div className="flex h-full items-center justify-center">
-              <div className="text-center">
+              <div className="space-y-6 text-center">
+                <img
+                  src={FieldsEmptyState}
+                  alt="no fields added"
+                  className="h-64 w-full"
+                />
                 <h2 className="text-lg font-medium">
                   Start building your form
                 </h2>
-                <p className="mt-2 text-body-muted">
-                  Select a field from the left sidebar to add it to your form.
+                <p className="mt-2 text-caption text-body-muted">
+                  Start Building Your Form Select or click a field from the left
+                  menu to add it here.
                 </p>
               </div>
             </div>

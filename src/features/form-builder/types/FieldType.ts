@@ -1,6 +1,10 @@
-export type FieldType =
-  | "longtext"
-  | "shorttext"
+type FieldType =
+  | "text"
+  | "textarea"
+  | "email"
+  | "password"
+  | "tel"
+  | "url"
   | "number"
   | "date"
   | "dropdown"
