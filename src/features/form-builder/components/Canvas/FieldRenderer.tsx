@@ -1,4 +1,11 @@
-import { Input, Textarea } from "@/shared/ui";
+import {
+  Input,
+  Textarea,
+  Select,
+  RadioGroup,
+  CheckboxGroup,
+  FileUpload,
+} from "@/shared/ui";
 import type { FormField } from "../../types/FieldType";
 
 interface FieldRendererProps {
@@ -59,68 +66,30 @@ export function FieldRenderer({ field }: FieldRendererProps) {
 
     case "dropdown":
       return (
-        <div className="flex flex-col gap-2">
-          <label className="caption text-body-muted uppercase">
-            {field.label}
-          </label>
-          <select
-            className="h-10.5 border border-hairline px-4 bg-white"
-            defaultValue=""
-          >
-            <option value="" disabled>
-              {field.helperText || "Select"}
-            </option>
-            {field.option.map((option) => (
-              <option key={option.id} value={option.label}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Select
+          label={field.label}
+          placeholder={field.helperText}
+          options={field.option}
+        />
       );
 
     case "radio":
       return (
-        <div className="flex flex-col gap-2">
-          <label className="caption text-body-muted uppercase">
-            {field.label}
-          </label>
-
-          <div className="flex flex-col gap-2">
-            {field.option.map((option) => (
-              <label key={option.id} className="flex items-center gap-2">
-                <input type="radio" name={field.id} disabled />
-                <span>{option.label}</span>
-              </label>
-            ))}
-          </div>
-        </div>
+        <RadioGroup
+          label={field.label}
+          name={field.id}
+          options={field.option}
+          disabled
+        />
       );
 
     case "checkbox":
       return (
-        <div className="flex flex-col gap-2">
-          <label className="caption text-body-muted uppercase">
-            {field.label}
-          </label>
-
-          <div className="flex flex-col gap-2">
-            {field.option.map((option) => (
-              <label key={option.id} className="flex items-center gap-2">
-                <input type="checkbox" disabled />
-                <span>{option.label}</span>
-              </label>
-            ))}
-          </div>
-        </div>
+        <CheckboxGroup label={field.label} options={field.option} disabled />
       );
 
     case "file":
-      return (
-        <>
-          <p>file</p>
-        </>
-      );
+      return <FileUpload />;
 
     default:
       return null;

@@ -1,9 +1,12 @@
 interface TextareaProps {
   label?: string;
   placeholder?: string;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  value: string;
+  defaultValue?: string | number;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  value?: string;
   rows?: number;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 function Textarea({
@@ -15,9 +18,7 @@ function Textarea({
 }: TextareaProps) {
   return (
     <div className="flex flex-col space-y-2 action-button">
-      {label && (
-        <label className="caption text-body-muted uppercase">{label}</label>
-      )}
+      {label && <label className="caption text-ink uppercase">{label}</label>}
 
       <textarea
         placeholder={placeholder}
