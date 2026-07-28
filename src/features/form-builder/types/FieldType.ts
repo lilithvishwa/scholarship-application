@@ -12,12 +12,18 @@ type FieldType =
   | "checkbox"
   | "file";
 
+export interface FieldOption {
+  id: string;
+  label: string;
+}
+
 export interface FormField {
   id: string;
   type: FieldType;
   label: string;
   helperText: string;
   required: boolean;
-  option: Record<string, any>[];
-  validation: Record<string, any>[];
+  option: FieldOption[];
+  allowOther: boolean;
+  validation: string[];
 }

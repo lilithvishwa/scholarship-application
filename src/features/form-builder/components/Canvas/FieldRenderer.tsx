@@ -28,8 +28,8 @@ export function FieldRenderer({ field }: FieldRendererProps) {
         <div>
           <Textarea
             label={field.label}
-            placeholder="Enter helper text"
-            value={field.helperText}
+            placeholder={field.helperText}
+            // value={}
             // onChange={(e) => setHelperText(e.target.value)}
           />
         </div>
@@ -63,7 +63,6 @@ export function FieldRenderer({ field }: FieldRendererProps) {
           <label className="caption text-body-muted uppercase">
             {field.label}
           </label>
-
           <select
             className="h-10.5 border border-hairline px-4 bg-white"
             defaultValue=""
@@ -71,10 +70,9 @@ export function FieldRenderer({ field }: FieldRendererProps) {
             <option value="" disabled>
               {field.helperText || "Select"}
             </option>
-
-            {field.option.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
+            {field.option.map((option) => (
+              <option key={option.id} value={option.label}>
+                {option.label}
               </option>
             ))}
           </select>

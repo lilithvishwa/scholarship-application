@@ -4,9 +4,10 @@ import type { FormField } from "../../types/FieldType";
 
 interface Props {
   field: FormField | null;
+  onUpdateField: (id: string, updates: Partial<FormField>) => void;
 }
 
-function PropertiesPanel({ field }: Props) {
+function PropertiesPanel({ field, onUpdateField }: Props) {
   if (!field) {
     return (
       <div className="flex h-full items-center justify-center p-6 text-center text-body-muted">
@@ -17,7 +18,7 @@ function PropertiesPanel({ field }: Props) {
 
   return (
     <div className=" p-6 flex flex-col gap-8">
-      <CommonProperties field={field} />
+      <CommonProperties field={field} onUpdateField={onUpdateField} />
 
       <hr className="border-hairline" />
 

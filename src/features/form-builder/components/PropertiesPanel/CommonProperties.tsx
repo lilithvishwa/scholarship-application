@@ -1,52 +1,35 @@
-import { useState } from "react";
 import { Input, ToggleSwitch, Icon } from "@shared/ui";
-import type { FormField } from "../../types/FieldType";
+import type { FormField, FieldOption } from "../../types/FieldType";
 
 interface Props {
   field: FormField;
+  onUpdateField: (id: string, updates: Partial<FormField>) => void;
 }
 
-interface Option {
-  id: number;
-  value: string;
-}
-
-function CommonProperties({ field }: Props) {
-  const [options, setOptions] = useState<Option[]>([
-    {
-      id: 1,
-      value: "India",
-    },
-    {
-      id: 2,
-      value: "",
-    },
-  ]);
-
-  const addOption = () => {
-    setOptions((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        value: "",
-      },
-    ]);
-  };
-
-  const updateOption = (id: number, value: string) => {
-    setOptions((prev) =>
-      prev.map((option) => (option.id === id ? { ...option, value } : option)),
-    );
-  };
-
-  const deleteOption = (id: number) => {
-    setOptions((prev) => prev.filter((option) => option.id !== id));
-  };
-
+function CommonProperties({ field, onUpdateField }: Props) {
   const isOptionField =
     field.type === "dropdown" ||
     field.type === "checkbox" ||
     field.type === "radio";
+
+  const addOption = () => {
+    const newOption: FieldOption = { id: crypto.randomUUID(), label: "" };
+    onUpdateField(field.id, { option: [...field.option, newOption] });
+  };
+
+  const updateOption = (id: string, label: string) => {
+    onUpdateField(field.id, {
+      option: field.option.map((opt) =>
+        opt.id === id ? { ...opt, label } : opt,
+      ),
+    });
+  };
+
+  const deleteOption = (id: string) => {
+    onUpdateField(field.id, {
+      option: field.option.filter((opt) => opt.id !== id),
+    });
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -56,6 +39,7 @@ function CommonProperties({ field }: Props) {
         label="FIELD LABEL"
         placeholder="Field Label"
         value={field.label}
+        onChange={(e) => onUpdateField(field.id, { label: e.target.value })}
       />
 
       {isOptionField ? (
@@ -67,56 +51,61 @@ function CommonProperties({ field }: Props) {
               <Icon
                 name="ic:outline-plus"
                 size={24}
-                className="text-body-muted"
+                className="text-body-muted cursor-pointer"
               />
             </button>
           </div>
-
-          {options.map((option) => (
+          {field.option.map((option) => (
             <div key={option.id} className="flex items-center gap-2">
               <div className="flex-1">
                 <Input
                   placeholder="Enter your option"
-                  value={option.value}
+                  value={option.label}
                   type="text"
                   onChange={(e) => updateOption(option.id, e.target.value)}
                 />
               </div>
-
               <button type="button" onClick={() => deleteOption(option.id)}>
                 <Icon
                   name="material-symbols:delete-outline"
                   size={20}
-                  className="text-body-muted"
+                  className="text-body-muted cursor-pointer"
                 />
               </button>
             </div>
           ))}
-
           {field.type === "dropdown" && (
             <div className="flex items-center justify-between pt-4">
               <label className="caption text-body-muted">ALLOW OTHER</label>
-
-              <ToggleSwitch checked={false} onChange={() => {}} />
+              <ToggleSwitch
+                checked={field.allowOther}
+                onChange={(checked) =>
+                  onUpdateField(field.id, { allowOther: checked })
+                }
+              />
             </div>
           )}
         </div>
       ) : (
         <div className="flex flex-col gap-2">
           <label className="caption text-body-muted">HELPER TEXT</label>
-
           <textarea
             className="border border-hairline h-22 px-4 py-2"
             placeholder="Income Certificate"
             value={field.helperText}
+            onChange={(e) =>
+              onUpdateField(field.id, { helperText: e.target.value })
+            }
           />
         </div>
       )}
 
       <div className="flex items-center justify-between">
         <label className="caption text-body-muted">REQUIRED FIELD</label>
-
-        <ToggleSwitch checked={field.required} onChange={() => {}} />
+        <ToggleSwitch
+          checked={field.required}
+          onChange={(checked) => onUpdateField(field.id, { required: checked })}
+        />
       </div>
     </div>
   );

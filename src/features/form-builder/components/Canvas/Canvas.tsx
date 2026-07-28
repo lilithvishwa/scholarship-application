@@ -21,7 +21,7 @@ function Canvas({ fields, selectedFieldId, onSelectField }: CanvasProps) {
               : "border border-transparent"
           }`}
         >
-          <DragHandle />
+          {/*<DragHandle />*/}
           <div className="group-hover:ml-5 transition-all duration-450">
             <FieldRenderer field={field} />
           </div>

@@ -12,6 +12,12 @@ function BuilderPage() {
   const [fields, setFields] = useState<FormField[]>([]);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
 
+  const updateField = (id: string, updates: Partial<FormField>) => {
+    setFields((prev) =>
+      prev.map((field) => (field.id === id ? { ...field, ...updates } : field)),
+    );
+  };
+
   const selectedField =
     fields.find((field) => field.id === selectedFieldId) ?? null;
   console.log(selectedField);
@@ -24,6 +30,7 @@ function BuilderPage() {
       helperText: "",
       required: false,
       option: [],
+      allowOther: false,
       validation: [],
     };
 
@@ -71,7 +78,7 @@ function BuilderPage() {
 
         {/* Right Properties */}
         <aside className="w-79.75 shrink-0 overflow-y-auto border-l border-hairline">
-          <PropertiesPanel field={selectedField} />
+          <PropertiesPanel field={selectedField} onUpdateField={updateField} />
         </aside>
       </div>
     </div>

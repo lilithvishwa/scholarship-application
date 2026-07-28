@@ -5,9 +5,9 @@ function NumberValidation({ field }) {
     <div className="flex flex-col gap-6">
       <p className="body">VALIDATION RULES</p>
 
-      <Input label="MINIMUM VALUE" placeholder="1" />
+      <Input label="MINIMUM VALUE" placeholder="Enter a Minimum Value" />
 
-      <Input label="MAXIMUM VALUE" placeholder="10" />
+      <Input label="MAXIMUM VALUE" placeholder="Enter a Maximum value" />
 
       <div className="flex justify-between items-center">
         <label className="caption text-body-muted">ALLOW DECIMALS</label>
