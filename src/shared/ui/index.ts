@@ -1,6 +1,10 @@
-//Input Fields ui exports
-export { default as Input } from "./Input/Input.tsx";
-export { default as Textarea } from "./Input/Textarea.tsx";
+//Form Fields ui exports
+export { default as Input } from "./Inputs/Input.tsx";
+export { default as Textarea } from "./Inputs/Textarea.tsx";
+export { default as Select } from "./Inputs/Select.tsx";
+export { default as RadioGroup } from "./Inputs/Radio.tsx";
+export { default as CheckboxGroup } from "./Inputs/CheckboxGroup.tsx";
+export { default as FileUpload } from "./Inputs/FileUpload.tsx";
 
 // icon export
 export { default as Icon } from "./Icon/Icon.tsx";

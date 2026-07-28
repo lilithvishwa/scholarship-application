@@ -1,18 +1,17 @@
 interface InputProps {
-  label: string;
-  placeholder: string;
-  type: string;
-  onChange(): void;
-  value: string | number;
+  label?: string;
+  placeholder?: string;
+  type?: React.HTMLInputTypeAttribute;
+  value?: string | number;
+  defaultValue?: string | number;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
-
 function Input({ label, placeholder, type, onChange, value }: InputProps) {
   return (
     <div className="flex flex-col space-y-2 action-button">
-      {/*<label>{label}</label>*/}
-      {label && (
-        <label className="caption text-body-muted uppercase">{label}</label>
-      )}
+      {label && <label className="caption text-ink">{label}</label>}
       <input
         type={type}
         placeholder={placeholder}
