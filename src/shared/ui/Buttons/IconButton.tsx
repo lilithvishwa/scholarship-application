@@ -1,0 +1,35 @@
+import clsx from "clsx";
+import Icon from "../Icon/Icon";
+
+interface IconButtonProps {
+  icon: string;
+  onClick?: () => void;
+  size?: number;
+  disabled?: boolean;
+  title?: string;
+  className?: string;
+}
+
+export default function IconButton({
+  title,
+  icon,
+  size = 24,
+  disabled,
+  onClick,
+  className,
+}: IconButtonProps) {
+  return (
+    <button
+      title={title}
+      disabled={disabled}
+      onClick={onClick}
+      className={clsx(
+        "flex h-5 w-5 items-center justify-center rounded-xs text-body-muted hover:bg-gray-100 transition-colors",
+        "disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer",
+        className,
+      )}
+    >
+      <Icon name={icon} size={size} />
+    </button>
+  );
+}
