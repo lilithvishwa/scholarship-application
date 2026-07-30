@@ -18,9 +18,28 @@ function BuilderPage() {
     );
   };
 
+  const updateValidation = (
+    fieldId: string,
+    validation: Partial<FormField["validation"]>,
+  ) => {
+    setFields((prev) =>
+      prev.map((field) =>
+        field.id === fieldId
+          ? {
+              ...field,
+              validation: {
+                ...field.validation,
+                ...validation,
+              },
+            }
+          : field,
+      ),
+    );
+  };
+
   const selectedField =
     fields.find((field) => field.id === selectedFieldId) ?? null;
-  console.log(selectedField);
+  // console.log(selectedField);
 
   const addField = (type: FormField["type"]) => {
     const newField: FormField = {
@@ -78,7 +97,11 @@ function BuilderPage() {
 
         {/* Right Properties */}
         <aside className="w-79.75 shrink-0 overflow-y-auto border-l border-hairline">
-          <PropertiesPanel field={selectedField} onUpdateField={updateField} />
+          <PropertiesPanel
+            field={selectedField}
+            onUpdateField={updateField}
+            updateValidation={updateValidation}
+          />
         </aside>
       </div>
     </div>

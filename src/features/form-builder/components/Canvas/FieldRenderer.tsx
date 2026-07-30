@@ -89,7 +89,7 @@ export function FieldRenderer({ field }: FieldRendererProps) {
       );
 
     case "file":
-      return <FileUpload />;
+      return <FileUpload label={field.label} />;
 
     default:
       return null;

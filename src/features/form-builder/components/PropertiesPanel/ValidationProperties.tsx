@@ -9,11 +9,15 @@ import type { FormField } from "../../types/FieldType";
 
 interface Props {
   field: FormField;
+  updateValidation: (
+    fieldId: string,
+    validation: Partial<FormField["validation"]>,
+  ) => void;
 }
 
 const validationMap = {
-  text: () => <TextValidation showFormat={true} />,
-  textarea: () => <TextValidation showFormat={false} />,
+  text: TextValidation,
+  textarea: TextValidation,
   number: NumberValidation,
   date: DateValidation,
   dropdown: DropdownValidation,
@@ -22,13 +26,16 @@ const validationMap = {
   file: FileUploadValidation,
 };
 
-function ValidationProperties({ field }: Props) {
+function ValidationProperties({ field, updateValidation }: Props) {
   const ValidationComponent = validationMap[field.type];
 
   return (
     <div>
       {ValidationComponent ? (
-        <ValidationComponent field={field} />
+        <ValidationComponent
+          field={field}
+          updateValidation={updateValidation}
+        />
       ) : (
         <p>No validation available</p>
       )}

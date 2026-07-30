@@ -91,7 +91,7 @@ function CommonProperties({ field, onUpdateField }: Props) {
           <label className="caption text-body-muted">HELPER TEXT</label>
           <textarea
             className="border border-hairline h-22 px-4 py-2"
-            placeholder="Income Certificate"
+            placeholder="Enter Helper Text"
             value={field.helperText}
             onChange={(e) =>
               onUpdateField(field.id, { helperText: e.target.value })

@@ -5,9 +5,13 @@ import type { FormField } from "../../types/FieldType";
 interface Props {
   field: FormField | null;
   onUpdateField: (id: string, updates: Partial<FormField>) => void;
+  updateValidation: (
+    fieldId: string,
+    validation: Partial<FormField["validation"]>,
+  ) => void;
 }
 
-function PropertiesPanel({ field, onUpdateField }: Props) {
+function PropertiesPanel({ field, onUpdateField, updateValidation }: Props) {
   if (!field) {
     return (
       <div className="flex h-full items-center justify-center p-6 text-center text-body-muted">
@@ -22,7 +26,7 @@ function PropertiesPanel({ field, onUpdateField }: Props) {
 
       <hr className="border-hairline" />
 
-      <ValidationProperties field={field} />
+      <ValidationProperties field={field} updateValidation={updateValidation} />
     </div>
   );
 }
