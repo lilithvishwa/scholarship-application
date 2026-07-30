@@ -1,4 +1,4 @@
-import { BackgroundImg } from "@assets";
+import { BackgroundImg } from "@/assets";
 
 function Background() {
   return (
