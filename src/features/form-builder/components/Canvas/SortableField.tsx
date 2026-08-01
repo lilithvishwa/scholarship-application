@@ -1,4 +1,5 @@
 import { useSortable } from "@dnd-kit/sortable";
+
 import { CSS } from "@dnd-kit/utilities";
 
 import { DragHandle } from "./DragHandle";
@@ -21,14 +22,22 @@ function SortableField({
   onRemoveField,
   onDuplicateField,
 }: SortableFieldProps) {
-  const { setNodeRef, listeners, attributes, transform, transition } =
-    useSortable({
-      id: field.id,
-    });
+  const {
+    setNodeRef,
+    listeners,
+    attributes,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: field.id,
+    animateLayoutChanges: () => false,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    opacity: isDragging ? 0 : 1,
   };
 
   return (
@@ -44,6 +53,7 @@ function SortableField({
     >
       <DragHandle
         listeners={listeners}
+        isDragging={isDragging}
         attributes={attributes}
         onRemove={() => onRemoveField(field.id)}
         onCopy={() => onDuplicateField(field.id)}

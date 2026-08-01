@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragOverlay,
+  type DragStartEvent,
+  type DragEndEvent,
+} from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
 import { FieldsEmptyState } from "@/assets";
@@ -10,37 +15,20 @@ import {
   Canvas,
 } from "../components";
 import type { FormField } from "../types/FieldType";
+import { FieldRenderer } from "../components/Canvas/FieldRenderer";
 
 function BuilderPage() {
   const [fields, setFields] = useState<FormField[]>([]);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
+  const [activeFieldId, setActiveFieldId] = useState<string | null>(null);
 
   /**
    * Updates the properties of a form field
    * identified by its ID.
    */
-  const updateField = (id: string, updates: Partial<FormField>) => {
+  const updateField = (id: string, updates: Partial<FormField[]>) => {
     setFields((prev) =>
       prev.map((field) => (field.id === id ? { ...field, ...updates } : field)),
-    );
-  };
-
-  const updateValidation = (
-    fieldId: string,
-    validation: Partial<FormField["validation"]>,
-  ) => {
-    setFields((prev) =>
-      prev.map((field) =>
-        field.id === fieldId
-          ? {
-              ...field,
-              validation: {
-                ...field.validation,
-                ...validation,
-              },
-            }
-          : field,
-      ),
     );
   };
 
@@ -50,7 +38,14 @@ function BuilderPage() {
    */
   const selectedField =
     fields.find((field) => field.id === selectedFieldId) ?? null;
-  // console.log(selectedField);
+
+  /**
+   * Finds the currently active draging field
+   * from the form fields in Canvas component using the @activeFieldId field ID.
+   */
+  const activeField =
+    fields.find((field) => field.id === activeFieldId) ?? null;
+  // console.log(activeField);
 
   /**
    * Creates a new form field with default values and
@@ -96,6 +91,11 @@ function BuilderPage() {
     setFields((prev) => [...prev, newField]);
   };
 
+  const handleDragStart = (event: DragStartEvent) => {
+    // console.log(event);
+    setActiveFieldId(event.active.id as string);
+  };
+
   const handleDragEnd = (event: DragEndEvent) => {
     // console.log(event);
     // console.log(event.active.id);
@@ -104,12 +104,13 @@ function BuilderPage() {
     const newIndex = fields.findIndex((field) => field.id === event.over?.id);
     const reorderedFields = arrayMove(fields, oldIndex, newIndex);
     setFields(reorderedFields);
+    setActiveFieldId(null);
   };
 
   return (
     <div className="bg-white">
       <BuilderHeader />
-      <DndContext onDragEnd={handleDragEnd}>
+      <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className="flex flex-1 overflow-hidden ">
           {/* Left Sidebar */}
           <aside className="w-69.75 shrink-0 overflow-y-auto border-r border-hairline">
@@ -150,11 +151,14 @@ function BuilderPage() {
           <aside className="w-79.75 shrink-0 overflow-y-auto border-l border-hairline">
             <PropertiesPanel
               field={selectedField}
-              onUpdateField={updateField}
-              updateValidation={updateValidation}
+              // onUpdateField={updateField}
+              // updateValidation={updateValidation}
             />
           </aside>
         </div>
+        <DragOverlay>
+          {activeField ? <FieldRenderer field={activeField} /> : null}
+        </DragOverlay>
       </DndContext>
     </div>
   );

@@ -17,16 +17,16 @@ export interface FieldOption {
   label: string;
 }
 
-// export interface FormField {
-//   id: string;
-//   type: FieldType;
-//   label: string;
-//   helperText: string;
-//   required: boolean;
-//   option: FieldOption[];
-//   allowOther: boolean;
-//   validation: string[];
-// }
+export interface FormField {
+  id: string;
+  type: FieldType;
+  label: string;
+  helperText: string;
+  required: boolean;
+  option: FieldOption[];
+  allowOther: boolean;
+  validation: string[];
+}
 
 interface BaseInputField {
   id: string;

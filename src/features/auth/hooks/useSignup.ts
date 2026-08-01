@@ -5,7 +5,7 @@ import axios from "axios";
 
 export function useSignup() {
   const [signupData, setSignupData] = useState<RegisterRequest>({
-    username: "",
+    name: "",
     email: "",
     password: "",
     confirm_password: "",

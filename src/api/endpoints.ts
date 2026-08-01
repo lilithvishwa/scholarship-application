@@ -5,10 +5,10 @@
  */
 
 export const AUTH_ENDPOINTS = {
-  REGISTER: "/auth/register",
-  LOGIN: "/auth/login",
-  GOOGLE_LOGIN: "/auth/login/google",
-  MICROSOFT_LOGIN: "/auth/login/microsoft",
-  USER: "/auth/me",
-  LOGOUT: "/auth/logout",
+  REGISTER: "/api/auth/sign-up",
+  LOGIN: "/api/auth/login",
+  GOOGLE_LOGIN: "/api/auth/google",
+  MICROSOFT_LOGIN: "/api/auth/microsoft",
+  USER: "/api/auth/me",
+  LOGOUT: "/api/auth/logout",
 } as const;

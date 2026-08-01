@@ -4,6 +4,7 @@ import type React from "react";
 
 function SignUpForm() {
   const { signupData, updateField, handleSignup, loading, error } = useSignup();
+  console.log(error);
 
   return (
     <form className="space-y-4" onSubmit={handleSignup}>
@@ -11,9 +12,9 @@ function SignUpForm() {
         label="Name"
         placeholder="Enter your Name"
         type="text"
-        value={signupData.username}
+        value={signupData.name}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          updateField("username", e.target.value)
+          updateField("name", e.target.value)
         }
       />
       <Input
@@ -43,7 +44,9 @@ function SignUpForm() {
           updateField("confirm_password", e.target.value)
         }
       />
-      <Button name={loading ? "Creating..." : "Create Account"} type="submit" />
+      <Button type="submit">
+        {loading ? "Creating..." : "Create Account"}
+      </Button>
     </form>
   );
 }
