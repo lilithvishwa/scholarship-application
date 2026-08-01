@@ -1,11 +1,11 @@
-interface Option {
-  id: string;
-  label: string;
-}
+// interface Option {
+//   id: string;
+//   label: string;
+// }
 
 interface CheckboxGroupProps {
   label?: string;
-  options: Option[];
+  options: string[];
   value?: string[];
   onChange?: (value: string[]) => void;
   disabled?: boolean;
@@ -33,17 +33,17 @@ export default function CheckboxGroup({
       {label && <label className="caption text-ink uppercase">{label}</label>}
 
       <div className="flex flex-col gap-2">
-        {options.map((option) => (
-          <label key={option.id} className="flex items-center gap-2">
+        {options.map((option, index) => (
+          <label key={index} className="flex items-center gap-2">
             <input
               type="checkbox"
-              value={option.label}
-              checked={value.includes(option.label)}
+              value={option}
+              checked={value.includes(option)}
               disabled={disabled}
-              onChange={(e) => handleChange(option.label, e.target.checked)}
+              onChange={(e) => handleChange(option, e.target.checked)}
             />
 
-            <span>{option.label}</span>
+            <span>{option}</span>
           </label>
         ))}
       </div>

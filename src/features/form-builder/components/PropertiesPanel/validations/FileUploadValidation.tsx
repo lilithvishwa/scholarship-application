@@ -2,14 +2,11 @@ import type { FormField } from "@/features/form-builder/types/FieldType";
 
 interface Props {
   field: FormField;
-  updateValidation: (
-    fieldId: string,
-    validation: Partial<FormField["validation"]>,
-  ) => void;
+  updateField: (id: string, updates: Partial<FormField>) => void;
 }
 
-function FileUploadValidation({ field, updateValidation }: Props) {
-  const acceptedFiles = field.validation?.acceptedFileTypes ?? [];
+function FileUploadValidation({ field, updateField }: Props) {
+  const acceptedFiles = field?.fileType ?? [];
   // console.log(acceptedFiles);
 
   const toggleFileType = (type: string) => {
@@ -19,7 +16,7 @@ function FileUploadValidation({ field, updateValidation }: Props) {
       ? acceptedFiles.filter((item) => item !== type)
       : [...acceptedFiles, type];
 
-    updateValidation(field.id, { acceptedFileTypes: updated });
+    updateField(field.randomId, { fileType: updated });
   };
 
   return (
@@ -64,9 +61,9 @@ function FileUploadValidation({ field, updateValidation }: Props) {
 
         <select
           className="w-full h-12 border border-hairline px-4 mt-2"
-          value={field.validation?.maxFileSize ?? ""}
+          value={field?.maxFileSize ?? ""}
           onChange={(e) =>
-            updateValidation(field.id, {
+            updateField(field.randomId, {
               maxFileSize: Number(e.target.value),
             })
           }

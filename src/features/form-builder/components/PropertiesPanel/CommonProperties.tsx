@@ -1,33 +1,58 @@
 import { Input, ToggleSwitch, Icon } from "@shared/ui";
-import type { FormField, FieldOption } from "../../types/FieldType";
+import type { FormField } from "../../types/FieldType";
 
 interface Props {
   field: FormField;
-  onUpdateField: (id: string, updates: Partial<FormField>) => void;
+  updateField: (id: string, updates: Partial<FormField>) => void;
 }
 
-function CommonProperties({ field, onUpdateField }: Props) {
+function CommonProperties({ field, updateField }: Props) {
   const isOptionField =
-    field.type === "dropdown" ||
+    field.type === "select" ||
     field.type === "checkbox" ||
     field.type === "radio";
 
   const addOption = () => {
-    const newOption: FieldOption = { id: crypto.randomUUID(), label: "" };
-    onUpdateField(field.id, { option: [...field.option, newOption] });
-  };
-
-  const updateOption = (id: string, label: string) => {
-    onUpdateField(field.id, {
-      option: field.option.map((opt) =>
-        opt.id === id ? { ...opt, label } : opt,
-      ),
+    // const newOption: FieldOption = { id: crypto.randomUUID(), label: "" };
+    // updateField(field.randomId, { choices: [...field.choices, newOption] });
+    //
+    if (!("choices" in field)) return;
+    updateField(field.randomId, {
+      choices: [...field.choices, ""],
     });
   };
 
-  const deleteOption = (id: string) => {
-    onUpdateField(field.id, {
-      option: field.option.filter((opt) => opt.id !== id),
+  // const updateOption = (id: string, label: string) => {
+  //   updateField(field.randomId, {
+  //     option: field.option.map((opt) =>
+  //       opt.id === id ? { ...opt, label } : opt,
+  //     ),
+  //   });
+  // };
+  //
+  const updateOption = (index: number, value: string) => {
+    if (!("choices" in field)) return;
+
+    const updated = [...field.choices];
+
+    updated[index] = value;
+
+    updateField(field.randomId, {
+      choices: updated,
+    });
+  };
+
+  // const deleteOption = (id: string) => {
+  //   updateField(field.randomId, {
+  //     option: field.option.filter((opt) => opt.id !== id),
+  //   });
+  // };
+
+  const deleteOption = (index: number) => {
+    if (!("choices" in field)) return;
+
+    updateField(field.randomId, {
+      choices: field.choices.filter((_, i) => i !== index),
     });
   };
 
@@ -39,7 +64,7 @@ function CommonProperties({ field, onUpdateField }: Props) {
         label="FIELD LABEL"
         placeholder="Field Label"
         value={field.label}
-        onChange={(e) => onUpdateField(field.id, { label: e.target.value })}
+        onChange={(e) => updateField(field.randomId, { label: e.target.value })}
       />
 
       {isOptionField ? (
@@ -55,17 +80,17 @@ function CommonProperties({ field, onUpdateField }: Props) {
               />
             </button>
           </div>
-          {field.option.map((option) => (
-            <div key={option.id} className="flex items-center gap-2">
+          {field?.choices.map((choice, index) => (
+            <div key={index} className="flex items-center gap-2">
               <div className="flex-1">
                 <Input
                   placeholder="Enter your option"
-                  value={option.label}
+                  value={choice}
                   type="text"
-                  onChange={(e) => updateOption(option.id, e.target.value)}
+                  onChange={(e) => updateOption(index, e.target.value)}
                 />
               </div>
-              <button type="button" onClick={() => deleteOption(option.id)}>
+              <button type="button" onClick={() => deleteOption(index)}>
                 <Icon
                   name="material-symbols:delete-outline"
                   size={20}
@@ -74,13 +99,13 @@ function CommonProperties({ field, onUpdateField }: Props) {
               </button>
             </div>
           ))}
-          {field.type === "dropdown" && (
+          {field.type === "select" && (
             <div className="flex items-center justify-between pt-4">
               <label className="caption text-body-muted">ALLOW OTHER</label>
               <ToggleSwitch
                 checked={field.allowOther}
                 onChange={(checked) =>
-                  onUpdateField(field.id, { allowOther: checked })
+                  updateField(field.randomId, { allowOther: checked })
                 }
               />
             </div>
@@ -92,9 +117,9 @@ function CommonProperties({ field, onUpdateField }: Props) {
           <textarea
             className="border border-hairline h-22 px-4 py-2"
             placeholder="Enter Helper Text"
-            value={field.helperText}
+            value={field.helpText || ""}
             onChange={(e) =>
-              onUpdateField(field.id, { helperText: e.target.value })
+              updateField(field.randomId, { helpText: e.target.value })
             }
           />
         </div>
@@ -104,7 +129,9 @@ function CommonProperties({ field, onUpdateField }: Props) {
         <label className="caption text-body-muted">REQUIRED FIELD</label>
         <ToggleSwitch
           checked={field.required}
-          onChange={(checked) => onUpdateField(field.id, { required: checked })}
+          onChange={(checked) =>
+            updateField(field.randomId, { required: checked })
+          }
         />
       </div>
     </div>

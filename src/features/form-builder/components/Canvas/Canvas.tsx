@@ -20,10 +20,10 @@ function Canvas({
 }: CanvasProps) {
   return (
     <div className="space-y-3 p-8">
-      <SortableContext items={fields?.map((field) => field.id)}>
+      <SortableContext items={fields?.map((field) => field.randomId)}>
         {fields?.map((field) => (
           <SortableField
-            key={field.id}
+            key={field.randomId}
             field={field}
             selectedFieldId={selectedFieldId}
             onSelectField={setSelectedField}

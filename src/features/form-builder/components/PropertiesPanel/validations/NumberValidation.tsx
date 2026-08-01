@@ -3,13 +3,10 @@ import { Input, ToggleSwitch } from "@shared/ui";
 
 interface Props {
   field: FormField;
-  updateValidation: (
-    fieldId: string,
-    validation: Partial<FormField["validation"]>,
-  ) => void;
+  updateField: (id: string, updates: Partial<FormField>) => void;
 }
 
-function NumberValidation({ field, updateValidation }: Props) {
+function NumberValidation({ field, updateField }: Props) {
   return (
     <div className="flex flex-col gap-6">
       <p className="body">VALIDATION RULES</p>
@@ -18,9 +15,9 @@ function NumberValidation({ field, updateValidation }: Props) {
         label="MINIMUM VALUE"
         placeholder="Enter a Minimum Value"
         type="number"
-        value={field.validation?.minValue ?? ""}
+        value={field?.minValue ?? ""}
         onChange={(e) => {
-          updateValidation(field.id, {
+          updateField(field.randomId, {
             minValue: e.target.value ? Number(e.target.value) : undefined,
           });
         }}
@@ -29,26 +26,26 @@ function NumberValidation({ field, updateValidation }: Props) {
       <Input
         label="MAXIMUM VALUE"
         placeholder="Enter a Maximum value"
-        value={field.validation?.maxValue ?? ""}
+        value={field?.maxValue ?? ""}
         onChange={(e) =>
-          updateValidation(field.id, {
+          updateField(field.randomId, {
             maxValue: e.target.value ? Number(e.target.value) : undefined,
           })
         }
       />
 
-      <div className="flex justify-between items-center">
+      {/*<div className="flex justify-between items-center">
         <label className="caption text-body-muted">ALLOW DECIMALS</label>
 
         <ToggleSwitch
-          checked={field.validation?.allowDecimals ?? true}
+          checked={field?.allowDecimals ?? true}
           onChange={(checked) =>
-            updateValidation(field.id, {
+            updateField(field.randomId, {
               allowDecimals: checked,
             })
           }
         />
-      </div>
+      </div>*/}
     </div>
   );
 }

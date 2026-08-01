@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
+import { useForm } from "../hooks/useForm";
 
 import { FieldsEmptyState } from "@/assets";
 import {
@@ -10,6 +11,7 @@ import {
   Canvas,
 } from "../components";
 import type { FormField } from "../types/FieldType";
+import { createField } from "../types/FieldFactory";
 
 function BuilderPage() {
   const [fields, setFields] = useState<FormField[]>([]);
@@ -19,27 +21,10 @@ function BuilderPage() {
    * Updates the properties of a form field
    * identified by its ID.
    */
-  const updateField = (id: string, updates: Partial<FormField>) => {
-    setFields((prev) =>
-      prev.map((field) => (field.id === id ? { ...field, ...updates } : field)),
-    );
-  };
-
-  const updateValidation = (
-    fieldId: string,
-    validation: Partial<FormField["validation"]>,
-  ) => {
+  const updateField = (id: string, updates: Partial<FormField[]>) => {
     setFields((prev) =>
       prev.map((field) =>
-        field.id === fieldId
-          ? {
-              ...field,
-              validation: {
-                ...field.validation,
-                ...validation,
-              },
-            }
-          : field,
+        field.randomId === id ? { ...field, ...updates } : field,
       ),
     );
   };
@@ -49,7 +34,7 @@ function BuilderPage() {
    * from the form fields in Canvas component using the selected field ID.
    */
   const selectedField =
-    fields.find((field) => field.id === selectedFieldId) ?? null;
+    fields.find((field) => field.randomId === selectedFieldId) ?? null;
   // console.log(selectedField);
 
   /**
@@ -60,18 +45,9 @@ function BuilderPage() {
    * (e.g. shorttext(text), longtext(textarea), dropdown, radio).
    */
   const addField = (type: FormField["type"]) => {
-    const newField: FormField = {
-      id: crypto.randomUUID(),
-      type,
-      label: "untitled",
-      helperText: "",
-      required: false,
-      option: [],
-      allowOther: false,
-      validation: [],
-    };
-
+    const newField = createField(type);
     setFields((prev) => [...prev, newField]);
+    setSelectedFieldId(newField.randomId);
   };
 
   /**
@@ -79,19 +55,19 @@ function BuilderPage() {
    * from the form builder.
    */
   const removeField = (fieldId: string) => {
-    setFields((prev) => prev.filter((field) => field.id !== fieldId));
+    setFields((prev) => prev.filter((field) => field.randomId !== fieldId));
   };
 
   /**
    *
    */
   const duplicateField = (fieldId: string) => {
-    const fieldToCopy = fields.find((field) => field.id === fieldId);
+    const fieldToCopy = fields.find((field) => field.randomId === fieldId);
 
     if (!fieldToCopy) return;
     const newField: FormField = {
       ...fieldToCopy,
-      id: crypto.randomUUID(),
+      randomId: crypto.randomUUID(),
     };
     setFields((prev) => [...prev, newField]);
   };
@@ -100,15 +76,20 @@ function BuilderPage() {
     // console.log(event);
     // console.log(event.active.id);
     // console.log(event.over?.id);
-    const oldIndex = fields.findIndex((field) => field.id === event.active.id);
-    const newIndex = fields.findIndex((field) => field.id === event.over?.id);
+    const oldIndex = fields.findIndex(
+      (field) => field.randomId === event.active.id,
+    );
+    const newIndex = fields.findIndex(
+      (field) => field.randomId === event.over?.id,
+    );
     const reorderedFields = arrayMove(fields, oldIndex, newIndex);
     setFields(reorderedFields);
   };
 
+  console.log(fields);
   return (
     <div className="bg-white">
-      <BuilderHeader />
+      <BuilderHeader fields={fields} />
       <DndContext onDragEnd={handleDragEnd}>
         <div className="flex flex-1 overflow-hidden ">
           {/* Left Sidebar */}
@@ -148,11 +129,7 @@ function BuilderPage() {
 
           {/* Right Properties */}
           <aside className="w-79.75 shrink-0 overflow-y-auto border-l border-hairline">
-            <PropertiesPanel
-              field={selectedField}
-              onUpdateField={updateField}
-              updateValidation={updateValidation}
-            />
+            <PropertiesPanel field={selectedField} updateField={updateField} />
           </aside>
         </div>
       </DndContext>

@@ -3,13 +3,10 @@ import { Input } from "@shared/ui";
 
 interface Props {
   field: FormField;
-  updateValidation: (
-    fieldId: string,
-    validation: Partial<FormField["validation"]>,
-  ) => void;
+  updateField: (id: string, updates: Partial<FormField>) => void;
 }
 
-function DropdownValidation({ field, updateValidation }: Props) {
+function DropdownValidation({ field, updateField }: Props) {
   return (
     <div className="flex flex-col gap-6">
       <p className="body">VALIDATION RULES</p>
@@ -18,9 +15,9 @@ function DropdownValidation({ field, updateValidation }: Props) {
         label="MINIMUM SELECTION"
         placeholder="1"
         type="number"
-        value={field.validation?.minSelection ?? ""}
+        value={field?.minSelection ?? ""}
         onChange={(e) =>
-          updateValidation(field.id, {
+          updateField(field.randomId, {
             minSelection: e.target.value ? Number(e.target.value) : undefined,
           })
         }
@@ -30,9 +27,9 @@ function DropdownValidation({ field, updateValidation }: Props) {
         label="MAXIMUM SELECTION"
         placeholder="3"
         type="number"
-        value={field.validation?.maxSelection ?? ""}
+        value={field?.maxSelection ?? ""}
         onChange={(e) =>
-          updateValidation(field.id, {
+          updateField(field.randomId, {
             maxSelection: e.target.value ? Number(e.target.value) : undefined,
           })
         }

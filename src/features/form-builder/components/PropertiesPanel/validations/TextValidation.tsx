@@ -3,16 +3,28 @@ import type { FormField } from "../../../types/FieldType";
 
 interface TextValidationProps {
   field: FormField;
-  updateValidation: (
-    fieldId: string,
-    validation: Partial<FormField["validation"]>,
-  ) => void;
+  updateField: (id: string, updates: Partial<FormField>) => void;
 }
 
-function TextValidation({ field, updateValidation }: TextValidationProps) {
+type RegexType = "text" | "email" | "phone" | "url";
+
+const REGEX_PATTERNS: Record<string, RegExp> = {
+  text: /.*/,
+  email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  phone: /^[6-9]\d{9}$/,
+  url: /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/.*)?$/,
+};
+
+function TextValidation({ field, updateField }: TextValidationProps) {
   const isShortText = field.type === "text";
 
-  // console.log(updateValidation);
+  const selectedRegex =
+    Object.entries(REGEX_PATTERNS).find(
+      ([, pattern]) => pattern.source === field?.regex,
+    )?.[0] ?? "text";
+
+  // const pattern = REGEX_PATTERNS[field.regex ?? "text"];
+
   return (
     <div className="flex flex-col gap-6">
       <p className="body">VALIDATION RULES</p>
@@ -22,18 +34,19 @@ function TextValidation({ field, updateValidation }: TextValidationProps) {
           <label className="caption text-body-muted">FORMAT</label>
 
           <select
-            value={field.validation?.format ?? "text"}
+            value={selectedRegex}
             onChange={(e) =>
-              updateValidation(field.id, {
-                format: e.target.value as "text" | "email" | "phone" | "url",
+              updateField(field.randomId, {
+                // regex: e.target.value as RegexType,
+                regex: REGEX_PATTERNS[e.target.value].source,
               })
             }
             className="w-full h-12 border border-hairline px-4 mt-2"
           >
-            <option>Any Text</option>
-            <option>Email</option>
-            <option>Phone Number</option>
-            <option>URL</option>
+            <option value="text">Any Text</option>
+            <option value="email">Email</option>
+            <option value="phone">Phone Number</option>
+            <option value="url">URL</option>
           </select>
         </div>
       )}
@@ -42,9 +55,9 @@ function TextValidation({ field, updateValidation }: TextValidationProps) {
         label="MINIMUM LENGTH"
         placeholder="3"
         type="number"
-        value={field.validation?.minLength ?? ""}
+        value={field?.minLength ?? ""}
         onChange={(e) =>
-          updateValidation(field.id, {
+          updateField(field.randomId, {
             minLength: e.target.value ? Number(e.target.value) : undefined,
             // minLength: e.target.value,
           })
@@ -55,9 +68,9 @@ function TextValidation({ field, updateValidation }: TextValidationProps) {
         label="MAXIMUM LENGTH"
         placeholder="20"
         type="number"
-        value={field.validation?.maxLength ?? ""}
+        value={field?.maxLength ?? ""}
         onChange={(e) =>
-          updateValidation(field.id, {
+          updateField(field.randomId, {
             maxLength: e.target.value ? Number(e.target.value) : undefined,
           })
         }

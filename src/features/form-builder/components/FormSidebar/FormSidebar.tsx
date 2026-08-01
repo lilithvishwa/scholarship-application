@@ -15,7 +15,7 @@ function FormSidebar({ onAddField }: FormSidebarProps) {
     {
       label: "Long Text",
       icon: "mdi:text-long",
-      type: "textarea",
+      type: "text-area",
     },
     {
       label: "Number",
@@ -33,7 +33,7 @@ function FormSidebar({ onAddField }: FormSidebarProps) {
     {
       label: "Dropdown",
       icon: "cuida:dropdown-outline",
-      type: "dropdown",
+      type: "select",
     },
     {
       label: "Radio Buttons",

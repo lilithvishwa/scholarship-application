@@ -4,14 +4,10 @@ import type { FormField } from "../../types/FieldType";
 
 interface Props {
   field: FormField | null;
-  onUpdateField: (id: string, updates: Partial<FormField>) => void;
-  updateValidation: (
-    fieldId: string,
-    validation: Partial<FormField["validation"]>,
-  ) => void;
+  updateField: (id: string, updates: Partial<FormField>) => void;
 }
 
-function PropertiesPanel({ field, onUpdateField, updateValidation }: Props) {
+function PropertiesPanel({ field, updateField }: Props) {
   if (!field) {
     return (
       <div className="flex h-full items-center justify-center p-6 text-center text-body-muted">
@@ -22,11 +18,11 @@ function PropertiesPanel({ field, onUpdateField, updateValidation }: Props) {
 
   return (
     <div className=" p-6 flex flex-col gap-8">
-      <CommonProperties field={field} onUpdateField={onUpdateField} />
+      <CommonProperties field={field} updateField={updateField} />
 
       <hr className="border-hairline" />
 
-      <ValidationProperties field={field} updateValidation={updateValidation} />
+      <ValidationProperties field={field} updateField={updateField} />
     </div>
   );
 }

@@ -9,33 +9,29 @@ import type { FormField } from "../../types/FieldType";
 
 interface Props {
   field: FormField;
-  updateValidation: (
-    fieldId: string,
-    validation: Partial<FormField["validation"]>,
-  ) => void;
+  updateField: (id: string, updates: Partial<FormField>) => void;
 }
+// const textarea = "text-area";
 
 const validationMap = {
   text: TextValidation,
-  textarea: TextValidation,
+  "text-area": TextValidation,
   number: NumberValidation,
   date: DateValidation,
-  dropdown: DropdownValidation,
+  select: DropdownValidation,
   radio: DropdownValidation,
   checkbox: CheckboxValidation,
   file: FileUploadValidation,
 };
 
-function ValidationProperties({ field, updateValidation }: Props) {
+function ValidationProperties({ field, updateField }: Props) {
   const ValidationComponent = validationMap[field.type];
+  // console.log(ValidationComponent);
 
   return (
     <div>
       {ValidationComponent ? (
-        <ValidationComponent
-          field={field}
-          updateValidation={updateValidation}
-        />
+        <ValidationComponent updateField={updateField} field={field} />
       ) : (
         <p>No validation available</p>
       )}

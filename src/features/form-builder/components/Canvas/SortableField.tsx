@@ -23,7 +23,7 @@ function SortableField({
 }: SortableFieldProps) {
   const { setNodeRef, listeners, attributes, transform, transition } =
     useSortable({
-      id: field.id,
+      id: field.randomId,
     });
 
   const style = {
@@ -35,9 +35,9 @@ function SortableField({
     <div
       ref={setNodeRef}
       style={style}
-      onClick={() => onSelectField(field.id)}
+      onClick={() => onSelectField(field.randomId)}
       className={`group relative p-4 max-h-75 ${
-        selectedFieldId === field.id
+        selectedFieldId === field.randomId
           ? "border border-action-blue"
           : "border border-transparent"
       }`}
@@ -45,8 +45,8 @@ function SortableField({
       <DragHandle
         listeners={listeners}
         attributes={attributes}
-        onRemove={() => onRemoveField(field.id)}
-        onCopy={() => onDuplicateField(field.id)}
+        onRemove={() => onRemoveField(field.randomId)}
+        onCopy={() => onDuplicateField(field.randomId)}
       />
 
       <div className="group-hover:ml-5 transition-all duration-450">

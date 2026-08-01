@@ -12,3 +12,9 @@ export const AUTH_ENDPOINTS = {
   USER: "/auth/me",
   LOGOUT: "/auth/logout",
 } as const;
+
+export const FORM_BUILDER_ENDPOINTS = {
+  SAVEFORM: "/forms/d8010c01-a7ee-4fe7-b055-75673e38db08",
+};
+
+// form-id : "d8010c01-a7ee-4fe7-b055-75673e38db08"

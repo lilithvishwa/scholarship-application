@@ -3,13 +3,10 @@ import { Input } from "@shared/ui";
 
 interface Props {
   field: FormField;
-  updateValidation: (
-    fieldId: string,
-    validation: Partial<FormField["validation"]>,
-  ) => void;
+  updateField: (id: string, updates: Partial<FormField>) => void;
 }
 
-function DateValidation({ field, updateValidation }: Props) {
+function DateValidation({ field, updateField }: Props) {
   return (
     <div className="flex flex-col gap-6">
       <p className="body">VALIDATION RULES</p>
@@ -18,9 +15,9 @@ function DateValidation({ field, updateValidation }: Props) {
         label="MINIMUM DATE"
         placeholder="DD/MM/YYYY"
         type="date"
-        value={field.validation?.minDate ?? ""}
+        value={field?.minDate ?? ""}
         onChange={(e) =>
-          updateValidation(field.id, {
+          updateField(field.randomId, {
             minDate: e.target.value,
           })
         }
@@ -30,9 +27,9 @@ function DateValidation({ field, updateValidation }: Props) {
         label="MAXIMUM DATE"
         placeholder="DD/MM/YYYY"
         type="date"
-        value={field.validation?.maxDate ?? ""}
+        value={field?.maxDate ?? ""}
         onChange={(e) =>
-          updateValidation(field.id, {
+          updateField(field.randomId, {
             maxDate: e.target.value,
           })
         }

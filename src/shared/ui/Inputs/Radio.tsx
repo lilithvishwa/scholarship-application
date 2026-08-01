@@ -1,12 +1,12 @@
-interface Option {
-  id: string;
-  label: string;
-}
+// interface Option {
+//   id: string;
+//   label: string;
+// }
 
 interface RadioGroupProps {
   label?: string;
   name: string;
-  options: Option[];
+  options: string[];
   value?: string;
   onChange?: (value: string) => void;
   disabled?: boolean;
@@ -25,18 +25,18 @@ export default function RadioGroup({
       {label && <label className="caption text-ink uppercase">{label}</label>}
 
       <div className="flex flex-col gap-2">
-        {options.map((option) => (
-          <label key={option.id} className="flex items-center gap-2">
+        {options.map((option, index) => (
+          <label key={index} className="flex items-center gap-2">
             <input
               type="radio"
               name={name}
-              value={option.label}
-              checked={value === option.label}
+              value={option}
+              checked={value === option}
               disabled={disabled}
-              onChange={() => onChange?.(option.label)}
+              onChange={() => onChange?.(option)}
             />
 
-            <span>{option.label}</span>
+            <span>{option}</span>
           </label>
         ))}
       </div>

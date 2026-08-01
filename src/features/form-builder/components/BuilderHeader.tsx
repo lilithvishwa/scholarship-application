@@ -1,6 +1,16 @@
 import { Icon, Button } from "@/shared/ui";
+import { useForm } from "../hooks/useForm";
+import type { FormField } from "../types/FieldType";
 
-function BuilderHeader() {
+function BuilderHeader({ fields }: FormField[]) {
+  const { save, error } = useForm();
+
+  const handleSubmit = () => {
+    console.log("Clicked");
+    console.log(fields);
+    if (fields.length === 0) return;
+    save(fields);
+  };
   return (
     <header className="flex h-18 items-center justify-between border-b border-hairline px-6">
       {/* Left */}
@@ -34,7 +44,11 @@ function BuilderHeader() {
           Preview
         </Button>
 
-        <Button variant="primary" paddingClass="px-8 py-3">
+        <Button
+          variant="primary"
+          paddingClass="px-8 py-3"
+          onClick={handleSubmit}
+        >
           Save Form
         </Button>
 

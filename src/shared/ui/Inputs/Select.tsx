@@ -1,12 +1,12 @@
-interface Option {
-  id: string;
-  label: string;
-}
+// interface Option {
+//   id: string;
+//   label: string;
+// }
 
 interface SelectProps {
   label?: string;
   placeholder?: string;
-  options: Option[];
+  options: string[];
   value?: string;
   onChange?: (value: string) => void;
 }
@@ -31,9 +31,9 @@ export default function Select({
           {placeholder || "Select"}
         </option>
 
-        {options.map((option) => (
-          <option key={option.id} value={option.label}>
-            {option.label}
+        {options.map((option, index) => (
+          <option key={index} value={option}>
+            {option}
           </option>
         ))}
       </select>

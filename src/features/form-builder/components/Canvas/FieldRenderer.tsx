@@ -17,7 +17,6 @@ interface FieldRendererProps {
  * Used by the form builder canvas to display added fields.
  */
 export function FieldRenderer({ field }: FieldRendererProps) {
-  console.log(field);
   switch (field.type) {
     case "text":
       return (
@@ -25,17 +24,17 @@ export function FieldRenderer({ field }: FieldRendererProps) {
           <Input
             label={field.label || "untitled"}
             type={field.type}
-            placeholder={field.helperText || "Type your helper text"}
+            placeholder={field.helpText || "Type your helper text"}
           />
         </div>
       );
 
-    case "textarea":
+    case "text-area":
       return (
         <div>
           <Textarea
             label={field.label}
-            placeholder={field.helperText}
+            placeholder={field.helpText || "Type your helper text"}
             // value={}
             // onChange={(e) => setHelperText(e.target.value)}
           />
@@ -48,7 +47,7 @@ export function FieldRenderer({ field }: FieldRendererProps) {
           <Input
             label={field.label || "untitled"}
             type={field.type}
-            placeholder={field.helperText || "Type your helper text"}
+            placeholder={field.helpText || "Type your helper text"}
           />
         </>
       );
@@ -59,17 +58,17 @@ export function FieldRenderer({ field }: FieldRendererProps) {
           <Input
             label={field.label || "untitled"}
             type={field.type}
-            placeholder={field.helperText || "Type your helper text"}
+            placeholder={field.helpText || "Type your helper text"}
           />
         </>
       );
 
-    case "dropdown":
+    case "select":
       return (
         <Select
           label={field.label}
-          placeholder={field.helperText}
-          options={field.option}
+          placeholder={field.helpText || "Type your helper text"}
+          options={field.choices}
         />
       );
 
@@ -77,15 +76,15 @@ export function FieldRenderer({ field }: FieldRendererProps) {
       return (
         <RadioGroup
           label={field.label}
-          name={field.id}
-          options={field.option}
+          name={field.randomId}
+          options={field.choices}
           disabled
         />
       );
 
     case "checkbox":
       return (
-        <CheckboxGroup label={field.label} options={field.option} disabled />
+        <CheckboxGroup label={field.label} options={field.choices} disabled />
       );
 
     case "file":
