@@ -1,12 +1,13 @@
 import { OAuthButton } from "@shared/ui";
+import { AUTH_ENDPOINTS } from "@/api/endpoints";
 
 function SocialLogin() {
   const googleLogin = () => {
-    window.location.href = `${import.meta.env.VITE_API_BACKEND}/auth/login/google`;
+    window.location.href = `${import.meta.env.VITE_API_BACKEND}${AUTH_ENDPOINTS.GOOGLE_LOGIN}`;
   };
 
   const microsoftLogin = () => {
-    window.location.href = `${import.meta.env.VITE_API_BACKEND}/auth/login/microsoft`;
+    window.location.href = `${import.meta.env.VITE_API_BACKEND}${AUTH_ENDPOINTS.MICROSOFT_LOGIN}`;
   };
 
   return (

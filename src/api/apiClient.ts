@@ -7,7 +7,7 @@
 import axios from "axios";
 
 export const apiClient = axios.create({
-  baseURL: "https://dorine-bolographic-apparently.ngrok-free.dev",
+  baseURL: `${import.meta.env.VITE_API_BACKEND}`,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",

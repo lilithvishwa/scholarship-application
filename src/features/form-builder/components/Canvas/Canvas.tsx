@@ -1,4 +1,7 @@
-import { SortableContext } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 import SortableField from "./SortableField";
 import type { FormField } from "../../types/FieldType";
@@ -20,7 +23,10 @@ function Canvas({
 }: CanvasProps) {
   return (
     <div className="space-y-3 p-8">
-      <SortableContext items={fields?.map((field) => field.randomId)}>
+      <SortableContext
+        items={fields?.map((field) => field.randomId)}
+        strategy={verticalListSortingStrategy}
+      >
         {fields?.map((field) => (
           <SortableField
             key={field.randomId}

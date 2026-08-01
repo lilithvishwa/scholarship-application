@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
-import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import { useState } from "react";
+import {
+  DndContext,
+  DragOverlay,
+  type DragStartEvent,
+  type DragEndEvent,
+} from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import { useForm } from "../hooks/useForm";
 
 import { FieldsEmptyState } from "@/assets";
 import {
@@ -12,10 +16,12 @@ import {
 } from "../components";
 import type { FormField } from "../types/FieldType";
 import { createField } from "../types/FieldFactory";
+import { FieldRenderer } from "../components/Canvas/FieldRenderer";
 
 function BuilderPage() {
   const [fields, setFields] = useState<FormField[]>([]);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
+  const [activeFieldId, setActiveFieldId] = useState<string | null>(null);
 
   /**
    * Updates the properties of a form field
@@ -35,7 +41,14 @@ function BuilderPage() {
    */
   const selectedField =
     fields.find((field) => field.randomId === selectedFieldId) ?? null;
-  // console.log(selectedField);
+
+  /**
+   * Finds the currently active draging field
+   * from the form fields in Canvas component using the @activeFieldId field ID.
+   */
+  const activeField =
+    fields.find((field) => field.randomId === activeFieldId) ?? null;
+  // console.log(activeField);
 
   /**
    * Creates a new form field with default values and
@@ -72,6 +85,11 @@ function BuilderPage() {
     setFields((prev) => [...prev, newField]);
   };
 
+  const handleDragStart = (event: DragStartEvent) => {
+    // console.log(event);
+    setActiveFieldId(event.active.id as string);
+  };
+
   const handleDragEnd = (event: DragEndEvent) => {
     // console.log(event);
     // console.log(event.active.id);
@@ -84,13 +102,14 @@ function BuilderPage() {
     );
     const reorderedFields = arrayMove(fields, oldIndex, newIndex);
     setFields(reorderedFields);
+    setActiveFieldId(null);
   };
 
   console.log(fields);
   return (
     <div className="bg-white">
       <BuilderHeader fields={fields} />
-      <DndContext onDragEnd={handleDragEnd}>
+      <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className="flex flex-1 overflow-hidden ">
           {/* Left Sidebar */}
           <aside className="w-69.75 shrink-0 overflow-y-auto border-r border-hairline">
@@ -132,6 +151,9 @@ function BuilderPage() {
             <PropertiesPanel field={selectedField} updateField={updateField} />
           </aside>
         </div>
+        <DragOverlay>
+          {activeField ? <FieldRenderer field={activeField} /> : null}
+        </DragOverlay>
       </DndContext>
     </div>
   );

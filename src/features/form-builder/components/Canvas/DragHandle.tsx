@@ -5,6 +5,7 @@ interface DragHandleProps {
   onCopy: () => void;
   listeners: any;
   attributes: any;
+  isDragging: boolean;
 }
 
 export function DragHandle({
@@ -12,9 +13,12 @@ export function DragHandle({
   onCopy,
   listeners,
   attributes,
+  isDragging,
 }: DragHandleProps) {
   return (
-    <div className="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center opacity-0 transition-opacity duration-450 group-hover:opacity-100">
+    <div
+      className={`pointer-events-none absolute left-0 top-0 flex h-full w-full items-center transition-opacity duration-450  ${isDragging ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+    >
       {/* Drag Handle */}
       <div
         {...listeners}
