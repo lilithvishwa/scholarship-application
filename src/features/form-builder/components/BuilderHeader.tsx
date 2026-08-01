@@ -1,16 +1,10 @@
 import { Icon, Button } from "@/shared/ui";
-import { useForm } from "../hooks/useForm";
-import type { FormField } from "../types/FieldType";
 
-function BuilderHeader({ fields }: FormField[]) {
-  const { save, error } = useForm();
+interface Props {
+  handleSubmit: () => void;
+}
 
-  const handleSubmit = () => {
-    console.log("Clicked");
-    console.log(fields);
-    if (fields.length === 0) return;
-    save(fields);
-  };
+function BuilderHeader({ handleSubmit }: Props) {
   return (
     <header className="flex h-18 items-center justify-between border-b border-hairline px-6">
       {/* Left */}

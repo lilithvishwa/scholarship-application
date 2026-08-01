@@ -17,11 +17,21 @@ import {
 import type { FormField } from "../types/FieldType";
 import { createField } from "../types/FieldFactory";
 import { FieldRenderer } from "../components/Canvas/FieldRenderer";
+import { useForm } from "../hooks/useForm";
 
 function BuilderPage() {
   const [fields, setFields] = useState<FormField[]>([]);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
   const [activeFieldId, setActiveFieldId] = useState<string | null>(null);
+
+  const { save, error } = useForm();
+
+  const handleSubmit = () => {
+    console.log("Clicked");
+    console.log(fields);
+    if (fields.length === 0) return;
+    save(fields);
+  };
 
   /**
    * Updates the properties of a form field
@@ -108,7 +118,7 @@ function BuilderPage() {
   console.log(fields);
   return (
     <div className="bg-white">
-      <BuilderHeader fields={fields} />
+      <BuilderHeader fields={fields} handleSubmit={handleSubmit} />
       <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className="flex flex-1 overflow-hidden ">
           {/* Left Sidebar */}
