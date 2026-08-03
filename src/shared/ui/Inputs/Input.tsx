@@ -8,7 +8,14 @@ interface InputProps {
   disabled?: boolean;
   readOnly?: boolean;
 }
-function Input({ label, placeholder, type, onChange, value }: InputProps) {
+function Input({
+  label,
+  placeholder,
+  type,
+  onChange,
+  value,
+  readOnly,
+}: InputProps) {
   return (
     <div className="flex flex-col space-y-2 action-button">
       {label && <label className="caption text-ink">{label}</label>}
@@ -19,6 +26,7 @@ function Input({ label, placeholder, type, onChange, value }: InputProps) {
         onChange={onChange}
         value={value}
         autoComplete="current-password"
+        readOnly={readOnly}
       />
     </div>
   );

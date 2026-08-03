@@ -3,7 +3,7 @@ import { Input, ToggleSwitch } from "@shared/ui";
 
 interface Props {
   field: FormField;
-  updateField: (id: string, updates: Partial<FormField>) => void;
+  updateField: (id: string, updates: Partial<FormField[]>) => void;
 }
 
 function NumberValidation({ field, updateField }: Props) {

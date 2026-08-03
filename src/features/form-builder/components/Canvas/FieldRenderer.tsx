@@ -25,6 +25,7 @@ export function FieldRenderer({ field }: FieldRendererProps) {
             label={field.label || "untitled"}
             type={field.type}
             placeholder={field.helpText || "Type your helper text"}
+            readOnly
           />
         </div>
       );
@@ -37,6 +38,7 @@ export function FieldRenderer({ field }: FieldRendererProps) {
             placeholder={field.helpText || "Type your helper text"}
             // value={}
             // onChange={(e) => setHelperText(e.target.value)}
+            readOnly
           />
         </div>
       );
@@ -48,6 +50,7 @@ export function FieldRenderer({ field }: FieldRendererProps) {
             label={field.label || "untitled"}
             type={field.type}
             placeholder={field.helpText || "Type your helper text"}
+            readOnly
           />
         </>
       );
@@ -59,6 +62,7 @@ export function FieldRenderer({ field }: FieldRendererProps) {
             label={field.label || "untitled"}
             type={field.type}
             placeholder={field.helpText || "Type your helper text"}
+            readOnly
           />
         </>
       );

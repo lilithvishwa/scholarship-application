@@ -40,26 +40,28 @@ function SortableField({
     opacity: isDragging ? 0 : 1,
   };
 
+  const isSelected = selectedFieldId === field.randomId;
+  const isActive = isSelected || isDragging;
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       onClick={() => onSelectField(field.randomId)}
-      className={`group relative p-4 max-h-75 ${
-        selectedFieldId === field.randomId
-          ? "border border-action-blue"
-          : "border border-transparent"
-      }`}
+      className={`group relative max-h-75 p-4`}
     >
       <DragHandle
         listeners={listeners}
         isDragging={isDragging}
+        isActive={isActive}
         attributes={attributes}
         onRemove={() => onRemoveField(field.randomId)}
         onCopy={() => onDuplicateField(field.randomId)}
       />
 
-      <div className="group-hover:ml-5 transition-all duration-450">
+      <div
+        className={`${isActive ? "ml-5 " : ""}group-hover:ml-5 transition-all duration-450`}
+      >
         <FieldRenderer field={field} />
       </div>
     </div>

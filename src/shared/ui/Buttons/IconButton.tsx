@@ -3,7 +3,7 @@ import Icon from "../Icon/Icon";
 
 interface IconButtonProps {
   icon: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   size?: number;
   disabled?: boolean;
   title?: string;

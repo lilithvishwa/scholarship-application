@@ -30,7 +30,7 @@ export default function CheckboxGroup({
 
   return (
     <div className="flex flex-col gap-2">
-      {label && <label className="caption text-ink uppercase">{label}</label>}
+      {label && <label className="caption text-ink">{label}</label>}
 
       <div className="flex flex-col gap-2">
         {options.map((option, index) => (

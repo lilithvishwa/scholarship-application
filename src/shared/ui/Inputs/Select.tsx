@@ -9,6 +9,7 @@ interface SelectProps {
   options: string[];
   value?: string;
   onChange?: (value: string) => void;
+  disabled?: boolean;
 }
 
 export default function Select({
@@ -17,15 +18,17 @@ export default function Select({
   options,
   value,
   onChange,
+  disabled = false,
 }: SelectProps) {
   return (
     <div className="flex flex-col gap-2">
-      {label && <label className="caption text-ink uppercase">{label}</label>}
+      {label && <label className="caption text-ink">{label}</label>}
 
       <select
         className="h-10.5 border border-hairline bg-transparent px-4"
         value={value ?? ""}
         onChange={(e) => onChange?.(e.target.value)}
+        disabled={disabled}
       >
         <option value="" disabled>
           {placeholder || "Select"}

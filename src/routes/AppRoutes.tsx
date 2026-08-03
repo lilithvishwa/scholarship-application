@@ -21,6 +21,7 @@ function AppRoutes() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/forms/builder" element={<BuilderPage />} />
+          <Route path="/forms/builder/preview" element={<p>preview</p>} />
         </Route>
       </Routes>
     </BrowserRouter>
