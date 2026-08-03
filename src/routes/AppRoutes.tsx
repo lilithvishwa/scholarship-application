@@ -11,6 +11,7 @@ import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 
 // Form builder pages imports
 import BuilderPage from "@/features/scholarship/formbuilder/pages/BuilderPage";
+import BuildMethodPage from "@/features/scholarship/pages/BuildMethodPage";
 
 function AppRoutes() {
   return (
@@ -21,7 +22,7 @@ function AppRoutes() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/forms/builder" element={<BuilderPage />} />
-          <Route path="/scholarship/create" element={<BuilderPage />} />
+          <Route path="/scholarship/create" element={<BuildMethodPage />} />
           <Route path="/forms/builder/preview" element={<p>preview</p>} />
         </Route>
       </Routes>

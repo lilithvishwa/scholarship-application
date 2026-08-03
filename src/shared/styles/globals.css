@@ -1,40 +1,39 @@
 @import "tailwindcss";
 
 @theme {
+    /* COLORS */
 
-  /* COLORS */
+    --color-primary: #17171c;
+    --color-cohere-black: #000000;
+    --color-ink: #212121;
+    --color-deep-green: #003c33;
+    --color-dark-navy: #071829;
+    --color-on-green: #0f5132;
 
-  --color-primary: #17171c;
-  --color-cohere-black: #000000;
-  --color-ink: #212121;
-  --color-deep-green: #003c33;
-  --color-dark-navy: #071829;
-  --color-on-green: #0F5132;
+    --color-canvas: #ffffff;
+    --color-soft-stone: #eeece7;
+    --color-pale-green: #edfce9;
+    --color-pale-blue: #f1f5ff;
 
-  --color-canvas: #ffffff;
-  --color-soft-stone: #eeece7;
-  --color-pale-green: #edfce9;
-  --color-pale-blue: #f1f5ff;
+    --color-hairline: #d9d9dd;
+    --color-border-light: #e5e7eb;
+    --color-card-border: #f2f2f2;
 
-  --color-hairline: #d9d9dd;
-  --color-border-light: #e5e7eb;
-  --color-card-border: #f2f2f2;
+    --color-muted: #93939f;
+    --color-slate: #75758a;
+    --color-body-muted: #616161;
 
-  --color-muted: #93939f;
-  --color-slate: #75758a;
-  --color-body-muted: #616161;
+    --color-action-blue: #1863dc;
+    --color-light-blue: #e6f0ff;
+    --color-focus-blue: #4c6ee6;
 
-  --color-action-blue: #1863dc;
-  --color-focus-blue: #4c6ee6;
+    --color-coral: #ff7759;
+    --color-coral-soft: #ffad9b;
 
-  --color-coral: #ff7759;
-  --color-coral-soft: #ffad9b;
+    --color-form-focus: #9b60aa;
 
-  --color-form-focus: #9b60aa;
+    --color-error: #b30000;
 
-  --color-error: #b30000;
-
-  --color-on-primary: #ffffff;
-  --color-on-dark: #ffffff;
-
+    --color-on-primary: #ffffff;
+    --color-on-dark: #ffffff;
 }
