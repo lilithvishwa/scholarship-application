@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -32,6 +32,15 @@ function BuilderPage() {
     if (fields.length === 0) return;
     save(fields);
   };
+
+  useEffect(() => {
+    const Timer = setTimeout(() => {
+      console.log("Auto Saved Enabled...");
+      // console.log(fields);
+    }, 4000);
+
+    return () => clearTimeout(Timer);
+  }, [fields]);
 
   /**
    * Updates the properties of a form field
@@ -118,7 +127,7 @@ function BuilderPage() {
   console.log(fields);
   return (
     <div className="bg-white">
-      <BuilderHeader fields={fields} handleSubmit={handleSubmit} />
+      <BuilderHeader handleSubmit={handleSubmit} />
       <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className="flex flex-1 overflow-hidden ">
           {/* Left Sidebar */}
