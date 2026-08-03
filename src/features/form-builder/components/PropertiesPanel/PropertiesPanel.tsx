@@ -4,7 +4,7 @@ import type { FormField } from "../../types/FieldType";
 
 interface Props {
   field: FormField | null;
-  updateField: (id: string, updates: Partial<FormField>) => void;
+  updateField: (id: string, updates: Partial<FormField[]>) => void;
 }
 
 function PropertiesPanel({ field, updateField }: Props) {

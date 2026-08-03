@@ -3,7 +3,7 @@ import type { FormField } from "../../../types/FieldType";
 
 interface TextValidationProps {
   field: FormField;
-  updateField: (id: string, updates: Partial<FormField>) => void;
+  updateField: (id: string, updates: Partial<FormField[]>) => void;
 }
 
 type RegexType = "text" | "email" | "phone" | "url";

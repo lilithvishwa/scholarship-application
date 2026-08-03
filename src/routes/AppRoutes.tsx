@@ -22,6 +22,7 @@ function AppRoutes() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/forms/builder" element={<BuilderPage />} />
           {/*<Route path="/scholarship/create" element={} />*/}
+          <Route path="/forms/builder/preview" element={<p>preview</p>} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -15,10 +15,11 @@ function Textarea({
   onChange,
   value,
   rows = 2,
+  readOnly,
 }: TextareaProps) {
   return (
     <div className="flex flex-col space-y-2 action-button">
-      {label && <label className="caption text-ink uppercase">{label}</label>}
+      {label && <label className="caption text-ink">{label}</label>}
 
       <textarea
         placeholder={placeholder}
@@ -26,6 +27,7 @@ function Textarea({
         onChange={onChange}
         rows={rows}
         className="border border-hairline bg-transparent px-4 py-2.5 resize-none focus:outline-none"
+        readOnly={readOnly}
       />
     </div>
   );

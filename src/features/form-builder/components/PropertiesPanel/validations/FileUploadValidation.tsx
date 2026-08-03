@@ -2,7 +2,7 @@ import type { FormField } from "@/features/form-builder/types/FieldType";
 
 interface Props {
   field: FormField;
-  updateField: (id: string, updates: Partial<FormField>) => void;
+  updateField: (id: string, updates: Partial<FormField[]>) => void;
 }
 
 function FileUploadValidation({ field, updateField }: Props) {

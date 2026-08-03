@@ -3,7 +3,7 @@ import type { FormField } from "../../types/FieldType";
 
 interface Props {
   field: FormField;
-  updateField: (id: string, updates: Partial<FormField>) => void;
+  updateField: (id: string, updates: Partial<FormField[]>) => void;
 }
 
 function CommonProperties({ field, updateField }: Props) {

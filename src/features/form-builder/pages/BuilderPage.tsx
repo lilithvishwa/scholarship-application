@@ -1,12 +1,4 @@
 import { useEffect, useState } from "react";
-import {
-  DndContext,
-  DragOverlay,
-  type DragStartEvent,
-  type DragEndEvent,
-} from "@dnd-kit/core";
-import { arrayMove } from "@dnd-kit/sortable";
-
 import { FieldsEmptyState } from "@/assets";
 import {
   BuilderHeader,
@@ -16,15 +8,13 @@ import {
 } from "../components";
 import type { FormField } from "../types/FieldType";
 import { createField } from "../types/FieldFactory";
-import { FieldRenderer } from "../components/Canvas/FieldRenderer";
 import { useForm } from "../hooks/useForm";
 
 function BuilderPage() {
   const [fields, setFields] = useState<FormField[]>([]);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
-  const [activeFieldId, setActiveFieldId] = useState<string | null>(null);
 
-  const { save, error } = useForm();
+  const { save } = useForm();
 
   const handleSubmit = () => {
     console.log("Clicked");
@@ -62,14 +52,6 @@ function BuilderPage() {
     fields.find((field) => field.randomId === selectedFieldId) ?? null;
 
   /**
-   * Finds the currently active draging field
-   * from the form fields in Canvas component using the @activeFieldId field ID.
-   */
-  const activeField =
-    fields.find((field) => field.randomId === activeFieldId) ?? null;
-  // console.log(activeField);
-
-  /**
    * Creates a new form field with default values and
    * appends it to the form builder @setFields state.
    *
@@ -104,76 +86,51 @@ function BuilderPage() {
     setFields((prev) => [...prev, newField]);
   };
 
-  const handleDragStart = (event: DragStartEvent) => {
-    // console.log(event);
-    setActiveFieldId(event.active.id as string);
-  };
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    // console.log(event);
-    // console.log(event.active.id);
-    // console.log(event.over?.id);
-    const oldIndex = fields.findIndex(
-      (field) => field.randomId === event.active.id,
-    );
-    const newIndex = fields.findIndex(
-      (field) => field.randomId === event.over?.id,
-    );
-    const reorderedFields = arrayMove(fields, oldIndex, newIndex);
-    setFields(reorderedFields);
-    setActiveFieldId(null);
-  };
-
-  console.log(fields);
   return (
     <div className="bg-white">
       <BuilderHeader handleSubmit={handleSubmit} />
-      <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-        <div className="flex flex-1 overflow-hidden ">
-          {/* Left Sidebar */}
-          <aside className="w-69.75 shrink-0 overflow-y-auto border-r border-hairline">
-            <FormSidebar onAddField={addField} />
-          </aside>
+      <div className="flex flex-1 overflow-hidden ">
+        {/* Left Sidebar */}
+        <aside className="w-69.75 shrink-0 overflow-y-auto border-r border-hairline">
+          <FormSidebar onAddField={addField} />
+        </aside>
 
-          {/* Canvas */}
-          <main className="flex-1 overflow-y-auto">
-            {fields.length === 0 ? (
-              <div className="flex h-full items-center justify-center">
-                <div className="space-y-6 text-center">
-                  <img
-                    src={FieldsEmptyState}
-                    alt="no fields added"
-                    className="h-64 w-full"
-                  />
-                  <h2 className="text-lg font-medium">
-                    Start building your form
-                  </h2>
-                  <p className="mt-2 text-caption text-body-muted">
-                    Start Building Your Form Select or click a field from the
-                    left menu to add it here.
-                  </p>
-                </div>
+        {/* Canvas */}
+        <main className="flex-1 overflow-y-auto">
+          {fields.length === 0 ? (
+            <div className="flex h-full items-center justify-center">
+              <div className="space-y-6 text-center">
+                <img
+                  src={FieldsEmptyState}
+                  alt="no fields added"
+                  className="h-64 w-full"
+                />
+                <h2 className="text-lg font-medium">
+                  Start building your form
+                </h2>
+                <p className="mt-2 text-caption text-body-muted">
+                  Start Building Your Form Select or click a field from the left
+                  menu to add it here.
+                </p>
               </div>
-            ) : (
-              <Canvas
-                fields={fields}
-                selectedFieldId={selectedFieldId}
-                setSelectedField={setSelectedFieldId}
-                onRemoveField={removeField}
-                onDuplicateField={duplicateField}
-              />
-            )}
-          </main>
+            </div>
+          ) : (
+            <Canvas
+              fields={fields}
+              selectedFieldId={selectedFieldId}
+              setSelectedField={setSelectedFieldId}
+              onRemoveField={removeField}
+              onDuplicateField={duplicateField}
+              onReorderFields={setFields}
+            />
+          )}
+        </main>
 
-          {/* Right Properties */}
-          <aside className="w-79.75 shrink-0 overflow-y-auto border-l border-hairline">
-            <PropertiesPanel field={selectedField} updateField={updateField} />
-          </aside>
-        </div>
-        <DragOverlay>
-          {activeField ? <FieldRenderer field={activeField} /> : null}
-        </DragOverlay>
-      </DndContext>
+        {/* Right Properties */}
+        <aside className="w-79.75 shrink-0 overflow-y-auto border-l border-hairline">
+          <PropertiesPanel field={selectedField} updateField={updateField} />
+        </aside>
+      </div>
     </div>
   );
 }
