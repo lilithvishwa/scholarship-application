@@ -1,4 +1,4 @@
-import type { FormField } from "@/features/form-builder/types/FieldType";
+import type { FormField } from "@/features/scholarship/formbuilder/types/FieldType";
 import { Input } from "@shared/ui";
 
 interface Props {
@@ -6,7 +6,7 @@ interface Props {
   updateField: (id: string, updates: Partial<FormField[]>) => void;
 }
 
-function DropdownValidation({ field, updateField }: Props) {
+function CheckboxValidation({ field, updateField }: Props) {
   return (
     <div className="flex flex-col gap-6">
       <p className="body">VALIDATION RULES</p>
@@ -26,7 +26,6 @@ function DropdownValidation({ field, updateField }: Props) {
       <Input
         label="MAXIMUM SELECTION"
         placeholder="3"
-        type="number"
         value={field?.maxSelection ?? ""}
         onChange={(e) =>
           updateField(field.randomId, {
@@ -38,4 +37,4 @@ function DropdownValidation({ field, updateField }: Props) {
   );
 }
 
-export default DropdownValidation;
+export default CheckboxValidation;

@@ -1,4 +1,4 @@
-import type { FormField } from "@/features/form-builder/types/FieldType";
+import type { FormField } from "@/features/scholarship/formbuilder/types/FieldType";
 import { Input } from "@shared/ui";
 
 interface Props {

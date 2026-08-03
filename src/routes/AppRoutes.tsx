@@ -10,7 +10,7 @@ import SignUp from "../features/auth/pages/SignUp";
 import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 
 // Form builder pages imports
-import BuilderPage from "@/features/form-builder/pages/BuilderPage";
+import BuilderPage from "@/features/scholarship/formbuilder/pages/BuilderPage";
 
 function AppRoutes() {
   return (
