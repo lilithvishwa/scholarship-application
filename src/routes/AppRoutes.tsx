@@ -9,8 +9,9 @@ import SignUp from "../features/auth/pages/SignUp";
 // Dashboard pages imports
 import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 
-// Form builder pages imports
-import BuilderPage from "@/features/scholarship/formbuilder/pages/BuilderPage";
+// scholarship pages imports
+import BuilderPage from "@/features/scholarship/pages/BuilderPage";
+import PreviewPage from "@/features/scholarship/pages/PreviewPage";
 import BuildMethodPage from "@/features/scholarship/pages/BuildMethodPage";
 
 function AppRoutes() {
@@ -23,7 +24,7 @@ function AppRoutes() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/forms/builder" element={<BuilderPage />} />
           <Route path="/scholarship/create" element={<BuildMethodPage />} />
-          <Route path="/forms/builder/preview" element={<p>preview</p>} />
+          <Route path="/forms/builder/preview" element={<PreviewPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

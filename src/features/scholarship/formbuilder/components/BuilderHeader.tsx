@@ -1,56 +1,63 @@
-import { Icon, Button } from "@/shared/ui";
+import { Icon, Button, PageHeader } from "@/shared/ui";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   handleSubmit: () => void;
 }
 
 function BuilderHeader({ handleSubmit }: Props) {
+  const navigate = useNavigate();
   return (
-    <header className="flex h-18 items-center justify-between border-b border-hairline px-6">
-      {/* Left */}
-      <div className="flex items-center gap-4">
-        <button className="flex h-8 w-8 items-center justify-center rounded hover:bg-gray-100">
-          <Icon name="ic:baseline-arrow-back" size={20} />
-        </button>
+    <PageHeader
+      left={
+        <>
+          <button className="flex h-8 w-8 items-center justify-center rounded hover:bg-gray-100">
+            <Icon name="ic:baseline-arrow-back" size={20} />
+          </button>
 
-        <div className="h-6 w-px bg-hairline" />
+          <div className="h-6 w-px bg-hairline" />
 
-        <h1 className="field-group-heading">Fall 2026 Tuition Grant</h1>
-      </div>
+          <h1 className="field-group-heading">Fall 2026 Tuition Grant</h1>
+        </>
+      }
 
-      {/* Center */}
-      <div className="flex items-center gap-2">
-        <Icon
-          name="gravity-ui:cloud-check"
-          size={16}
-          className="text-body-muted"
-        />
+      center={
+        <>
+          <div className="flex items-center gap-2">
+            <Icon
+              name="gravity-ui:cloud-check"
+              size={16}
+              className="text-body-muted"
+            />
 
-        <span className="helper-text text-body-muted">Saved just now</span>
-      </div>
+            <span className="helper-text text-body-muted">Saved just now</span>
+          </div>
+        </>
+      }
+      right={
+        <>
+          <Button
+            variant="outline"
+            leftIcon={<Icon name="tabler:eye" size={24} />}
+            onClick={() => navigate("/forms/builder/preview")}
+          >
+            Preview
+          </Button>
 
-      {/* Right */}
-      <div className="flex items-center gap-4">
-        <Button
-          variant="outline"
-          leftIcon={<Icon name="tabler:eye" size={24} />}
-        >
-          Preview
-        </Button>
+          <Button
+            variant="primary"
+            paddingClass="px-8 py-3"
+            onClick={handleSubmit}
+          >
+            Save Form
+          </Button>
 
-        <Button
-          variant="primary"
-          paddingClass="px-8 py-3"
-          onClick={handleSubmit}
-        >
-          Save Form
-        </Button>
-
-        <button className="flex h-full items-center justify-center text-body-muted">
-          <Icon name="material-symbols:settings-outline" size={24} />
-        </button>
-      </div>
-    </header>
+          <button className="flex h-full items-center justify-center text-body-muted">
+            <Icon name="material-symbols:settings-outline" size={24} />
+          </button>
+        </>
+      }
+    />
   );
 }
 

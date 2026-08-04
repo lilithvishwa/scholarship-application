@@ -5,10 +5,10 @@ import {
   FormSidebar,
   PropertiesPanel,
   Canvas,
-} from "../components";
-import type { FormField } from "../types/FieldType";
-import { createField } from "../types/FieldFactory";
-import { useForm } from "../hooks/useForm";
+} from "../formbuilder/components";
+import type { FormField } from "../formbuilder/types/FieldType";
+import { createField } from "../formbuilder/types/FieldFactory";
+import { useForm } from "../formbuilder/hooks/useForm";
 
 function BuilderPage() {
   const [fields, setFields] = useState<FormField[]>([]);

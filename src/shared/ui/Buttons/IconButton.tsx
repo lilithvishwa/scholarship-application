@@ -8,6 +8,7 @@ interface IconButtonProps {
   disabled?: boolean;
   title?: string;
   className?: string;
+  buttonName?: string;
 }
 
 export default function IconButton({
@@ -17,6 +18,7 @@ export default function IconButton({
   disabled,
   onClick,
   className,
+  buttonName,
 }: IconButtonProps) {
   return (
     <button
@@ -24,12 +26,13 @@ export default function IconButton({
       disabled={disabled}
       onClick={onClick}
       className={clsx(
-        "flex h-5 w-5 items-center justify-center rounded-xs text-body-muted hover:bg-gray-100 transition-colors",
+        "flex p-0.5 items-center justify-center rounded-xs text-body-muted hover:bg-gray-100 transition-colors",
         "disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer",
         className,
       )}
     >
       <Icon name={icon} size={size} />
+      <p className="action-button">{buttonName}</p>
     </button>
   );
 }

@@ -1,3 +1,6 @@
+// header exports
+export { default as PageHeader } from "./Header/PageHeader.tsx";
+
 //Form Fields ui exports
 export { default as Input } from "./Inputs/Input.tsx";
 export { default as Textarea } from "./Inputs/Textarea.tsx";
@@ -17,5 +20,4 @@ export { default as IconButton } from "./Buttons/IconButton.tsx";
 export { default as ToggleSwitch } from "./Buttons/ToggleSwitch.tsx";
 
 //Cards
-
 export { default as Panel } from "./Cards/Panel.tsx";
