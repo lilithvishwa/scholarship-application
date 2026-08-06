@@ -28,7 +28,7 @@ function CreateScholarshipForm() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col w-full gap-2 items-center text-center justify-center">
         <h1 className="form-step-heading">Create New Scholarship</h1>
-        <p className="body-large text-instruction">
+        <p className="body-large text-instructions">
           Let's start with the public-facing details that applicants will see
           before they apply.
         </p>
