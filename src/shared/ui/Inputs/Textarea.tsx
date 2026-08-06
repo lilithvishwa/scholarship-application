@@ -7,6 +7,7 @@ interface TextareaProps {
   rows?: number;
   disabled?: boolean;
   readOnly?: boolean;
+  className?: string;
 }
 
 function Textarea({
@@ -16,6 +17,7 @@ function Textarea({
   value,
   rows = 2,
   readOnly,
+  className,
 }: TextareaProps) {
   return (
     <div className="flex flex-col space-y-2 action-button">
@@ -26,7 +28,7 @@ function Textarea({
         value={value}
         onChange={onChange}
         rows={rows}
-        className="border border-hairline bg-transparent px-4 py-2.5 resize-none focus:outline-none"
+        className={`border border-hairline bg-transparent px-4 py-2.5 resize-none focus:outline-none ${className}`}
         readOnly={readOnly}
       />
     </div>

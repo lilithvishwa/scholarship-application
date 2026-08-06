@@ -5,6 +5,7 @@ interface InputProps {
   value?: string | number;
   defaultValue?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
   disabled?: boolean;
   readOnly?: boolean;
 }
@@ -13,6 +14,7 @@ function Input({
   placeholder,
   type,
   onChange,
+  className,
   value,
   readOnly,
 }: InputProps) {
@@ -22,7 +24,7 @@ function Input({
       <input
         type={type}
         placeholder={placeholder}
-        className="border border-hairline bg-transparent h-10.25 py-2.5 px-4"
+        className={`border border-hairline bg-transparent h-10.25 py-2.5 px-4 ${className}`}
         onChange={onChange}
         value={value}
         autoComplete="current-password"

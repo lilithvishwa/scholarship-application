@@ -13,6 +13,7 @@ import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 import BuilderPage from "@/features/scholarship/pages/BuilderPage";
 import PreviewPage from "@/features/scholarship/pages/PreviewPage";
 import BuildMethodPage from "@/features/scholarship/pages/BuildMethodPage";
+import CreateScholarshipPage from "@/features/scholarship/pages/CreateScholarshipPage";
 
 function AppRoutes() {
   return (
@@ -23,7 +24,11 @@ function AppRoutes() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/forms/builder" element={<BuilderPage />} />
-          <Route path="/scholarship/create" element={<BuildMethodPage />} />
+          <Route path="/scholarship/choose" element={<BuildMethodPage />} />
+          <Route
+            path="/scholarship/create"
+            element={<CreateScholarshipPage />}
+          />
           <Route path="/forms/builder/preview" element={<PreviewPage />} />
         </Route>
       </Routes>
