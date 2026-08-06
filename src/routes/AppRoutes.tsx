@@ -14,6 +14,7 @@ import BuilderPage from "@/features/scholarship/pages/BuilderPage";
 import PreviewPage from "@/features/scholarship/pages/PreviewPage";
 import BuildMethodPage from "@/features/scholarship/pages/BuildMethodPage";
 import CreateScholarshipPage from "@/features/scholarship/pages/CreateScholarshipPage";
+import TemplateSelectionPage from "@/features/scholarship/pages/TemplateSelectionPage";
 
 function AppRoutes() {
   return (
@@ -30,6 +31,7 @@ function AppRoutes() {
             element={<CreateScholarshipPage />}
           />
           <Route path="/forms/builder/preview" element={<PreviewPage />} />
+          <Route path="/forms/templates" element={<TemplateSelectionPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

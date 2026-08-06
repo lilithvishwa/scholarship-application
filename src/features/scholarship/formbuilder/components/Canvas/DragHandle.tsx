@@ -29,7 +29,7 @@ export function DragHandle({
       <div
         {...listeners}
         {...attributes}
-        className="pointer-events-auto flex h-full w-6 cursor-grab items-center justify-center rounded-s-xs bg-cohere-black active:cursor-grabbing"
+        className={`pointer-events-auto flex h-full w-6 items-center justify-center rounded-s-xs bg-cohere-black ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
       >
         <Icon
           name="fluent:re-order-dots-vertical-16-filled"

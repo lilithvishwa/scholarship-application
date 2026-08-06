@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { PageHeader, IconButton, Button, Icon, Panel } from "@shared/ui";
 import { FieldRenderer } from "../formbuilder/components/Canvas/FieldRenderer";
 import { StepFooter } from "../components";
+import type { FormField } from "../formbuilder/types/FieldType";
 
 const fields: FormField[] = [
   {

@@ -1,5 +1,6 @@
 import { Button, Panel, Icon } from "@/shared/ui";
 import { StepFooter } from "../components";
+<<<<<<< HEAD
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -25,18 +26,27 @@ function BuildMethodPage() {
   const navigate = useNavigate();
 
   const items: Canva[] = [
+=======
+import { useNavigate } from "react-router-dom";
+
+function BuildMethodPage() {
+  const navigate = useNavigate();
+  const items = [
+>>>>>>> 632cafb6589c9b12e80ad3949f09b5bdb8465b1d
     {
       canvaMethod: "scratch",
       title: "Start From Scratch",
       description:
         "Open a blank canvas and build your application form block by block.",
       icon: "mingcute:add-fill",
+      onclick: () => navigate("/forms/builder"),
     },
     {
       canvaMethod: "duplicate",
       title: "Duplicate Existing",
       description: "Clone a previous semester's scholarship form to save time.",
       icon: "material-symbols:content-copy-outline-rounded",
+      onclick: () => navigate("/forms/templates"),
     },
     {
       canvaMethod: "ai",
@@ -44,6 +54,7 @@ function BuildMethodPage() {
       description:
         "Let AI draft your form automatically based on your eligibility criteria",
       icon: "mingcute:ai-line",
+      onclick: () => alert("☄️coming soon..."),
     },
   ];
   return (
