@@ -13,6 +13,7 @@ import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 import BuilderPage from "@/features/scholarship/pages/BuilderPage";
 import PreviewPage from "@/features/scholarship/pages/PreviewPage";
 import BuildMethodPage from "@/features/scholarship/pages/BuildMethodPage";
+import TemplateSelectionPage from "@/features/scholarship/pages/TemplateSelectionPage";
 
 function AppRoutes() {
   return (
@@ -25,6 +26,7 @@ function AppRoutes() {
           <Route path="/forms/builder" element={<BuilderPage />} />
           <Route path="/scholarship/create" element={<BuildMethodPage />} />
           <Route path="/forms/builder/preview" element={<PreviewPage />} />
+          <Route path="/forms/templates" element={<TemplateSelectionPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

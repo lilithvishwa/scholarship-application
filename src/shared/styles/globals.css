@@ -29,6 +29,7 @@
 
     --color-coral: #ff7759;
     --color-coral-soft: #ffad9b;
+    --color-soft-coral: #FF7759;
 
     --color-form-focus: #9b60aa;
 
@@ -36,6 +37,9 @@
 
     --color-on-primary: #ffffff;
     --color-on-dark: #ffffff;
+
+    --color-instructions: #47464B;
+
 }
 
 /*#C8C5CB*/

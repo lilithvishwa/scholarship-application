@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 interface InputProps {
   label?: string;
   placeholder?: string;
@@ -7,6 +9,10 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   readOnly?: boolean;
+  className?: string;
+  borderColor?: string;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
 }
 function Input({
   label,
@@ -15,19 +21,42 @@ function Input({
   onChange,
   value,
   readOnly,
+  className,
+  borderColor = "border-hairline",
+  leftIcon,
+  rightIcon,
 }: InputProps) {
   return (
-    <div className="flex flex-col space-y-2 action-button">
+    <div className={clsx("flex flex-col space-y-2", className)}>
       {label && <label className="caption text-ink">{label}</label>}
-      <input
-        type={type}
-        placeholder={placeholder}
-        className="border border-hairline bg-transparent h-10.25 py-2.5 px-4"
-        onChange={onChange}
-        value={value}
-        autoComplete="current-password"
-        readOnly={readOnly}
-      />
+      <div className="relative w-full">
+        {leftIcon && (
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-body-muted">
+            {leftIcon}
+          </span>
+        )}
+
+        <input
+          type={type}
+          placeholder={placeholder}
+          className={clsx(
+            "h-10.25 w-full border bg-transparent py-2.5",
+            borderColor,
+            leftIcon ? "pl-11" : "px-4",
+            rightIcon ? "pr-11" : "px-4",
+          )}
+          onChange={onChange}
+          value={value}
+          autoComplete="current-password"
+          readOnly={readOnly}
+        />
+
+        {rightIcon && (
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-body-muted">
+            {rightIcon}
+          </span>
+        )}
+      </div>
     </div>
   );
 }

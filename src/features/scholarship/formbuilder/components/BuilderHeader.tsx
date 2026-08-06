@@ -1,4 +1,4 @@
-import { Icon, Button, PageHeader } from "@/shared/ui";
+import { Icon, Button, IconButton, PageHeader } from "@/shared/ui";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -11,9 +11,10 @@ function BuilderHeader({ handleSubmit }: Props) {
     <PageHeader
       left={
         <>
-          <button className="flex h-8 w-8 items-center justify-center rounded hover:bg-gray-100">
-            <Icon name="ic:baseline-arrow-back" size={20} />
-          </button>
+          <IconButton
+            icon="ic:baseline-arrow-back"
+            onClick={() => navigate("/forms/templates")}
+          />
 
           <div className="h-6 w-px bg-hairline" />
 

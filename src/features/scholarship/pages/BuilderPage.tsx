@@ -9,12 +9,14 @@ import {
 import type { FormField } from "../formbuilder/types/FieldType";
 import { createField } from "../formbuilder/types/FieldFactory";
 import { useForm } from "../formbuilder/hooks/useForm";
+import { useNavigate } from "react-router-dom";
 
 function BuilderPage() {
+  const navigate = useNavigate();
+  const { save } = useForm();
+
   const [fields, setFields] = useState<FormField[]>([]);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
-
-  const { save } = useForm();
 
   const handleSubmit = () => {
     console.log("Clicked");

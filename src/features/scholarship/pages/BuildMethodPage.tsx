@@ -1,24 +1,29 @@
 import { Button, Panel, Icon } from "@/shared/ui";
 import { StepFooter } from "../components";
+import { useNavigate } from "react-router-dom";
 
 function BuildMethodPage() {
+  const navigate = useNavigate();
   const items = [
     {
       title: "Start From Scratch",
       description:
         "Open a blank canvas and build your application form block by block.",
       icon: "mingcute:add-fill",
+      onclick: () => navigate("/forms/builder"),
     },
     {
       title: "Duplicate Existing",
       description: "Clone a previous semester's scholarship form to save time.",
       icon: "material-symbols:content-copy-outline-rounded",
+      onclick: () => navigate("/forms/templates"),
     },
     {
       title: "Generate with AI",
       description:
         "Let AI draft your form automatically based on your eligibility criteria",
       icon: "mingcute:ai-line",
+      onclick: () => alert("☄️coming soon..."),
     },
   ];
   return (
@@ -37,6 +42,7 @@ function BuildMethodPage() {
             <button
               key={index}
               className={`group w-full flex flex-col border border-hairline rounded-sm p-4 gap-3 items-center text-center hover:bg-light-blue hover:border-action-blue `}
+              onClick={item.onclick}
             >
               <div className="flex items-center justify-center w-12 h-12 rounded-sm  bg-pale-blue">
                 <Icon
@@ -50,15 +56,6 @@ function BuildMethodPage() {
             </button>
           ))}
         </div>
-        {/*<hr className="text-[#C8C5CB]" />
-        <div className="flex items-center justify-between">
-          <p className="disclaimer-text text-muted">Step 2 of 2</p>
-          <Button
-            fullWidth={false}
-            className="px-8 py-4 cursor-pointer"
-            children="Continue"
-          />*/}
-        {/*</div>*/}
 
         <StepFooter
           step="Step 2 of 2"
