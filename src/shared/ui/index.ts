@@ -23,3 +23,6 @@ export { default as Panel } from "./Cards/Panel.tsx";
 
 // Badge
 export { default as Badge } from "./Badge/Badge.tsx";
+
+// Breadcrumb
+export { default as Breadcrumb } from "./Breadcrumb/Breadcrumb.tsx";

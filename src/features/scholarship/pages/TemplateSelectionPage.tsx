@@ -18,6 +18,7 @@ function TemplateSelectionPage() {
             buttonName="Back to Selection"
             onClick={() => navigate("/scholarship/create")}
           />
+
           <h1 className="page-heading pt-5">Select a Template</h1>
           <p className="body-large text-instructions">
             Choose a past scholarship to copy its application form structure.
