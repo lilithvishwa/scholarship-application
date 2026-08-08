@@ -13,7 +13,7 @@ interface Canva {
 }
 
 const paths = {
-  scratch: "/scholarship/create",
+  scratch: "/forms/builder",
   duplicate: "/forms/templates",
   ai: "/generate-ai",
 };

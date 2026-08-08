@@ -27,7 +27,7 @@ function Input({
   rightIcon,
 }: InputProps) {
   return (
-    <div className={clsx("flex flex-col space-y-2", className)}>
+    <div className="flex flex-col space-y-2">
       {label && <label className="caption text-ink">{label}</label>}
       <div className="relative w-full">
         {leftIcon && (
@@ -44,6 +44,7 @@ function Input({
             borderColor,
             leftIcon ? "pl-11" : "px-4",
             rightIcon ? "pr-11" : "px-4",
+            className,
           )}
           onChange={onChange}
           value={value}
