@@ -45,4 +45,4 @@ export const actions = [
     icon: "mdi:chart-arc",
     path: "/form-analytics",
   },
-];npm run dev
+];
