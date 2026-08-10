@@ -26,3 +26,9 @@ export { default as Badge } from "./Badge/Badge.tsx";
 
 // Breadcrumb
 export { default as Breadcrumb } from "./Breadcrumb/Breadcrumb.tsx";
+
+// Tabs
+export { default as Tabs } from "./Tabs/Tabs.tsx";
+
+// Tables
+export { default as TableToolbar } from "./Table/TableToolbar.tsx";

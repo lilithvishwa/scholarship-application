@@ -17,6 +17,7 @@ import CreateScholarshipPage from "@/features/scholarship/pages/CreateScholarshi
 import TemplateSelectionPage from "@/features/scholarship/pages/TemplateSelectionPage";
 import ScholarshipDashboard from "@/features/scholarship/pages/ScholarshipDashboard";
 import SubmissionsPage from "@/features/scholarship/pages/SubmissionsPage";
+import TablePage from "@/features/scholarship/components/TablePage";
 
 function AppRoutes() {
   return (
@@ -42,6 +43,7 @@ function AppRoutes() {
             path="/scholarship/abcmeritscholarship/submissions"
             element={<SubmissionsPage />}
           />
+          <Route path="/forms/table" element={<TablePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
