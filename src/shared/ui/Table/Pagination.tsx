@@ -57,7 +57,7 @@ function Pagination({
         type="button"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-1.5 py-0.75 rounded-xs disabled:opacity-40 disabled:cursor-not-allowed bg-soft-stone cursor-pointer"
+        className="px-1.5 py-0.75 rounded-xs disclaimer-text disabled:opacity-40 disabled:cursor-not-allowed bg-soft-stone cursor-pointer"
       >
         Previous
       </button>
@@ -87,7 +87,7 @@ function Pagination({
         type="button"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-1.5 py-0.75 rounded-xs disabled:opacity-40 disabled:cursor-not-allowed bg-soft-stone cursor-pointer"
+        className="px-1.5 py-0.75 rounded-xs disclaimer-text disabled:opacity-40 disabled:cursor-not-allowed bg-soft-stone cursor-pointer"
       >
         Next
       </button>
