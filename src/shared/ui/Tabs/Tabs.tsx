@@ -10,12 +10,22 @@ interface TabItem {
 interface TabsProps {
   tabs: TabItem[];
   defaultTab?: string;
+  onChange?: (tabId: string) => void;
 }
 
-export default function Tabs({ tabs, defaultTab }: TabsProps) {
+function Tabs({ tabs, defaultTab, onChange }: TabsProps) {
   const [activeTab, setActiveTab] = useState(defaultTab ?? tabs[0]?.id);
 
   const activeContent = tabs.find((tab) => tab.id === activeTab)?.content;
+
+  const handleTabChange = (tabId: string) => {
+    setActiveTab(tabId);
+    onChange?.(tabId);
+  };
+
+  if (!tabs.length) {
+    return null;
+  }
 
   return (
     <div>
@@ -27,7 +37,7 @@ export default function Tabs({ tabs, defaultTab }: TabsProps) {
             <button
               key={tab.id}
               type="button"
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabChange(tab.id)}
               className={clsx(
                 "body relative px-4 py-3 text-sm",
                 isActive ? "text-primary" : "text-body-muted",
@@ -47,3 +57,5 @@ export default function Tabs({ tabs, defaultTab }: TabsProps) {
     </div>
   );
 }
+
+export default Tabs;

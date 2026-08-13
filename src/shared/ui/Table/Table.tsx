@@ -32,10 +32,13 @@ function Table<T>({
   const bodyAreaHeight = visibleRows * rowHeight + headerHeight;
 
   return (
-    <div className="p-8">
+    <>
       <div className="border border-hairline overflow-hidden">
         {/* Reserves space for `visibleRows` rows. Scrolls internally only if data exceeds that. */}
-        <div className="" style={{ height: bodyAreaHeight }}>
+        <div
+          className="overflow-y-auto scrollbar-hide"
+          style={{ height: bodyAreaHeight }}
+        >
           <table className="w-full table-fixed border-collapse">
             <thead className="bg-card-border sticky top-0 z-10">
               {/*<tr className="border-b border-hairline">*/}
@@ -79,7 +82,7 @@ function Table<T>({
         </div>
         {footer}
       </div>
-    </div>
+    </>
   );
 }
 

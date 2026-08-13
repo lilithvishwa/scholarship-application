@@ -1,19 +1,29 @@
 import type { ReactNode } from "react";
+import clsx from "clsx";
 
 interface PanelCardProps {
   children: ReactNode;
+  variant?: "panel" | "outlined";
   className?: string;
   widthClass?: string;
 }
 
 function PanelCard({
   children,
+  variant = "panel",
   widthClass = "w-130",
   className,
 }: PanelCardProps) {
   return (
     <div
-      className={`space-y-6  rounded-lg border border-card-border bg-on-dark px-10 py-8 shadow-[2px_4px_10px_0px_#00000040] ${widthClass} ${className}`}
+      className={clsx(
+        "space-y-6 border bg-on-dark px-10 py-8",
+        widthClass,
+        className,
+        variant === "panel"
+          ? "rounded-lg border-card-border shadow-[2px_4px_10px_0px_#00000040]"
+          : "rounded-sm border-hairline",
+      )}
     >
       {children}
     </div>

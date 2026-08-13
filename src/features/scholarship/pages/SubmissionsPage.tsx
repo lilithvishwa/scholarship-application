@@ -1,8 +1,12 @@
-import { Breadcrumb, Tabs, TableToolbar } from "@/shared/ui";
+import { Breadcrumb, Tabs } from "@/shared/ui";
+import {
+  PendingSubmissions,
+  ProcessedSubmissions,
+} from "../components/submissions";
 
 function SubmissionsPage() {
   return (
-    <div className="space-y-6 p-8">
+    <div className="space-y-6 p-8 bg-white">
       <div className="space-y-4">
         <Breadcrumb
           items={[
@@ -22,21 +26,17 @@ function SubmissionsPage() {
         />
         <h2 className="field-group-heading">Submissions (10)</h2>
         <Tabs
+          defaultTab="pending"
           tabs={[
             {
               id: "pending",
               label: "Pending Queue",
-              content: (
-                <>
-                  <TableToolbar />
-                  {/*<Table />*/}
-                </>
-              ),
+              content: <PendingSubmissions />,
             },
             {
               id: "processed",
               label: "Processed History",
-              content: <>processed</>,
+              content: <ProcessedSubmissions />,
             },
           ]}
         />

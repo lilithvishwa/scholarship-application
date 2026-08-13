@@ -5,6 +5,10 @@ interface UsePaginationOptions<T> {
   initialPageSize?: number;
 }
 
+/*
+ * Calculates pagination details such as the current range and total pages.
+ * Used by the table to manage paginated data and row display.
+ */
 export function usePagination<T>({
   data,
   initialPageSize = 8,
