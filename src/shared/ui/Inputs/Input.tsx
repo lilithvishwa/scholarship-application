@@ -13,6 +13,8 @@ interface InputProps {
   borderColor?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  pattern?: string;
+  required?: boolean;
 }
 function Input({
   label,
@@ -25,6 +27,9 @@ function Input({
   borderColor = "border-hairline",
   leftIcon,
   rightIcon,
+  pattern,
+  disabled,
+  required,
 }: InputProps) {
   return (
     <div className="flex flex-col space-y-2">
@@ -40,16 +45,20 @@ function Input({
           type={type}
           placeholder={placeholder}
           className={clsx(
-            "h-10.25 w-full border bg-transparent py-2.5",
+            "h-10.25 w-full border  py-2.5",
             borderColor,
             leftIcon ? "pl-11" : "px-4",
             rightIcon ? "pr-11" : "px-4",
+            disabled ? "bg-card-border" : "bg-transparent",
             className,
           )}
           onChange={onChange}
           value={value}
           autoComplete="current-password"
           readOnly={readOnly}
+          pattern={pattern}
+          disabled={disabled}
+          required={required}
         />
 
         {rightIcon && (

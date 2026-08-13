@@ -25,10 +25,10 @@ function ToggleSwitch({
         w-9
         items-center
         rounded-full
-        p-[2px]
+        p-0.5
         transition-colors
         duration-200
-        ${checked ? "bg-[#1863DC]" : "bg-gray-300"}
+        ${checked ? "bg-action-blue" : "bg-gray-300"}
         ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}
         ${className}
       `}

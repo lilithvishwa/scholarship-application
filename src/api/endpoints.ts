@@ -18,3 +18,17 @@ export const FORM_BUILDER_ENDPOINTS = {
 };
 
 // form-id : "d8010c01-a7ee-4fe7-b055-75673e38db08"
+
+export const PROFILE_COMPLETION_ENDPOINTS = {
+  PERSONAL_DETAILS: "/api/profile-completion/personal-details",
+
+  PARENTAL_DETAILS: "/api/profile-completion/parental-details",
+
+  ACADEMIC_STATUS: "/api/profile-completion/academic-details/status",
+  ACADEMIC_DETAILS: "/api/profile-completion/academic-details",
+  CREATE_ACADEMIC: "/api/profile-completion/academic-details/create",
+  UPDATE_ACADEMIC: "/api/profile-completion/academic-details/update",
+  DELETE_ACADEMIC: (levelOfEducation: string) =>
+    `/api/profile-completion/academic-details/delete/${levelOfEducation}`,
+  COMPLETION_STATUS: "/api/profile-completion/status",
+} as const;
