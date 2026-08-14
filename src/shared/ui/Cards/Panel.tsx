@@ -20,9 +20,9 @@ function PanelCard({
     <div
       className={clsx(
         "space-y-6 border bg-on-dark ",
-        paddingClass,
         widthClass,
         className,
+        paddingClass,
         variant === "panel"
           ? "rounded-lg border-card-border shadow-[2px_4px_10px_0px_#00000040]"
           : "rounded-sm border-hairline",

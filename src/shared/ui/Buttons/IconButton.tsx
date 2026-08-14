@@ -32,7 +32,7 @@ export default function IconButton({
       )}
     >
       <Icon name={icon} size={size} />
-      <p className="action-button ml-1">{buttonName}</p>
+      {buttonName && <p className="action-button ml-1">{buttonName}</p>}
     </button>
   );
 }

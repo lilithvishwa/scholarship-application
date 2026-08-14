@@ -20,9 +20,22 @@ export { default as ToggleSwitch } from "./Buttons/ToggleSwitch.tsx";
 
 //Cards
 export { default as Panel } from "./Cards/Panel.tsx";
+export { FileAttachmentCard } from "./Cards/FileAttachmentCard.tsx";
 
 // Badge
 export { default as Badge } from "./Badge/Badge.tsx";
 
 //Divider
 export { default as Divider } from "./Divider/Divider.tsx";
+// Breadcrumb
+export { default as Breadcrumb } from "./Breadcrumb/Breadcrumb.tsx";
+
+// Tabs
+export { default as Tabs } from "./Tabs/Tabs.tsx";
+
+// Tables
+export { default as TableToolbar } from "./Table/TableToolbar.tsx";
+export { default as DataTable } from "./Table/DataTable.tsx";
+
+// Details
+export { default as DetailItem } from "./Details/DetailItem.tsx";

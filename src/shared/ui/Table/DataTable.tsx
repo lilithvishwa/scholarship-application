@@ -1,7 +1,7 @@
 import Table from "./Table";
 import type { Column } from "./Table";
 import TableFooter from "./TableFooter";
-import { usePagination } from "./usePagination";
+import { usePagination } from "./hook/usePagination";
 
 export interface DataTableProps<T> {
   columns: Column<T>[];
@@ -33,6 +33,8 @@ function DataTable<T>({
     onPageChange,
     onPageSizeChange,
   } = usePagination({ data, initialPageSize });
+
+  console.log();
 
   return (
     <Table

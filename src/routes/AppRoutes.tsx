@@ -15,11 +15,14 @@ import PreviewPage from "@/features/scholarship/pages/PreviewPage";
 import BuildMethodPage from "@/features/scholarship/pages/BuildMethodPage";
 import CreateScholarshipPage from "@/features/scholarship/pages/CreateScholarshipPage";
 import TemplateSelectionPage from "@/features/scholarship/pages/TemplateSelectionPage";
+import ScholarshipDashboard from "@/features/scholarship/pages/ScholarshipDashboard";
+import SubmissionsPage from "@/features/scholarship/pages/SubmissionsPage";
 import TablePage from "@/features/scholarship/components/TablePage";
 import VerifyEmail from "@/features/auth/pages/VerifyEmail";
 import AboutYouPage from "@/features/auth/pages/AboutYouPage";
 import EducationProfilePage from "@/features/auth/pages/EducationProfilePage";
 import FamilyFinancePage from "@/features/auth/pages/FamilyFinancePage";
+import SubmissionDetailsPage from "@/features/scholarship/pages/SubmissionDetailsPage";
 
 function AppRoutes() {
   return (
@@ -38,6 +41,18 @@ function AppRoutes() {
           />
           <Route path="/forms/builder/preview" element={<PreviewPage />} />
           <Route path="/forms/templates" element={<TemplateSelectionPage />} />
+          <Route
+            path="/scholarship/abcmeritscholarship"
+            element={<ScholarshipDashboard />}
+          />
+          <Route
+            path="/scholarship/abcmeritscholarship/submissions"
+            element={<SubmissionsPage />}
+          />
+          <Route
+            path="/scholarship/abcmeritscholarship/submissions/SETN-USR-01"
+            element={<SubmissionDetailsPage />}
+          />
           <Route path="/forms/table" element={<TablePage />} />
         </Route>
         <Route path="/profile/complete" element={<AppLayout />}>
