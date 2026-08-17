@@ -39,3 +39,16 @@ export interface ErrorResponse {
 export interface LogoutResponse {
   message: string;
 }
+
+export interface VerifyEmailResponse {
+  message: string;
+}
+
+export interface SetPasswordRequest {
+  password: string;
+  confirmPassword: string;
+}
+
+export interface GeneratePasswordResetTokenResponse {
+  email: string;
+}

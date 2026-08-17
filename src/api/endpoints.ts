@@ -11,6 +11,9 @@ export const AUTH_ENDPOINTS = {
   MICROSOFT_LOGIN: "/api/auth/microsoft",
   USER: "/api/auth/me",
   LOGOUT: "/api/auth/logout",
+  VERIFY_EMAIL: "/api/auth/verify-email",
+  SET_PASSWORD: "/api/auth/set-password",
+  GENERATE_PASSWORD_RESET_TOKEN: "/api/auth/generate-set-password-token",
 } as const;
 
 export const FORM_BUILDER_ENDPOINTS = {

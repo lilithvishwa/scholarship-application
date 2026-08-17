@@ -24,7 +24,7 @@ function LoginForm() {
           updateField("password", e.target.value)
         }
       />
-      {error && <p className="text-error text-sm">{error}</p>}
+      {error && <p className="text-error disclaimer-text">{error}</p>}
       <Button type="submit" disabled={isLoading}>
         {isLoading ? "Logging in..." : "Login"}
       </Button>

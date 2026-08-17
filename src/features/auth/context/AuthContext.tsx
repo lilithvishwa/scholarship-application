@@ -10,10 +10,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import {
-  getCurrentUser,
-  logoutUser,
-} from "../features/auth/services/auth.service";
+import { getCurrentUser, logoutUser } from "../services/auth.service";
 import type { AuthUser } from "@/types/auth.type";
 
 interface AuthContextType {

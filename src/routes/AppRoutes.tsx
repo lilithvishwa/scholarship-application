@@ -1,10 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { AppLayout } from "../layouts";
+import { AppLayout } from "../../layouts";
 
 // auth pages imports
-import LoginPage from "../features/auth/pages/LoginPage";
-import SignUp from "../features/auth/pages/SignUp";
+import LoginPage from "../../features/auth/pages/LoginPage";
+import SignUp from "../../features/auth/pages/SignUp";
+import VerifyEmail from "@/features/auth/pages/VerifyEmail";
+
+//Complete Profile
 
 // Dashboard pages imports
 import DashboardPage from "@/features/dashboard/pages/DashboardPage";
@@ -18,7 +21,6 @@ import TemplateSelectionPage from "@/features/scholarship/pages/TemplateSelectio
 import ScholarshipDashboard from "@/features/scholarship/pages/ScholarshipDashboard";
 import SubmissionsPage from "@/features/scholarship/pages/SubmissionsPage";
 import TablePage from "@/features/scholarship/components/TablePage";
-import VerifyEmail from "@/features/auth/pages/VerifyEmail";
 import AboutYouPage from "@/features/auth/pages/AboutYouPage";
 import EducationProfilePage from "@/features/auth/pages/EducationProfilePage";
 import FamilyFinancePage from "@/features/auth/pages/FamilyFinancePage";

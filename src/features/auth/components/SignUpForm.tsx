@@ -1,13 +1,17 @@
-import { Input, Button } from "@shared/ui";
+import { Input, Button, Icon } from "@shared/ui";
 import { useSignup } from "../hooks/useSignup";
 import type React from "react";
+import SuccessMessage from "./SuccessMessage";
 
 function SignUpForm() {
-  const { signupData, updateField, handleSignup, loading, error } = useSignup();
+  const { signupData, updateField, handleSignup, loading, error, success } =
+    useSignup();
   console.log(error);
 
   return (
     <form className="space-y-4" onSubmit={handleSignup}>
+      {success && <SuccessMessage message={success} />}
+
       <Input
         label="Name"
         placeholder="Enter your Name"
@@ -44,6 +48,7 @@ function SignUpForm() {
           updateField("confirm_password", e.target.value)
         }
       />
+      {error && <p className="text-error disclaimer-text">{error}</p>}
       <Button type="submit">
         {loading ? "Creating..." : "Create Account"}
       </Button>

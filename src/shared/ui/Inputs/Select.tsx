@@ -43,6 +43,7 @@ function Select({
   return (
     <div className={`relative ${className}`}>
       {/* Select trigger */}
+      <label className="caption text-ink">{label}</label>
       <button
         type="button"
         disabled={disabled}
@@ -55,7 +56,6 @@ function Select({
         `}
       >
         <span className="truncate text-body-muted">
-          {label && `${label}: `}
           {selectedOption?.label ?? placeholder}
         </span>
 

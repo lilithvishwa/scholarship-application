@@ -13,6 +13,9 @@ import type {
   RegisterRequest,
   RegisterResponse,
   LogoutResponse,
+  VerifyEmailResponse,
+  SetPasswordRequest,
+  GeneratePasswordResetTokenResponse,
 } from "@/types/auth.type";
 
 /**
@@ -60,5 +63,38 @@ export const signupUser = async (
 
 export const logoutUser = async (): Promise<LogoutResponse> => {
   const response = await apiClient.get<LogoutResponse>(AUTH_ENDPOINTS.LOGOUT);
+  return response.data;
+};
+
+export const verifyEmail = async (
+  token: string,
+): Promise<VerifyEmailResponse> => {
+  const response = await apiClient.post<VerifyEmailResponse>(
+    AUTH_ENDPOINTS.VERIFY_EMAIL,
+    null,
+    {
+      params: { token },
+    },
+  );
+  return response.data;
+};
+
+export const setPassword = async (
+  token: string,
+  payload: SetPasswordRequest,
+): Promise<void> => {
+  const response = await apiClient.post(AUTH_ENDPOINTS.SET_PASSWORD, payload, {
+    params: { token },
+  });
+  return response.data;
+};
+
+export const generatePasswordResetToken = async (
+  payload: GeneratePasswordResetTokenResponse,
+): Promise<GeneratePasswordResetTokenResponse> => {
+  const response = await apiClient.post<GeneratePasswordResetTokenResponse>(
+    AUTH_ENDPOINTS.GENERATE_PASSWORD_RESET_TOKEN,
+    payload,
+  );
   return response.data;
 };

@@ -2,7 +2,7 @@
 import { WelcomeBanner, Kpis } from "../components";
 
 // auth context hook import
-import { useAuth } from "@/context/hooks/useAuth";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 // dummny data imports
 import { dashboardKpiData } from "../dummyData/dashboardKpiData ";

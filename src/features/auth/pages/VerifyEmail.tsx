@@ -1,12 +1,15 @@
 import { Button, Icon } from "@/shared/ui";
 import PanelCard from "@/shared/ui/Cards/Panel";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-type VerificationStatus = "verifying" | "success" | "failed" | "invalid";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useVerifyEmail } from "../hooks/useVerifyEmail";
 
 function VerifyEmail() {
-  const [status, setStatus] = useState<VerificationStatus>("verifying");
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  console.log(token);
   const navigate = useNavigate();
+
+  const { status, retry } = useVerifyEmail(token);
 
   const renderContent = () => {
     if (status === "verifying") {

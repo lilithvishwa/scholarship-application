@@ -27,8 +27,8 @@
     --color-light-blue: #e6f0ff;
     --color-focus-blue: #4c6ee6;
 
-    --color-light-grey:#E5E7EB;
-    --color-on-grey:#4B5563;
+    --color-light-grey: #e5e7eb;
+    --color-on-grey: #4b5563;
 
     --color-coral: #ff7759;
     --color-coral-soft: #ffad9b;
@@ -42,6 +42,8 @@
     --color-on-dark: #ffffff;
 
     --color-instructions: #47464b;
+
+    --color-light-green: #d1e7dd;
 }
 
 /*#C8C5CB*/
