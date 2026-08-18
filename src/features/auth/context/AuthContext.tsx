@@ -1,8 +1,4 @@
-/**
- * Manages the global authentication state of the application.
- * Stores the logged-in user, authentication status, and exposes
- * methods for fetching user information and managing auth state.
- */
+// imports
 import {
   createContext,
   useCallback,
@@ -13,6 +9,7 @@ import {
 import { getCurrentUser, logoutUser } from "../services/auth.service";
 import type { AuthUser } from "@/types/auth.type";
 
+// types
 interface AuthContextType {
   user: AuthUser | null;
   loading: boolean;
@@ -21,36 +18,48 @@ interface AuthContextType {
   logout: () => Promise<void>;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined,
-);
-
 interface AuthProviderProps {
   children: ReactNode;
 }
 
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined,
+);
+
+/**
+ * Manages the global authentication state of the application.
+ * Stores the logged-in user, authentication status, and exposes
+ * methods for fetching user information and managing auth state.
+ */
 export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const lastLogin = localStorage.getItem("pendingLogin") || "";
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
+  /**
+   * Gets the current user, @getCurrentUser
+   */
   const fetchCurrentUser = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getCurrentUser();
       setUser(data);
+      localStorage.setItem("lastLogin", lastLogin);
     } catch (error) {
       setUser(null);
     } finally {
       setLoading(false);
+      localStorage.removeItem("pendingLogin");
     }
   }, []);
 
+  /**
+   * Hits logout endpoint then clears user backend cookie.
+   */
   const logout = useCallback(async () => {
     try {
       await logoutUser();
-      console.log("Logged Out Successfully..."); // hits an endpoint to clear server-side session/cookie
     } catch (error) {
-      // even if the API call fails, clear local state so the UI reflects logged-out
       console.error(error);
     } finally {
       setUser(null);

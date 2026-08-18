@@ -36,6 +36,7 @@ export function useLogin() {
       await login(loginData);
       await fetchCurrentUser();
       navigate("/dashboard");
+      localStorage.setItem("pendingLogin", "password");
     } catch (err: unknown) {
       const { status, error_code, message } = getApiError(err);
       let errorMessage = "Unable to login. Please try again later.";
@@ -63,36 +64,7 @@ export function useLogin() {
           errorMessage = "Invalid Email or Password.";
         }
       }
-
       setError(errorMessage);
-      console.error(err.response);
-
-      // const status = err.response?.status;
-      // const errorType = err.response?.data?.error?.type;
-      // let message = "Unable to login. Please try again later.";
-
-      // if (status === 401) {
-      //   if (errorType === errorCodeEnum.INVALID_CREDENTIALS) {
-      //     message =
-      //       "Your email address hasn't been verified. Please verify your email before login.";
-      //   } else {
-      //     message = "Incorrect email or password.";
-      //   }
-      // } else if (status === 422) {
-      //   message = "Please enter a valid email and password.";
-      // } else if (status >= 500) {
-      //   message = "Server error while logging in.";
-      // } else if (status === 404) {
-      //   if (errorType === "PasswordNotFoundError") {
-      //     navigate("/different-signin-method");
-      //   } else {
-      //     message = "Invalid Email or Password.";
-      //   }
-      // }
-      // setError(message);
-      // console.error(err.response);
-      //
-      //
     } finally {
       setIsLoading(false);
     }

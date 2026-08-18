@@ -16,17 +16,29 @@ import ProtectedRoute from "./ProtectedRoute";
 import SignInMethodPage from "@/features/auth/pages/SignInMethodPage";
 import SetPasswordPage from "@/features/auth/pages/SetPasswordPage";
 
+// PUBLIC pages import
+import {
+  AboutUsPage,
+  HomePage,
+  ScholarshipPage,
+} from "@/features/public/pages";
+
 function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
         {/* ================= PUBLIC ROUTES ================= */}
+        <Route element={<AppLayout variant="public" />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/scholarship" element={<ScholarshipPage />} />
+          <Route path="/about-us" element={<AboutUsPage />} />
+        </Route>
 
-        <Route element={<AppLayout />}>
+        {/* ================= AUTH ROUTES ================= */}
+        <Route element={<AppLayout variant="default" />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
-          <Route path="/" element={<p>Landing Page....</p>} />
           <Route
             path="/different-signin-method"
             element={<SignInMethodPage />}
@@ -37,9 +49,9 @@ function AppRoutes() {
         {/* ================= PROTECTED ROUTES ================= */}
 
         <Route element={<ProtectedRoute />}>
-          <Route element={<AppLayout />}>
+          <Route element={<AppLayout variant="authenticated" />}>
             <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/scholarship" element={<p>Scholarship Page...</p>} />
+            <Route path="/scholarships" element={<p>Scholarship Page...</p>} />
             <Route path="/profile">
               <Route index element={<Navigate to="about" replace />} />
               <Route path="about" element={<AboutYouPage />} />

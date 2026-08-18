@@ -30,7 +30,7 @@ function Button({
   return (
     <button
       className={clsx(
-        "action-button inline-flex items-center justify-center gap-2 rounded-xs transition-colors",
+        "action-button inline-flex items-center justify-center gap-2 rounded-xs transition-colors cursor-pointer",
         fullWidth ? "w-full" : "w-auto",
         variants[variant],
         className,
