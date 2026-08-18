@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../services/auth.service";
 import { useAuth } from "./useAuth";
 import type { LoginRequest } from "@/types/auth.type";
-import { errorCodeEnum } from "@/errors";
+import { getApiError } from "@/utils/get-api-error";
+import { HTTP_STATUS } from "@/constants/http-status";
+import { ERROR_CODES } from "@/constants/error-codes";
 
 /**
  * Encapsulates login form state, submission, loading and error handling.
@@ -34,32 +36,63 @@ export function useLogin() {
       await login(loginData);
       await fetchCurrentUser();
       navigate("/dashboard");
-    } catch (err: any) {
-      const status = err.response?.status;
-      const errorType = err.response?.data?.error?.type;
+    } catch (err: unknown) {
+      const { status, error_code, message } = getApiError(err);
+      let errorMessage = "Unable to login. Please try again later.";
 
-      let message = "Unable to login. Please try again later.";
-
-      if (status === 401) {
-        if (errorType === errorCodeEnum.INVALID_CREDENTIALS) {
-          message =
-            "Your email address hasn't been verified. Please verify your email before login.";
-        } else {
-          message = "Incorrect email or password.";
-        }
-      } else if (status === 422) {
-        message = "Please enter a valid email and password.";
-      } else if (status >= 500) {
-        message = "Server error while logging in.";
-      } else if (status === 404) {
-        if (errorType === "PasswordNotFoundError") {
-          navigate("/different-signin-method");
-        } else {
-          message = "Invalid Email or Password.";
+      if (status === HTTP_STATUS.UNAUTHORIZED) {
+        if (error_code === ERROR_CODES.INVALID_CREDENTIALS) {
+          console.log(message);
+          if (message === "Incorrect Email or Password.") {
+            errorMessage = "Incorrect email or password.";
+          } else {
+            errorMessage =
+              "Your email address hasn't been verified. Please verify your email before login.";
+          }
         }
       }
-      setError(message);
+      if (status === HTTP_STATUS.UNPROCESSABLE_ENTITY) {
+        errorMessage = "Please enter a valid email and password.";
+      }
+
+      if (status === HTTP_STATUS.NOT_FOUND) {
+        if (error_code === ERROR_CODES.PASSWORD_NOT_FOUND) {
+          navigate("/different-signin-method");
+          localStorage.setItem("email", loginData.email);
+        } else {
+          errorMessage = "Invalid Email or Password.";
+        }
+      }
+
+      setError(errorMessage);
       console.error(err.response);
+
+      // const status = err.response?.status;
+      // const errorType = err.response?.data?.error?.type;
+      // let message = "Unable to login. Please try again later.";
+
+      // if (status === 401) {
+      //   if (errorType === errorCodeEnum.INVALID_CREDENTIALS) {
+      //     message =
+      //       "Your email address hasn't been verified. Please verify your email before login.";
+      //   } else {
+      //     message = "Incorrect email or password.";
+      //   }
+      // } else if (status === 422) {
+      //   message = "Please enter a valid email and password.";
+      // } else if (status >= 500) {
+      //   message = "Server error while logging in.";
+      // } else if (status === 404) {
+      //   if (errorType === "PasswordNotFoundError") {
+      //     navigate("/different-signin-method");
+      //   } else {
+      //     message = "Invalid Email or Password.";
+      //   }
+      // }
+      // setError(message);
+      // console.error(err.response);
+      //
+      //
     } finally {
       setIsLoading(false);
     }

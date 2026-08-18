@@ -7,13 +7,13 @@ import useGeneratePasswordResetToken from "../hooks/useGeneratePasswordResetToke
 function SignInMethodPage() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  const { generateToken, loading, error, success } =
-    useGeneratePasswordResetToken();
+  const { generateToken } = useGeneratePasswordResetToken();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const email = localStorage.getItem("email");
+    console.log(email);
     const response = await generateToken({
       email,
     });
@@ -28,7 +28,6 @@ function SignInMethodPage() {
   return (
     <section className="flex items-center justify-center p-8">
       <Panel className="space-y-6">
-        {successMessage && <SuccessMessage message={successMessage} />}
         <div className="flex flex-col items-center text-center gap-2">
           <div className="text-on-grey flex items-center justify-center bg-light-grey rounded-lg h-12 w-12">
             <Icon name="streamline-sharp:information-circle-remix" size={32} />
@@ -41,6 +40,7 @@ function SignInMethodPage() {
             with your existing log-in method or set up a password.
           </p>
         </div>
+        {successMessage && <SuccessMessage message={successMessage} />}
         <div className="space-y-4">
           <Button
             children="Continue to Login"

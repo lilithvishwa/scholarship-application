@@ -18,15 +18,12 @@ interface UseGeneratePasswordResetTokenReturn {
     payload: GeneratePasswordResetTokenResponse,
   ) => Promise<GeneratePasswordResetTokenResponse | null>;
 
-  loading: boolean;
   error: string | null;
   success: boolean;
   data: GeneratePasswordResetTokenResponse | null;
-  reset: () => void;
 }
 
 function useGeneratePasswordResetToken(): UseGeneratePasswordResetTokenReturn {
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [data, setData] = useState<GeneratePasswordResetTokenResponse | null>(
@@ -36,18 +33,13 @@ function useGeneratePasswordResetToken(): UseGeneratePasswordResetTokenReturn {
   const generateToken = async (
     payload: GeneratePasswordResetTokenResponse,
   ): Promise<GeneratePasswordResetTokenResponse | null> => {
-    if (loading) {
-      return null;
-    }
-
-    setLoading(true);
     setError(null);
     setSuccess(false);
     setData(null);
 
     try {
       const response = await generatePasswordResetToken(payload);
-
+      console.log(response);
       setData(response);
       setSuccess(true);
 
@@ -63,24 +55,14 @@ function useGeneratePasswordResetToken(): UseGeneratePasswordResetTokenReturn {
 
       return null;
     } finally {
-      setLoading(false);
     }
-  };
-
-  const reset = () => {
-    setLoading(false);
-    setError(null);
-    setSuccess(false);
-    setData(null);
   };
 
   return {
     generateToken,
-    loading,
     error,
     success,
     data,
-    reset,
   };
 }
 

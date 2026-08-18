@@ -7,7 +7,7 @@ interface ApiError {
     status?: number;
     data?: {
       message?: string;
-      code?: string;
+      error_code?: string;
     };
   };
 }
@@ -38,16 +38,18 @@ function useSetPassword(): UseSetPasswordReturn {
     setSuccess(false);
 
     try {
-      await setPasswordRequest(token, payload);
+      const response = await setPasswordRequest(token, payload);
+      console.log(response);
 
       setSuccess(true);
 
       return true;
-    } catch (error) {
+    } catch (error: any) {
       const apiError = error as ApiError;
+      console.log(error.response);
 
       const message =
-        apiError.response?.data?.message ||
+        apiError.response?.data?.error?.message ||
         "Unable to set your password. Please try again.";
 
       setError(message);

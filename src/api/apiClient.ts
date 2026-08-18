@@ -5,6 +5,7 @@
  */
 
 import axios from "axios";
+import { responseErrorInterceptor } from "./interceptors/response.interceptor";
 
 export const apiClient = axios.create({
   baseURL: `${import.meta.env.VITE_API_BACKEND}`,
@@ -14,6 +15,11 @@ export const apiClient = axios.create({
     "ngrok-skip-browser-warning": "true",
   },
 });
+
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => responseErrorInterceptor(error),
+);
 
 // export const apiClient = axios.create({
 //   baseURL: import.meta.env.VITE_API_BACKEND,

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { signupUser } from "../services/auth.service";
 import type { RegisterRequest } from "@/types/auth.type";
+import { getApiError } from "@/utils/get-api-error";
+import { HttpStatusCode } from "axios";
+import { ERROR_CODES } from "@/constants/error-codes";
 
 export function useSignup() {
   const [signupData, setSignupData] = useState<RegisterRequest>({
@@ -28,19 +31,19 @@ export function useSignup() {
       setSuccess(
         "Please verify your email before logging in. Check your inbox for the verification link.",
       );
-    } catch (err: any) {
-      const status = err.response?.status;
-      const errorType = err.response?.data?.error?.type;
+    } catch (err: unknown) {
+      const { status, error_code } = getApiError(err);
       let message = "Unable to signup. Please try again later.";
+      // console.log(error_code, status);
 
-      if (status === 409) {
-        if (errorType === "UserAlreadyExistsError") {
+      if (status === HttpStatusCode.Conflict) {
+        if (error_code === ERROR_CODES.USER_ALREADY_EXISTS) {
           message = "User already exists. Please login.";
         } else {
           message = "Invalid credentials.";
         }
       }
-
+      console.error(err.response);
       setError(message);
     } finally {
       setLoading(false);

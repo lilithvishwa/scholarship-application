@@ -3,6 +3,7 @@ import { Button, Input, Panel, Select } from "@/shared/ui";
 import SegmentedControl from "@/shared/ui/Buttons/SegmentedControl";
 import { useState } from "react";
 import type { AcademicRecord, GradingSystem } from "../../types/profile.types";
+import useAcademicDetails from "../../hooks/useAcademicDetails";
 
 interface EducationProfileFormProps {
   onSave: (record: AcademicRecord) => void;
@@ -31,13 +32,15 @@ function EducationProfileForm({ onSave, onCancel }: EducationProfileFormProps) {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const record: AcademicRecord = {
       ...formData,
       id: crypto.randomUUID(),
     };
-    onSave(record);
+
+    await onSave(record);
   };
 
   return (
@@ -46,15 +49,20 @@ function EducationProfileForm({ onSave, onCancel }: EducationProfileFormProps) {
         <Select
           label="Level of Education *"
           options={[
-            "10th Standard / (SSLC)",
-            "12th Standard / Higher Secondary (HSC)",
-            "Undergraduate",
-            "Postgraduate",
-            "Research/Ph.D",
+            {
+              label: "10th Standard / (SSLC)",
+              value: "10th Grade",
+            },
+            {
+              label: "12th Standard / Higher Secondary (HSC)",
+              value: "12th or Diploma",
+            },
+            { label: "Undergraduate", value: "Undergraduate" },
+            { label: "Postgraduate", value: "Postgraduate" },
+            { label: "Research/Ph.D", value: "Research or PhD" },
           ]}
           value={formData.levelOfEducation}
           onChange={(e) => updateField("levelOfEducation", e)}
-          required={true}
         />
         <Input
           label="Register Number"
@@ -88,11 +96,23 @@ function EducationProfileForm({ onSave, onCancel }: EducationProfileFormProps) {
         <div className="grid grid-cols-2 gap-5">
           <Select
             label="Year of Passing *"
-            options={["2026", "2025", "2024"]}
+            options={[
+              {
+                label: "2026",
+                value: "2026",
+              },
+              {
+                label: "2025",
+                value: "2025",
+              },
+              {
+                label: "2024",
+                value: "2024",
+              },
+            ]}
             placeholder="Select Year"
             value={formData.yearOfPassing}
             onChange={(e) => updateField("yearOfPassing", e)}
-            required={true}
           />
           <Input
             label="Current Semester"
@@ -145,6 +165,7 @@ function EducationProfileForm({ onSave, onCancel }: EducationProfileFormProps) {
                 children="Save Record"
                 fullWidth={false}
                 className="cursor-pointer"
+                type="submit"
               />
             </div>
           }

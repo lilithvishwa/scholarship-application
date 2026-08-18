@@ -3,6 +3,7 @@ import { Button, Divider, Input, Select, Textarea } from "@/shared/ui";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { AboutYouFormData } from "@/features/auth/types/profile.types";
+import useProfileCompletion from "../../hooks/useProfileCompletion";
 
 function AboutYouForm() {
   const navigate = useNavigate();
@@ -19,7 +20,13 @@ function AboutYouForm() {
     pincode: "",
     country: "",
   });
-  console.log(formData);
+  // console.log(formData);
+
+  const { createProfile } = useProfileCompletion();
+
+  const handleSubmit = () => {
+    createProfile(formData);
+  };
   return (
     <div className="flex flex-col gap-5">
       <div className="space-y-6">
@@ -35,7 +42,11 @@ function AboutYouForm() {
           <Select
             label="Gender *"
             placeholder="Select Gender"
-            options={["Male", "Female"]}
+            // options={["Male", "Female"]}
+            options={[
+              { value: "male", label: "Male" },
+              { value: "female", label: "Female" },
+            ]}
             value={formData.gender}
             onChange={(e) => setFormData({ ...formData, gender: e })}
           />
@@ -43,7 +54,7 @@ function AboutYouForm() {
         <Select
           label="Nationality *"
           placeholder="Select Nationality"
-          options={["Indian"]}
+          options={[{ value: "indian", label: "Indian" }]}
           value={formData.nationality}
           onChange={(e) => setFormData({ ...formData, nationality: e })}
         />
@@ -143,8 +154,8 @@ function AboutYouForm() {
         </div>
         <Select
           label="Country *"
-          placeholder=""
-          options={["India"]}
+          placeholder="Select Country"
+          options={[{ value: "india", label: "India" }]}
           value={formData.country}
           onChange={(e) => setFormData({ ...formData, country: e })}
         />
@@ -156,7 +167,7 @@ function AboutYouForm() {
             children="Save & Continue"
             fullWidth={false}
             className="cursor-pointer"
-            onClick={() => navigate("/profile/complete/education")}
+            onClick={handleSubmit}
           />
         }
       />

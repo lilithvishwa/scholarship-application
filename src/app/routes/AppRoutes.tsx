@@ -1,7 +1,14 @@
 import { AppLayout } from "@/layouts";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { LoginPage, Signup, VerifyEmail } from "@/features/auth/pages";
+import {
+  AboutYouPage,
+  EducationProfilePage,
+  FamilyFinancePage,
+  LoginPage,
+  Signup,
+  VerifyEmail,
+} from "@/features/auth/pages";
 
 import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 
@@ -33,6 +40,12 @@ function AppRoutes() {
           <Route element={<AppLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/scholarship" element={<p>Scholarship Page...</p>} />
+            <Route path="/profile">
+              <Route index element={<Navigate to="about" replace />} />
+              <Route path="about" element={<AboutYouPage />} />
+              <Route path="education" element={<EducationProfilePage />} />
+              <Route path="family-finance" element={<FamilyFinancePage />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

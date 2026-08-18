@@ -62,7 +62,7 @@ export const signupUser = async (
 };
 
 export const logoutUser = async (): Promise<LogoutResponse> => {
-  const response = await apiClient.get<LogoutResponse>(AUTH_ENDPOINTS.LOGOUT);
+  const response = await apiClient.post<LogoutResponse>(AUTH_ENDPOINTS.LOGOUT);
   return response.data;
 };
 
