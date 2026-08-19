@@ -5,7 +5,7 @@ import type {
   AboutYouFormData,
   AcademicRecord,
   FamilyDetails,
-} from "../types/profile.types";
+} from "../components/CompleteYourProfile/types/profile.types";
 
 export const createPersonalDetails = async (payload: AboutYouFormData) => {
   const response = await apiClient.post(

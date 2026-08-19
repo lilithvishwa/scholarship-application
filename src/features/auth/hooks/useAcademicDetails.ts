@@ -10,7 +10,7 @@ import {
   createAcademicDetail,
   getAcademicDetails,
 } from "../services/profile-completion.service";
-import type { AcademicRecord } from "../types/profile.types";
+import type { AcademicRecord } from "../components/CompleteYourProfile/types/profile.types";
 
 function useAcademicDetails() {
   const [educationalDetails, setEducationalDetails] = useState<

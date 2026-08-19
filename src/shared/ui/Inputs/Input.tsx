@@ -15,6 +15,7 @@ interface InputProps {
   rightIcon?: React.ReactNode;
   pattern?: string;
   required?: boolean;
+  errorMessage?: string;
 }
 function Input({
   label,
@@ -29,7 +30,8 @@ function Input({
   rightIcon,
   pattern,
   disabled,
-  required,
+  required = false,
+  errorMessage,
 }: InputProps) {
   return (
     <div className="flex flex-col space-y-2">
@@ -67,6 +69,9 @@ function Input({
           </span>
         )}
       </div>
+      {errorMessage && (
+        <span className="disclaimer-text text-error">{errorMessage}</span>
+      )}
     </div>
   );
 }

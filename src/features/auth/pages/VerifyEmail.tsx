@@ -41,7 +41,7 @@ function VerifyEmail() {
           </p>
           <Button
             children="Continue to Dashboard"
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/profile")}
           />
         </div>
       );

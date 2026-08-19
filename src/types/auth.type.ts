@@ -17,7 +17,7 @@ export interface RegisterRequest {
   name: string;
   email: string;
   password: string;
-  confirm_password: string;
+  confirmPassword: string;
 }
 
 export interface RegisterResponse {

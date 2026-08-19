@@ -29,7 +29,8 @@
     "react-dom": "^19.2.7",
     "react-dropzone": "^19.1.1",
     "react-router-dom": "^7.18.2",
-    "tailwindcss": "^4.3.2"
+    "tailwindcss": "^4.3.2",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",

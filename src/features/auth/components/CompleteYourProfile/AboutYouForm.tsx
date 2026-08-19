@@ -2,7 +2,7 @@ import { StepFooter } from "@/features/scholarship/components";
 import { Button, Divider, Input, Select, Textarea } from "@/shared/ui";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { AboutYouFormData } from "@/features/auth/types/profile.types";
+import type { AboutYouFormData } from "@/features/auth/components/CompleteYourProfile/types/profile.types";
 import useProfileCompletion from "../../hooks/useProfileCompletion";
 
 function AboutYouForm() {

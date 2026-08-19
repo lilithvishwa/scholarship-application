@@ -2,7 +2,7 @@ import { StepFooter } from "@/features/scholarship/components";
 import { Button, Input, Panel, Select } from "@/shared/ui";
 import SegmentedControl from "@/shared/ui/Buttons/SegmentedControl";
 import { useState } from "react";
-import type { AcademicRecord, GradingSystem } from "../../types/profile.types";
+import type { AcademicRecord, GradingSystem } from "./types/profile.types";
 import useAcademicDetails from "../../hooks/useAcademicDetails";
 
 interface EducationProfileFormProps {
