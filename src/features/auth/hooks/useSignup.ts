@@ -1,31 +1,60 @@
+import { z } from "zod";
 import { useState } from "react";
 import { signupUser } from "../services/auth.service";
 import type { RegisterRequest } from "@/types/auth.type";
 import { getApiError } from "@/utils/get-api-error";
 import { HttpStatusCode } from "axios";
 import { ERROR_CODES } from "@/constants/error-codes";
+import { signUpSchema, type signUpSchemaData } from "../schemas/signUp.schema";
+
+// type for validation error state
+type signupFormErrors = Partial<Record<keyof signUpSchemaData, string>>;
 
 export function useSignup() {
   const [signupData, setSignupData] = useState<RegisterRequest>({
     name: "",
     email: "",
     password: "",
-    confirm_password: "",
+    confirmPassword: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [validationErrors, setValidationError] = useState<signupFormErrors>({});
 
   const updateField = (field: keyof RegisterRequest, value: string) => {
     setSignupData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignup = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
-    setLoading(true);
+
+    const result = signUpSchema.safeParse(signupData);
+
+    if (!result.success) {
+      const tree = z.treeifyError(result.error);
+      // const confirmPasswordErrors =
+      //   tree.properties?.confirmPassword?.errors ?? [];
+
+      // const confirmPasswordError =
+      //   confirmPasswordErrors.length > 1
+      //     ? confirmPasswordErrors[confirmPasswordErrors.length - 1]
+      //     : confirmPasswordErrors[0];
+
+      console.log(tree);
+      setValidationError({
+        name: tree.properties?.name?.errors?.[0],
+        email: tree.properties?.email?.errors?.[0],
+        password: tree.properties?.password?.errors?.[0],
+        confirmPassword: tree.properties?.confirmPassword?.errors?.[0],
+      });
+
+      return;
+    }
 
     try {
+      setLoading(true);
       const response = await signupUser(signupData);
       console.log(response);
       setSuccess(
@@ -43,7 +72,6 @@ export function useSignup() {
           message = "Invalid credentials.";
         }
       }
-      console.error(err.response);
       setError(message);
     } finally {
       setLoading(false);
@@ -58,5 +86,6 @@ export function useSignup() {
 
     loading,
     error,
+    validationErrors,
   };
 }

@@ -10,10 +10,29 @@ import {
   getLocationPincode,
   getProfileCompletionStatus,
 } from "../services/profile-completion.service";
-import type { AboutYouFormData, FamilyDetails } from "../types/profile.types";
+import type {
+  AboutYouFormData,
+  FamilyDetails,
+} from "@/features/auth/components/CompleteYourProfile/types/profile.types";
 import { useState } from "react";
 
+// Personal details
+// Parental details
+// Completion status
+interface CompletionStatusResponse {
+  personalDetails: boolean;
+  academicDetails: boolean;
+  parentalDetails: boolean;
+}
 function useProfileCompletion() {
+  const [completionStatus, setCompletionStatus] =
+    useState<CompletionStatusResponse>({
+      personalDetails: false,
+      academicDetails: false,
+      parentalDetails: false,
+    });
+  const [fetchingStatus, setFetchingStatus] = useState(true);
+
   const navigate = useNavigate();
   const [address, setAddress] = useState({
     city: [],
@@ -28,7 +47,7 @@ function useProfileCompletion() {
       const response = await createPersonalDetails(payload);
       console.log(response);
       if (response) {
-        navigate("/profile/education");
+        navigate("/onboarding/education");
       }
     } catch (error: any) {
       console.error(error.response);
@@ -38,15 +57,6 @@ function useProfileCompletion() {
   const createParentsDetails = async (payload: Partial<FamilyDetails>) => {
     try {
       const response = await createParentalDetails(payload);
-      console.log(response);
-    } catch (error: any) {
-      console.error(error.response);
-    }
-  };
-
-  const completionStatus = async () => {
-    try {
-      const response = await getProfileCompletionStatus();
       console.log(response);
     } catch (error: any) {
       console.error(error.response);
@@ -63,13 +73,37 @@ function useProfileCompletion() {
     }
   };
 
+  const fetchProfileCompletionStatus = async () => {
+    try {
+      setFetchingStatus(true);
+      const response = await getProfileCompletionStatus();
+
+      setCompletionStatus(response);
+    } catch (error: unknown) {
+      console.error("Failed to fetch profile completion status:", error);
+    } finally {
+      setFetchingStatus(false);
+    }
+  };
+  // const getAddressDetails = async (pincode: string) => {
+  //   try {
+  //     const response = await getLocationPincode(pincode);
+  //     // console.log(response);
+  //     setAddress(response);
+  //   } catch (error) {
+  //     console.error(error.response);
+  //   }
+  // };
+
   return {
     createProfile,
     createParentsDetails,
-    completionStatus,
     getAddressDetails,
+    completionStatus,
 
     address,
+    fetchProfileCompletionStatus,
+    fetchingStatus,
   };
 }
 

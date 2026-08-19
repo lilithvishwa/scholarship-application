@@ -1,7 +1,7 @@
 import { Button, Icon, IconButton, Panel } from "@/shared/ui";
 import { useState } from "react";
 import EducationProfileForm from "../components/CompleteYourProfile/EducationProfileForm";
-import type { AcademicRecord } from "../types/profile.types";
+import type { AcademicRecord } from "../components/CompleteYourProfile/types/profile.types";
 import { StepFooter } from "@/features/scholarship/components";
 import useAcademicDetails from "../hooks/useAcademicDetails";
 

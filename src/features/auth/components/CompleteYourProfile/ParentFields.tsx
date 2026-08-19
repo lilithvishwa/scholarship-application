@@ -1,5 +1,5 @@
 import { Input, Select } from "@/shared/ui";
-import type { ParentDetails } from "../../types/profile.types";
+import type { ParentDetails } from "./types/profile.types";
 
 const OCCUPATION_OPTIONS = [
   { label: "Government Sector", value: "government sector" },

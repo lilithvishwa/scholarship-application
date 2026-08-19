@@ -22,6 +22,7 @@ import {
   HomePage,
   ScholarshipPage,
 } from "@/features/public/pages";
+import ProfileCompletionGuard from "./ProfileCompletionGuard";
 
 function AppRoutes() {
   return (
@@ -47,16 +48,18 @@ function AppRoutes() {
         </Route>
 
         {/* ================= PROTECTED ROUTES ================= */}
-
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout variant="authenticated" />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/scholarships" element={<p>Scholarship Page...</p>} />
-            <Route path="/profile">
-              <Route index element={<Navigate to="about" replace />} />
-              <Route path="about" element={<AboutYouPage />} />
-              <Route path="education" element={<EducationProfilePage />} />
-              <Route path="family-finance" element={<FamilyFinancePage />} />
+
+            {/*onBoarding profile completion check @ProfileCompletionGuard */}
+            <Route element={<ProfileCompletionGuard />}>
+              <Route path="/onboarding">
+                <Route path="about" element={<AboutYouPage />} />
+                <Route path="education" element={<EducationProfilePage />} />
+                <Route path="family-finance" element={<FamilyFinancePage />} />
+              </Route>
             </Route>
           </Route>
         </Route>

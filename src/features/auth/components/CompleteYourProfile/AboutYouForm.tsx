@@ -1,7 +1,7 @@
 import { StepFooter } from "@/features/scholarship/components";
 import { Button, Divider, Input, Select, Textarea } from "@/shared/ui";
 import { useEffect, useState } from "react";
-import type { AboutYouFormData } from "@/features/auth/types/profile.types";
+import type { AboutYouFormData } from "@/features/auth/components/CompleteYourProfile/types/profile.types";
 import useProfileCompletion from "../../hooks/useProfileCompletion";
 
 function AboutYouForm() {

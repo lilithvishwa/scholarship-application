@@ -1,6 +1,6 @@
 import { Button, CheckboxGroup, Divider, Input, Select } from "@/shared/ui";
 import { useState } from "react";
-import type { FamilyDetails } from "@/features/auth/types/profile.types";
+import type { FamilyDetails } from "@/features/auth/components/CompleteYourProfile/types/profile.types";
 import ParentFields from "./ParentFields";
 import { StepFooter } from "@/features/scholarship/components";
 import useProfileCompletion from "../../hooks/useProfileCompletion";

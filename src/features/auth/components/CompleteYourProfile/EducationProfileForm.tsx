@@ -2,10 +2,10 @@ import { StepFooter } from "@/features/scholarship/components";
 import { Button, CheckboxGroup, Input, Panel, Select } from "@/shared/ui";
 import SegmentedControl from "@/shared/ui/Buttons/SegmentedControl";
 import { useEffect, useState } from "react";
-import type { AcademicRecord, GradingSystem } from "../../types/profile.types";
-import { getYearOptions } from "@/utils/getYearOptions";
+import type { AcademicRecord, GradingSystem } from "./types/profile.types";
 import useAcademicDetails from "../../hooks/useAcademicDetails";
 import Autocomplete from "@/shared/ui/Inputs/AutoComplete";
+import { getYearOptions } from "@/utils/getYearOptions";
 
 interface EducationProfileFormProps {
   initialData?: AcademicRecord | null;

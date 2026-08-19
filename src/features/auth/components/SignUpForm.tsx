@@ -4,9 +4,16 @@ import type React from "react";
 import SuccessMessage from "./SuccessMessage";
 
 function SignUpForm() {
-  const { signupData, updateField, handleSignup, loading, error, success } =
-    useSignup();
-  console.log(error);
+  const {
+    signupData,
+    updateField,
+    handleSignup,
+    loading,
+    error,
+    success,
+    validationErrors,
+  } = useSignup();
+  console.log(signupData);
 
   return (
     <form className="space-y-4" onSubmit={handleSignup}>
@@ -14,39 +21,43 @@ function SignUpForm() {
 
       <Input
         label="Name"
-        placeholder="Enter your Name"
+        placeholder="Name"
         type="text"
         value={signupData.name}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           updateField("name", e.target.value)
         }
+        errorMessage={validationErrors?.name}
       />
       <Input
         label="Email Address"
-        placeholder="Enter your Email"
-        type="email"
+        placeholder="Email"
+        // type="email"
         value={signupData.email}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           updateField("email", e.target.value)
         }
+        errorMessage={validationErrors?.email}
       />
       <Input
         label="Password"
-        placeholder="********"
+        placeholder="Password"
         type="password"
         value={signupData.password}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           updateField("password", e.target.value)
         }
+        errorMessage={validationErrors?.password}
       />
       <Input
         label="Confirm Password"
-        placeholder="********"
+        placeholder="Password"
         type="password"
-        value={signupData.confirm_password}
+        value={signupData.confirmPassword}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          updateField("confirm_password", e.target.value)
+          updateField("confirmPassword", e.target.value)
         }
+        errorMessage={validationErrors?.confirmPassword}
       />
       {error && <p className="text-error disclaimer-text">{error}</p>}
       <Button type="submit">

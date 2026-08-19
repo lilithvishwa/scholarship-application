@@ -14,7 +14,10 @@ import {
   getCollegeDetails,
   updateAcademicDetails,
 } from "../services/profile-completion.service";
-import type { AcademicRecord, College } from "../types/profile.types";
+import type {
+  AcademicRecord,
+  College,
+} from "../components/CompleteYourProfile/types/profile.types";
 import { useNavigate } from "react-router-dom";
 import { getApiError } from "@/utils/get-api-error";
 
@@ -31,7 +34,7 @@ function useAcademicDetails() {
       console.log("Educational Details");
       console.log(response);
       setEducationalDetails(response ?? []);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error.response);
     }
   }, []);
@@ -56,7 +59,7 @@ function useAcademicDetails() {
       console.log("Academics Status");
       console.log(response);
       if (response) {
-        navigate("/profile/family-finance");
+        navigate("/onboarding/family-finance");
       }
     } catch (error: any) {
       const { error_code } = getApiError(error);
@@ -70,7 +73,7 @@ function useAcademicDetails() {
     try {
       const response = await getCollegeDetails(collegeId);
       setColleges(response?.colleges ?? []);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error.response);
     }
   };
