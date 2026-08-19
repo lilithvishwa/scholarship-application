@@ -17,7 +17,7 @@ export interface AboutYouFormData {
 export type GradingSystem = "percentage" | "cgpa";
 
 export interface AcademicRecord {
-  id: string;
+  id?: string;
   levelOfEducation: string;
   registerNumber: string;
   institutionName: string;
@@ -27,6 +27,7 @@ export interface AcademicRecord {
   currentSemester: string;
   gradingSystem: GradingSystem;
   score: string;
+  currentlyEnrolled: boolean;
 }
 
 export interface ParentDetails {
@@ -47,4 +48,9 @@ export interface FamilyDetails {
   mother: ParentDetails;
   guardian: GuardianDetails;
   annualFamilyIncome: string;
+}
+
+export interface College {
+  name: string;
+  university: string;
 }

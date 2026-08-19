@@ -2,11 +2,10 @@ import { Input, Select } from "@/shared/ui";
 import type { ParentDetails } from "../../types/profile.types";
 
 const OCCUPATION_OPTIONS = [
-  "Farmer",
-  "Daily Wages",
-  "Police",
-  "Doctor",
-  "Actor",
+  { label: "Government Sector", value: "government sector" },
+  { label: "Private Sector", value: "private sector" },
+  { label: "Self-Employed", value: "self-employed" },
+  { label: "Other", value: "other" },
 ];
 
 interface ParentFieldsProps {

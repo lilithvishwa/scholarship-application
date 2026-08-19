@@ -30,8 +30,13 @@ export const PROFILE_COMPLETION_ENDPOINTS = {
   ACADEMIC_STATUS: "/api/profile-completion/academic-details/status",
   ACADEMIC_DETAILS: "/api/profile-completion/academic-details",
   CREATE_ACADEMIC: "/api/profile-completion/academic-details/create",
-  UPDATE_ACADEMIC: "/api/profile-completion/academic-details/update",
+  UPDATE_ACADEMIC: (levelOfEducation: string) =>
+    `/api/profile-completion/academic-details/update/${levelOfEducation}`,
   DELETE_ACADEMIC: (levelOfEducation: string) =>
     `/api/profile-completion/academic-details/delete/${levelOfEducation}`,
   COMPLETION_STATUS: "/api/profile-completion/status",
+  LOCATION_PINCODE: (pincode: string) =>
+    `/api/profile-completion/pincode/${pincode}`,
+  COLLEGE_NAME: (collegeName: string) =>
+    `/api/profile-completion/college/${collegeName}`,
 } as const;

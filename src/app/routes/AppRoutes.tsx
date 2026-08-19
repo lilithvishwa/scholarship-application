@@ -43,7 +43,7 @@ function AppRoutes() {
             path="/different-signin-method"
             element={<SignInMethodPage />}
           />
-          <Route path="/set-up-password" element={<SetPasswordPage />} />
+          <Route path="/set-password" element={<SetPasswordPage />} />
         </Route>
 
         {/* ================= PROTECTED ROUTES ================= */}

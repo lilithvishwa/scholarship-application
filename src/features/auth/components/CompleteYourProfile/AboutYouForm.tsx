@@ -1,12 +1,10 @@
 import { StepFooter } from "@/features/scholarship/components";
 import { Button, Divider, Input, Select, Textarea } from "@/shared/ui";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import type { AboutYouFormData } from "@/features/auth/types/profile.types";
 import useProfileCompletion from "../../hooks/useProfileCompletion";
 
 function AboutYouForm() {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState<AboutYouFormData>({
     dob: "",
     gender: "",
@@ -18,11 +16,20 @@ function AboutYouForm() {
     district: "",
     state: "",
     pincode: "",
-    country: "",
+    country: "india",
   });
-  // console.log(formData);
+  console.log(formData);
 
-  const { createProfile } = useProfileCompletion();
+  const { createProfile, getAddressDetails, address } = useProfileCompletion();
+  console.log(address);
+  console.log(address.city);
+
+  useEffect(() => {
+    if (formData.pincode.length === 6) {
+      console.log("Api Called");
+      getAddressDetails(formData.pincode);
+    }
+  }, [formData.pincode]);
 
   const handleSubmit = () => {
     createProfile(formData);
@@ -104,44 +111,6 @@ function AboutYouForm() {
         <div className="flex gap-4">
           <div className="flex-1">
             <Input
-              label="City *"
-              placeholder="Enter City "
-              className="rounded-sm"
-              disabled
-              value={formData.city}
-              onChange={(e) =>
-                setFormData({ ...formData, city: e.target.value })
-              }
-            />
-          </div>
-          <div className="flex-1">
-            <Input
-              label="District *"
-              placeholder="Enter District"
-              className="rounded-sm"
-              disabled
-              value={formData.district}
-              onChange={(e) =>
-                setFormData({ ...formData, district: e.target.value })
-              }
-            />
-          </div>
-        </div>
-        <div className="flex gap-4">
-          <div className="flex-1">
-            <Input
-              label="State *"
-              placeholder="Select State "
-              className="rounded-sm"
-              disabled
-              value={formData.state}
-              onChange={(e) =>
-                setFormData({ ...formData, state: e.target.value })
-              }
-            />
-          </div>
-          <div className="flex-1">
-            <Input
               label="Pincode *"
               placeholder="000000"
               className="rounded-sm"
@@ -151,11 +120,62 @@ function AboutYouForm() {
               }
             />
           </div>
+          <div className="flex-1">
+            {/*<Input
+              label="City *"
+              placeholder="Enter City "
+              className="rounded-sm"
+              value={formData.city}
+              onChange={(e) =>
+                setFormData({ ...formData, city: e.target.value })
+              }
+            />*/}
+
+            <Select
+              label="City *"
+              placeholder="Select City "
+              options={address?.city.map((city) => ({
+                label: city,
+                value: city,
+              }))}
+              value={formData.city}
+              onChange={(value) => setFormData({ ...formData, city: value })}
+            />
+          </div>
+        </div>
+        <div className="flex gap-4">
+          <div className="flex-1">
+            <Input
+              label="District *"
+              placeholder="Enter District"
+              className="rounded-sm"
+              disabled
+              value={address.district}
+              onChange={(e) =>
+                setFormData({ ...formData, district: e.target.value })
+              }
+            />
+          </div>
+          <div className="flex-1">
+            <Input
+              label="State *"
+              placeholder="Select State "
+              className="rounded-sm"
+              disabled
+              value={address.state}
+              onChange={(e) =>
+                setFormData({ ...formData, state: e.target.value })
+              }
+            />
+          </div>
         </div>
         <Select
           label="Country *"
-          placeholder="Select Country"
-          options={[{ value: "india", label: "India" }]}
+          placeholder=""
+          options={[
+            { value: "india", label: "India" },
+            { value: "china", label: "China" },
+          ]}
           value={formData.country}
           onChange={(e) => setFormData({ ...formData, country: e })}
         />

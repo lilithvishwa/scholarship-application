@@ -1,18 +1,26 @@
 // Responsible for:
+// Personal details
+// Parental details
+// Completion status
 
 import { useNavigate } from "react-router-dom";
 import {
   createParentalDetails,
   createPersonalDetails,
+  getLocationPincode,
+  getProfileCompletionStatus,
 } from "../services/profile-completion.service";
 import type { AboutYouFormData, FamilyDetails } from "../types/profile.types";
-
-// Personal details
-// Parental details
-// Completion status
+import { useState } from "react";
 
 function useProfileCompletion() {
   const navigate = useNavigate();
+  const [address, setAddress] = useState({
+    city: [],
+    district: "",
+    state: "",
+    pincode: "",
+  });
 
   const createProfile = async (payload: AboutYouFormData) => {
     console.log(payload);
@@ -22,15 +30,34 @@ function useProfileCompletion() {
       if (response) {
         navigate("/profile/education");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error.response);
     }
   };
 
-  const createParentsDetails = async (payload: FamilyDetails) => {
+  const createParentsDetails = async (payload: Partial<FamilyDetails>) => {
     try {
       const response = await createParentalDetails(payload);
       console.log(response);
+    } catch (error: any) {
+      console.error(error.response);
+    }
+  };
+
+  const completionStatus = async () => {
+    try {
+      const response = await getProfileCompletionStatus();
+      console.log(response);
+    } catch (error: any) {
+      console.error(error.response);
+    }
+  };
+
+  const getAddressDetails = async (pincode: string) => {
+    try {
+      const response = await getLocationPincode(pincode);
+      // console.log(response);
+      setAddress(response);
     } catch (error) {
       console.error(error.response);
     }
@@ -39,6 +66,10 @@ function useProfileCompletion() {
   return {
     createProfile,
     createParentsDetails,
+    completionStatus,
+    getAddressDetails,
+
+    address,
   };
 }
 

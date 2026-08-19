@@ -1,4 +1,4 @@
-import { Button, Icon, Panel } from "@/shared/ui";
+import { Button, Icon, IconButton, Panel } from "@/shared/ui";
 import { useState } from "react";
 import EducationProfileForm from "../components/CompleteYourProfile/EducationProfileForm";
 import type { AcademicRecord } from "../types/profile.types";
@@ -7,18 +7,52 @@ import useAcademicDetails from "../hooks/useAcademicDetails";
 
 function EducationProfilePage() {
   const [openForm, setOpenForm] = useState(false);
-  const { educationalDetails, createEducationDetails, getEducationDetails } =
-    useAcademicDetails();
+  const [editingRecord, setEditingRecord] = useState<AcademicRecord | null>(
+    null,
+  );
+  const {
+    educationalDetails,
+    createEducationDetails,
+    getEducationDetails,
+    getAcademicsStatus,
+    error,
+    updateEducationDetails,
+    deleteEducationDetails,
+  } = useAcademicDetails();
+
+  const handleAddRecord = () => {
+    setEditingRecord(null);
+    setOpenForm(true);
+  };
+
   const handleSaveRecord = async (record: AcademicRecord) => {
-    await createEducationDetails(record);
+    if (editingRecord) {
+      await updateEducationDetails(editingRecord.levelOfEducation, record);
+    } else {
+      await createEducationDetails(record);
+    }
+
+    setEditingRecord(null);
     setOpenForm(false);
+  };
+
+  const handleEditRecord = (record: AcademicRecord) => {
+    setEditingRecord(record);
+    setOpenForm(true);
+  };
+
+  const handleDeleteRecord = async (levelOfEducation: string) => {
+    await deleteEducationDetails(levelOfEducation);
   };
 
   const handleCancel = async () => {
     setOpenForm(false);
     await getEducationDetails();
   };
-  console.log(educationalDetails);
+
+  const handleContinue = async () => {
+    await getAcademicsStatus();
+  };
 
   return (
     <section className="flex items-center justify-center px-10 py-8 gap-6">
@@ -31,16 +65,43 @@ function EducationProfilePage() {
           </p>
         </div>
 
-        {!openForm && educationalDetails.length === 0 && (
+        {educationalDetails.length > 0 && (
           <div className="space-y-4">
-            {educationalDetails.map((record) => (
+            {educationalDetails.map((record, index) => (
               <Panel
-                key={record.id}
+                key={index}
                 variant="outlined"
                 widthClass="w-full"
-                paddingClass="p-6"
+                paddingClass="p-5"
               >
                 <div className="space-y-1">
+                  <div className="relative">
+                    <div className="absolute right-0 flex gap-2 text-muted ">
+                      <div className="pointer-events-auto">
+                        <IconButton
+                          icon="material-symbols:edit-outline"
+                          size={20}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditRecord(record);
+                          }}
+                          className="hover:text-action-blue"
+                        />
+                      </div>
+
+                      <div className="pointer-events-auto">
+                        <IconButton
+                          icon="material-symbols:delete-outline"
+                          size={20}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteRecord(record.levelOfEducation);
+                          }}
+                          className="hover:text-red-800"
+                        />
+                      </div>
+                    </div>
+                  </div>
                   <h1 className="field-group-heading">
                     {record.levelOfEducation}
                   </h1>
@@ -56,20 +117,23 @@ function EducationProfilePage() {
                 </div>
               </Panel>
             ))}
+            {error && <p className="text-error disclaimer-text">{error}</p>}
           </div>
         )}
 
-        {!openForm && (
+        {!openForm && educationalDetails.length < 5 && (
           <Button
             variant="outline"
             children="+ Add Academic Record"
             className="reference-id"
-            onClick={() => setOpenForm(true)}
+            onClick={handleAddRecord}
           />
         )}
 
         {openForm ? (
           <EducationProfileForm
+            initialData={editingRecord}
+
             onSave={handleSaveRecord}
             onCancel={handleCancel}
           />
@@ -81,9 +145,7 @@ function EducationProfilePage() {
                 children="Save & Continue"
                 fullWidth={false}
                 className="cursor-pointer"
-                // onClick={() => navigate("/profile/complete/family-finance")}
-                // onClick={handleSubmit}
-                onClick={() => {}}
+                onClick={handleContinue}
               />
             }
           />

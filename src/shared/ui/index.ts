@@ -8,6 +8,7 @@ export { default as Select } from "./Inputs/Select.tsx";
 export { default as RadioGroup } from "./Inputs/Radio.tsx";
 export { default as CheckboxGroup } from "./Inputs/CheckboxGroup.tsx";
 export { default as FileUpload } from "./Inputs/FileUpload.tsx";
+export { default as AutoComplete } from "./Inputs/AutoComplete.tsx";
 
 // icon export
 export { default as Icon } from "./Icon/Icon.tsx";

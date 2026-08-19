@@ -3,6 +3,8 @@ import { useState } from "react";
 import type { FamilyDetails } from "@/features/auth/types/profile.types";
 import ParentFields from "./ParentFields";
 import { StepFooter } from "@/features/scholarship/components";
+import useProfileCompletion from "../../hooks/useProfileCompletion";
+import { useNavigate } from "react-router-dom";
 
 const INITIAL_FAMILY_DETAILS: FamilyDetails = {
   father: {
@@ -33,6 +35,9 @@ function FamilyDetailsForm() {
     INITIAL_FAMILY_DETAILS,
   );
   console.log(formData);
+  const { createParentsDetails } = useProfileCompletion();
+  const navigate = useNavigate();
+
   const toggleParentStatus = (parent: "father" | "mother") => {
     setFormData((prev) => ({
       ...prev,
@@ -68,6 +73,43 @@ function FamilyDetailsForm() {
         [field]: value,
       },
     }));
+  };
+
+  const withCountryCode = (mobile: string) => {
+    const cleanedMobile = mobile.replace(/\D/g, "");
+    return cleanedMobile ? `+91${cleanedMobile}` : "";
+  };
+
+  const handleSubmit = async () => {
+    const payload: Partial<FamilyDetails> = {
+      annualFamilyIncome: formData.annualFamilyIncome,
+    };
+
+    if (!formData.father.isNotApplicable) {
+      payload.father = {
+        ...formData.father,
+        mobile: withCountryCode(formData.father.mobile),
+      };
+    }
+
+    if (!formData.mother.isNotApplicable) {
+      payload.mother = {
+        ...formData.mother,
+        mobile: withCountryCode(formData.mother.mobile),
+      };
+    }
+
+    if (showGuardian) {
+      payload.guardian = {
+        ...formData.guardian,
+        mobile: withCountryCode(formData.guardian.mobile),
+      };
+    }
+
+    await createParentsDetails(payload);
+    // await completionStatus();
+
+    navigate("/dashboard");
   };
 
   const showGuardian =
@@ -139,11 +181,10 @@ function FamilyDetailsForm() {
                   label="Occupation *"
                   placeholder="Select Occupation"
                   options={[
-                    "Farmer",
-                    "Daily Wages",
-                    "Police",
-                    "Doctor",
-                    "Actor",
+                    { label: "Government Sector", value: "government sector" },
+                    { label: "Private Sector", value: "private sector" },
+                    { label: "Self-Employed", value: "self-employed" },
+                    { label: "Other", value: "other" },
                   ]}
                   value={formData.guardian.occupation}
                   onChange={(e) => updateGuardianField(e, "occupation")}
@@ -172,10 +213,11 @@ function FamilyDetailsForm() {
           label="Annual Family Income *"
           placeholder="Select Annual Income"
           options={[
-            "Below 1 Lakhs",
-            "1 Lakhs - 5 Lakhs",
-            "5 Lakhs - 10 Lakhs",
-            "Above 10 Lakhs",
+            { label: "Below 1 Lakhs", value: "below ₹1,00,000" },
+            { label: "1 Lakhs - 2.5 Lakhs", value: "₹1,00,000 – ₹2,50,000" },
+            { label: "2.5 Lakhs - 5 Lakhs", value: "₹2,50,000 – ₹5,00,000" },
+            { label: "5 Lakhs - 8 Lakhs", value: "₹5,00,000 – ₹8,00,000" },
+            { label: "Above 8 Lakhs", value: "above ₹8,00,000" },
           ]}
           value={formData.annualFamilyIncome}
           onChange={(e) =>
@@ -192,7 +234,7 @@ function FamilyDetailsForm() {
           <Button
             children="Save & Finish"
             fullWidth={false}
-            onClick={() => {}}
+            onClick={handleSubmit}
           />
         }
       />

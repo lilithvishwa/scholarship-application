@@ -16,7 +16,9 @@ export const createPersonalDetails = async (payload: AboutYouFormData) => {
   return response.data;
 };
 
-export const createParentalDetails = async (payload: FamilyDetails) => {
+export const createParentalDetails = async (
+  payload: Partial<FamilyDetails>,
+) => {
   const response = await apiClient.post(
     PROFILE_COMPLETION_ENDPOINTS.PARENTAL_DETAILS,
     payload,
@@ -50,9 +52,12 @@ export const createAcademicDetail = async (payload: AcademicRecord) => {
   return response.data;
 };
 
-export const updateAcademicDetails = async (payload: AcademicRecord) => {
+export const updateAcademicDetails = async (
+  levelOfEducation: string,
+  payload: AcademicRecord,
+) => {
   const response = await apiClient.patch(
-    PROFILE_COMPLETION_ENDPOINTS.UPDATE_ACADEMIC,
+    PROFILE_COMPLETION_ENDPOINTS.UPDATE_ACADEMIC(levelOfEducation),
     payload,
   );
 
@@ -70,6 +75,22 @@ export const deleteAcademicDetails = async (levelOfEducation: string) => {
 export const getProfileCompletionStatus = async () => {
   const response = await apiClient.get(
     PROFILE_COMPLETION_ENDPOINTS.COMPLETION_STATUS,
+  );
+
+  return response.data;
+};
+
+export const getLocationPincode = async (pincode: string) => {
+  const response = await apiClient.get(
+    PROFILE_COMPLETION_ENDPOINTS.LOCATION_PINCODE(pincode),
+  );
+
+  return response.data;
+};
+
+export const getCollegeDetails = async (collegeName: string) => {
+  const response = await apiClient.get(
+    PROFILE_COMPLETION_ENDPOINTS.COLLEGE_NAME(collegeName),
   );
 
   return response.data;
