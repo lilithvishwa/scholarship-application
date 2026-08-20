@@ -6,7 +6,6 @@ import type { AcademicRecord, GradingSystem } from "./types/profile.types";
 import useAcademicDetails from "../../hooks/useAcademicDetails";
 import Autocomplete from "@/shared/ui/Inputs/AutoComplete";
 import { getYearOptions } from "@/utils/getYearOptions";
-import { is } from "zod/v4/locales";
 
 interface EducationProfileFormProps {
   initialData?: AcademicRecord | null;

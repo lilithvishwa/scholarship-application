@@ -61,8 +61,8 @@ export function useLogin() {
       await fetchCurrentUser();
       navigate("/dashboard");
       localStorage.setItem("pendingLogin", "password");
-    } catch (err: unknown) {
-      const { status, error_code, message } = getApiError(err);
+    } catch (err: any) {
+      const { status, error_code } = getApiError(err);
 
       console.error(err.response);
       if (error_code === ERROR_CODES.PASSWORD_NOT_FOUND) {
