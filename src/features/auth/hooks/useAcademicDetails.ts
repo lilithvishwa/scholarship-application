@@ -21,21 +21,38 @@ import type {
 import { useNavigate } from "react-router-dom";
 import { getApiError } from "@/utils/get-api-error";
 
+type LoadingState = {
+  createEducationDetails: boolean;
+  getEducationDetails: boolean;
+  getAcademicDetails: boolean;
+  getCollege: boolean;
+  updateEducationDetails: boolean;
+};
+
 function useAcademicDetails() {
   const [educationalDetails, setEducationalDetails] = useState<
     AcademicRecord[]
   >([]);
   const [colleges, setColleges] = useState<College[]>([]);
+  const [loading, setLoading] = useState<LoadingState>({
+    createEducationDetails: false,
+    getEducationDetails: false,
+    getAcademicDetails: false,
+    getCollege: false,
+    updateEducationDetails: false,
+  });
 
   const [error, setError] = useState("");
   const getEducationDetails = useCallback(async () => {
     try {
       const response = await getAcademicDetails();
-      console.log("Educational Details");
-      console.log(response);
+      // console.log("Educational Details");
+      // console.log(response);
       setEducationalDetails(response ?? []);
     } catch (error: any) {
       console.error(error.response);
+    } finally {
+      setLoading((prev) => ({ ...prev, getEducationDetails: false }));
     }
   }, []);
 
@@ -43,6 +60,7 @@ function useAcademicDetails() {
 
   const createEducationDetails = async (payload: AcademicRecord) => {
     try {
+      setLoading((prev) => ({ ...prev, createEducationDetails: true }));
       const response = await createAcademicDetail(payload);
       console.log("Created response");
       console.log(response);
@@ -50,11 +68,13 @@ function useAcademicDetails() {
     } catch (err: any) {
       console.error(err.response);
     } finally {
+      setLoading((prev) => ({ ...prev, createEducationDetails: false }));
     }
   };
 
   const getAcademicsStatus = async () => {
     try {
+      setLoading((prev) => ({ ...prev, getAcademicDetails: true }));
       const response = await getAcademicStatus();
       console.log("Academics Status");
       console.log(response);
@@ -67,14 +87,20 @@ function useAcademicDetails() {
         setError("Academic Details with Enrollment not found");
       }
       console.error(error.response);
+    } finally {
+      setLoading((prev) => ({ ...prev, getAcademicDetails: false }));
     }
   };
+
   const getCollege = async (collegeId: string) => {
     try {
+      setLoading((prev) => ({ ...prev, getCollege: true }));
       const response = await getCollegeDetails(collegeId);
       setColleges(response?.colleges ?? []);
     } catch (error: any) {
       console.error(error.response);
+    } finally {
+      setLoading((prev) => ({ ...prev, getCollege: false }));
     }
   };
 
@@ -83,12 +109,15 @@ function useAcademicDetails() {
     payload: AcademicRecord,
   ) => {
     try {
+      setLoading((prev) => ({ ...prev, updateEducationDetails: true }));
       const response = await updateAcademicDetails(levelOfEducation, payload);
       console.log("Edited response");
       console.log(response);
       await getEducationDetails();
     } catch (error: any) {
       console.error(error.response);
+    } finally {
+      setLoading((prev) => ({ ...prev, updateEducationDetails: false }));
     }
   };
 
@@ -115,6 +144,7 @@ function useAcademicDetails() {
     error,
     getCollege,
     colleges,
+    loading,
     updateEducationDetails,
     deleteEducationDetails,
   };

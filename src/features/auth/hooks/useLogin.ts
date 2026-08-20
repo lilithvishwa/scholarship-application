@@ -63,31 +63,24 @@ export function useLogin() {
       localStorage.setItem("pendingLogin", "password");
     } catch (err: unknown) {
       const { status, error_code, message } = getApiError(err);
-      let errorMessage = "Unable to login. Please try again later.";
 
-      if (status === HTTP_STATUS.UNAUTHORIZED) {
-        if (error_code === ERROR_CODES.INVALID_CREDENTIALS) {
-          console.log(message);
-          if (message === "Incorrect Email or Password.") {
-            errorMessage = "Incorrect email or password.";
-          } else {
-            errorMessage =
-              "Your email address hasn't been verified. Please verify your email before login.";
-          }
-        }
+      console.error(err.response);
+      if (error_code === ERROR_CODES.PASSWORD_NOT_FOUND) {
+        navigate("/different-sign-in-method");
+        localStorage.setItem("email", loginData.email);
       }
+
+      let errorMessage = "Unable to login. Please try again later.";
+      console.log(error_code);
       if (status === HTTP_STATUS.UNPROCESSABLE_ENTITY) {
         errorMessage = "Please enter a valid email and password.";
+      } else if (error_code === ERROR_CODES.INVALID_CREDENTIALS) {
+        errorMessage = "Invalid Email or Password.";
+      } else if (error_code === ERROR_CODES.EMAIL_NOT_VERIFIED) {
+        errorMessage =
+          "Your Email Address hasn't been verified yet. Please verify your email before login.";
       }
 
-      if (status === HTTP_STATUS.NOT_FOUND) {
-        if (error_code === ERROR_CODES.PASSWORD_NOT_FOUND) {
-          navigate("/different-signin-method");
-          localStorage.setItem("email", loginData.email);
-        } else {
-          errorMessage = "Invalid Email or Password.";
-        }
-      }
       setError(errorMessage);
     } finally {
       setIsLoading(false);

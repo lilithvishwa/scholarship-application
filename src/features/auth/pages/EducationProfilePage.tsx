@@ -18,7 +18,13 @@ function EducationProfilePage() {
     error,
     updateEducationDetails,
     deleteEducationDetails,
+    loading,
   } = useAcademicDetails();
+
+  const {
+    updateEducationDetails: isUpdating,
+    createEducationDetails: isCreating,
+  } = loading;
 
   const handleAddRecord = () => {
     setEditingRecord(null);
@@ -133,16 +139,20 @@ function EducationProfilePage() {
         {openForm ? (
           <EducationProfileForm
             initialData={editingRecord}
-
             onSave={handleSaveRecord}
             onCancel={handleCancel}
+            isUpdating={isUpdating}
+            isCreating={isCreating}
+            existingRecords={educationalDetails}
           />
         ) : (
           <StepFooter
-            step="Step 2 of 3"
+            step="Step 2 of 4"
             action={
               <Button
-                children="Save & Continue"
+                children={
+                  loading.getAcademicDetails ? "Saving..." : "Save & Continue"
+                }
                 fullWidth={false}
                 className="cursor-pointer"
                 onClick={handleContinue}

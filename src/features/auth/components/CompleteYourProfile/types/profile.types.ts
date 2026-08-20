@@ -24,7 +24,7 @@ export interface AcademicRecord {
   boardUniversity: string;
   courseStreamSpecialization: string;
   yearOfPassing: string;
-  currentSemester: string;
+  currentSemester: number;
   gradingSystem: GradingSystem;
   score: string;
   currentlyEnrolled: boolean;

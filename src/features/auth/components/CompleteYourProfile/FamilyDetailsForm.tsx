@@ -35,7 +35,7 @@ function FamilyDetailsForm() {
     INITIAL_FAMILY_DETAILS,
   );
   console.log(formData);
-  const { createParentsDetails } = useProfileCompletion();
+  const { createParentsDetails, loading } = useProfileCompletion();
   const navigate = useNavigate();
 
   const toggleParentStatus = (parent: "father" | "mother") => {
@@ -229,10 +229,12 @@ function FamilyDetailsForm() {
         />{" "}
       </div>
       <StepFooter
-        step="Step 3 of 3"
+        step="Step 3 of 4"
         action={
           <Button
-            children="Save & Finish"
+            children={
+              loading.createParentsDetails ? "Saving..." : "Save & Continue"
+            }
             fullWidth={false}
             onClick={handleSubmit}
           />

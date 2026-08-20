@@ -20,7 +20,8 @@ function AboutYouForm() {
   });
   console.log(formData);
 
-  const { createProfile, getAddressDetails, address } = useProfileCompletion();
+  const { createProfile, getAddressDetails, address, loading } =
+    useProfileCompletion();
   console.log(address);
   console.log(address.city);
 
@@ -121,16 +122,6 @@ function AboutYouForm() {
             />
           </div>
           <div className="flex-1">
-            {/*<Input
-              label="City *"
-              placeholder="Enter City "
-              className="rounded-sm"
-              value={formData.city}
-              onChange={(e) =>
-                setFormData({ ...formData, city: e.target.value })
-              }
-            />*/}
-
             <Select
               label="City *"
               placeholder="Select City "
@@ -181,10 +172,10 @@ function AboutYouForm() {
         />
       </div>
       <StepFooter
-        step="Step 1 of 3"
+        step="Step 1 of 4"
         action={
           <Button
-            children="Save & Continue"
+            children={loading.createProfile ? "Saving..." : "Save & Continue"}
             fullWidth={false}
             className="cursor-pointer"
             onClick={handleSubmit}

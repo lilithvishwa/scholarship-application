@@ -16,14 +16,18 @@ import type {
 } from "@/features/auth/components/CompleteYourProfile/types/profile.types";
 import { useState } from "react";
 
-// Personal details
-// Parental details
-// Completion status
 interface CompletionStatusResponse {
   personalDetails: boolean;
   academicDetails: boolean;
   parentalDetails: boolean;
 }
+
+type LoadingState = {
+  createProfile: boolean;
+  createParentsDetails: boolean;
+  getAddressDetails: boolean;
+};
+
 function useProfileCompletion() {
   const [completionStatus, setCompletionStatus] =
     useState<CompletionStatusResponse>({
@@ -32,6 +36,11 @@ function useProfileCompletion() {
       parentalDetails: false,
     });
   const [fetchingStatus, setFetchingStatus] = useState(true);
+  const [loading, setLoading] = useState<LoadingState>({
+    createProfile: false,
+    createParentsDetails: false,
+    getAddressDetails: false,
+  });
 
   const navigate = useNavigate();
   const [address, setAddress] = useState({
@@ -44,6 +53,8 @@ function useProfileCompletion() {
   const createProfile = async (payload: AboutYouFormData) => {
     console.log(payload);
     try {
+      setLoading((prev) => ({ ...prev, createProfile: true }));
+
       const response = await createPersonalDetails(payload);
       console.log(response);
       if (response) {
@@ -51,25 +62,33 @@ function useProfileCompletion() {
       }
     } catch (error: any) {
       console.error(error.response);
+    } finally {
+      setLoading((prev) => ({ ...prev, createProfile: false }));
     }
   };
 
   const createParentsDetails = async (payload: Partial<FamilyDetails>) => {
     try {
+      setLoading((prev) => ({ ...prev, createParentsDetails: true }));
       const response = await createParentalDetails(payload);
       console.log(response);
     } catch (error: any) {
       console.error(error.response);
+    } finally {
+      setLoading((prev) => ({ ...prev, createParentsDetails: false }));
     }
   };
 
   const getAddressDetails = async (pincode: string) => {
     try {
+      setLoading((prev) => ({ ...prev, getAddressDetails: true }));
       const response = await getLocationPincode(pincode);
       // console.log(response);
       setAddress(response);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error.response);
+    } finally {
+      setLoading((prev) => ({ ...prev, getAddressDetails: false }));
     }
   };
 
@@ -85,15 +104,6 @@ function useProfileCompletion() {
       setFetchingStatus(false);
     }
   };
-  // const getAddressDetails = async (pincode: string) => {
-  //   try {
-  //     const response = await getLocationPincode(pincode);
-  //     // console.log(response);
-  //     setAddress(response);
-  //   } catch (error) {
-  //     console.error(error.response);
-  //   }
-  // };
 
   return {
     createProfile,
@@ -104,6 +114,7 @@ function useProfileCompletion() {
     address,
     fetchProfileCompletionStatus,
     fetchingStatus,
+    loading,
   };
 }
 

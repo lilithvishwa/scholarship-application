@@ -100,7 +100,7 @@ function Autocomplete({
             <Icon
               name="svg-spinners:ring-resize"
               size={18}
-              className="text-body-muted"
+              className="text-action-blue"
             />
           </span>
         )}
