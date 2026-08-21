@@ -5,6 +5,7 @@ import { Button, FileUpload, Icon } from "@/shared/ui";
 import { StepFooter } from "@/features/scholarship/components";
 import useProfileVerification from "../hooks/useProfileVerification";
 import { useNavigate } from "react-router-dom";
+import useProfileCompletion from "../hooks/useProfileCompletion";
 
 function VerifyIdentityPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -16,6 +17,7 @@ function VerifyIdentityPage() {
   } = useProfileVerification();
 
   const navigate = useNavigate();
+  const { fetchProfileCompletionStatus } = useProfileCompletion();
 
   const handleFileChange = (file: File | null) => {
     setSelectedFile(file);
@@ -40,7 +42,8 @@ function VerifyIdentityPage() {
     }
   };
 
-  const handleContinueToDashboard = () => {
+  const handleContinueToDashboard = async () => {
+    await fetchProfileCompletionStatus();
     navigate("/dashboard");
   };
 

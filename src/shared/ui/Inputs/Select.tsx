@@ -14,6 +14,7 @@ interface SelectProps {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
+  errorMessage?: string;
 }
 
 function Select({
@@ -24,6 +25,7 @@ function Select({
   placeholder = "Select",
   disabled = false,
   className = "",
+  errorMessage,
 }: SelectProps) {
   const [open, setOpen] = useState(false);
 
@@ -41,37 +43,45 @@ function Select({
   };
 
   return (
-    <div className={`relative ${className}`}>
-      {/* Select trigger */}
+    <div className="flex flex-col gap-2">
       <label className="caption text-ink">{label}</label>
-      <button
-        type="button"
-        disabled={disabled}
-        onClick={handleToggle}
-        className={`
-          flex h-10.5 w-full items-center justify-between
-          border border-hairline bg-transparent px-3
+
+      <div className={`relative ${className}`}>
+        {/* Select trigger */}
+        <button
+          type="button"
+          disabled={disabled}
+          onClick={handleToggle}
+          className={`
+          flex h-[40.7px] w-full items-center justify-between
+          border border-hairline px-3 rounded
           text-sm
-          ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}
+          ${disabled ? "cursor-not-allowed opacity-50 bg-card-border" : "bg-transparent cursor-pointer"}
         `}
-      >
-        <span className="truncate text-body-muted">
-          {selectedOption?.label ?? placeholder}
-        </span>
+        >
+          <span className="truncate text-body-muted">
+            {selectedOption?.label ?? placeholder}
+          </span>
 
-        <Icon
-          name="material-symbols:keyboard-arrow-down"
-          size={18}
-          className={`shrink-0 text-body-muted transition-transform ${
-            open ? "rotate-180" : ""
-          }`}
-        />
-      </button>
+          <Icon
+            name="material-symbols:keyboard-arrow-down"
+            size={18}
+            className={`shrink-0 text-body-muted transition-transform ${
+              open ? "rotate-180" : ""
+            }`}
+          />
+        </button>
 
-      {/* Dropdown */}
-      {open && !disabled && (
-        <div
-          className="
+        {errorMessage && (
+          <span className="absolute left-0 top-full mt-1.5 disclaimer-text text-error">
+            {errorMessage}
+          </span>
+        )}
+
+        {/* Dropdown */}
+        {open && !disabled && (
+          <div
+            className="
             absolute left-0 top-full z-50 mt-1
             max-h-60 w-full
             overflow-y-auto
@@ -79,16 +89,16 @@ function Select({
             bg-white
             shadow-md
           "
-        >
-          {options.map((option) => {
-            const isActive = option.value === value;
+          >
+            {options.map((option) => {
+              const isActive = option.value === value;
 
-            return (
-              <button
-                type="button"
-                key={option.value}
-                onClick={() => handleSelect(option)}
-                className={`
+              return (
+                <button
+                  type="button"
+                  key={option.value}
+                  onClick={() => handleSelect(option)}
+                  className={`
                   flex w-full items-center px-3 py-2
                   text-left text-sm
                   transition-colors
@@ -98,13 +108,14 @@ function Select({
                       : "text-ink hover:bg-gray-100"
                   }
                 `}
-              >
-                {option.label}
-              </button>
-            );
-          })}
-        </div>
-      )}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

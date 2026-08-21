@@ -39,7 +39,7 @@ export function useLogin() {
   const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
-    setValidationErrors({ email: "", password: "null" });
+    setValidationErrors({ email: "", password: "" });
     setIsLoading(true);
 
     const result = loginSchema.safeParse(loginData);
@@ -66,7 +66,7 @@ export function useLogin() {
 
       console.error(err.response);
       if (error_code === ERROR_CODES.PASSWORD_NOT_FOUND) {
-        navigate("/different-sign-in-method");
+        navigate("/different-signin-method");
         localStorage.setItem("email", loginData.email);
       }
 

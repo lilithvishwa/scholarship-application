@@ -1,10 +1,18 @@
-import { Button, CheckboxGroup, Divider, Input, Select } from "@/shared/ui";
 import { useState } from "react";
+
+import { Button, CheckboxGroup, Divider, Input, Select } from "@/shared/ui";
+
 import type { FamilyDetails } from "@/features/auth/components/CompleteYourProfile/types/profile.types";
+
 import ParentFields from "./ParentFields";
 import { StepFooter } from "@/features/scholarship/components";
+
 import useProfileCompletion from "../../hooks/useProfileCompletion";
-import { useNavigate } from "react-router-dom";
+
+import {
+  familyDetailsSchema,
+  type FamilyDetailsFormData,
+} from "../../schemas/familyDetails.schema";
 
 const INITIAL_FAMILY_DETAILS: FamilyDetails = {
   father: {
@@ -34,9 +42,13 @@ function FamilyDetailsForm() {
   const [formData, setFormData] = useState<FamilyDetails>(
     INITIAL_FAMILY_DETAILS,
   );
-  console.log(formData);
+
+  const [validationErrors, setValidationErrors] = useState<FamilyDetails>({});
+
   const { createParentsDetails, loading } = useProfileCompletion();
-  const navigate = useNavigate();
+
+  const showGuardian =
+    formData.father.isNotApplicable && formData.mother.isNotApplicable;
 
   const toggleParentStatus = (parent: "father" | "mother") => {
     setFormData((prev) => ({
@@ -45,6 +57,12 @@ function FamilyDetailsForm() {
         ...prev[parent],
         isNotApplicable: !prev[parent].isNotApplicable,
       },
+    }));
+
+    // Clear errors when parent is toggled
+    setValidationErrors((prev) => ({
+      ...prev,
+      [parent]: undefined,
     }));
   };
 
@@ -60,6 +78,14 @@ function FamilyDetailsForm() {
         [field]: value,
       },
     }));
+
+    setValidationErrors((prev) => ({
+      ...prev,
+      [parent]: {
+        ...prev[parent],
+        [field]: undefined,
+      },
+    }));
   };
 
   const updateGuardianField = (
@@ -73,14 +99,63 @@ function FamilyDetailsForm() {
         [field]: value,
       },
     }));
+
+    setValidationErrors((prev) => ({
+      ...prev,
+      guardian: {
+        ...prev.guardian,
+        [field]: undefined,
+      },
+    }));
   };
 
   const withCountryCode = (mobile: string) => {
     const cleanedMobile = mobile.replace(/\D/g, "");
+
     return cleanedMobile ? `+91${cleanedMobile}` : "";
   };
 
   const handleSubmit = async () => {
+    // Clear previous errors
+    setValidationErrors({});
+
+    const result = familyDetailsSchema.safeParse(formData);
+
+    if (!result.success) {
+      const errors: FamilyDetails = {};
+
+      result.error.issues.forEach((issue) => {
+        const [parent, field] = issue.path;
+
+        if (parent === "annualFamilyIncome") {
+          errors.annualFamilyIncome = issue.message;
+          return;
+        }
+
+        if (
+          parent === "father" ||
+          parent === "mother" ||
+          parent === "guardian"
+        ) {
+          if (!errors[parent]) {
+            errors[parent] = {};
+          }
+
+          if (
+            field === "name" ||
+            field === "occupation" ||
+            field === "mobile"
+          ) {
+            errors[parent][field] = issue.message;
+          }
+        }
+      });
+
+      setValidationErrors(errors);
+
+      return;
+    }
+
     const payload: Partial<FamilyDetails> = {
       annualFamilyIncome: formData.annualFamilyIncome,
     };
@@ -88,14 +163,14 @@ function FamilyDetailsForm() {
     if (!formData.father.isNotApplicable) {
       payload.father = {
         ...formData.father,
-        mobile: withCountryCode(formData.father.mobile),
+        mobile: withCountryCode(formData.father?.mobile),
       };
     }
 
     if (!formData.mother.isNotApplicable) {
       payload.mother = {
         ...formData.mother,
-        mobile: withCountryCode(formData.mother.mobile),
+        mobile: withCountryCode(formData.mother?.mobile),
       };
     }
 
@@ -106,20 +181,20 @@ function FamilyDetailsForm() {
       };
     }
 
-    await createParentsDetails(payload);
-    // await completionStatus();
-
-    navigate("/dashboard");
+    try {
+      await createParentsDetails(payload);
+    } catch (error) {
+      console.error("Failed to save family details:", error);
+    }
   };
-
-  const showGuardian =
-    formData.father.isNotApplicable && formData.mother.isNotApplicable;
 
   return (
     <div className="flex flex-col gap-5">
+      {/* Father */}
       <div className="flex flex-col gap-6">
         <div className="flex  items-center justify-between ">
           <h1 className="field-group-heading">Father's Details </h1>
+
           <CheckboxGroup
             label=""
             options={["Not Applicable / Deceased"]}
@@ -132,15 +207,20 @@ function FamilyDetailsForm() {
             disabled={false}
           />
         </div>
+
         {!formData.father.isNotApplicable && (
           <ParentFields
             parent="father"
             data={formData.father}
             onChange={updateParentField}
+            errors={validationErrors.father}
           />
         )}
       </div>
+
       <Divider />
+
+      {/* Mother */}
       <div className="flex flex-col gap-6">
         <div className="flex  items-center justify-between ">
           <h1 className="field-group-heading">Mother's Details </h1>
@@ -161,12 +241,17 @@ function FamilyDetailsForm() {
             parent="mother"
             data={formData.mother}
             onChange={updateParentField}
+            errors={validationErrors.mother}
           />
         )}
       </div>
+
       <Divider />
+
+      {/* Guardian */}
       <div className="flex flex-col gap-6">
         <h1 className="field-group-heading">Guardian's Details </h1>
+
         {showGuardian && (
           <>
             <Input
@@ -174,7 +259,9 @@ function FamilyDetailsForm() {
               placeholder="Enter Full Name"
               value={formData.guardian.name}
               onChange={(e) => updateGuardianField(e.target.value, "name")}
+              errorMessage={validationErrors.guardian?.name}
             />
+
             <div className="flex gap-4">
               <div className="flex-1">
                 <Select
@@ -188,6 +275,7 @@ function FamilyDetailsForm() {
                   ]}
                   value={formData.guardian.occupation}
                   onChange={(e) => updateGuardianField(e, "occupation")}
+                  errorMessage={validationErrors.guardian?.occupation}
                 />
               </div>
               <div className="flex-1">
@@ -200,13 +288,17 @@ function FamilyDetailsForm() {
                   onChange={(e) =>
                     updateGuardianField(e.target.value, "mobile")
                   }
+                  errorMessage={validationErrors.guardian?.mobile}
                 />
               </div>
             </div>
           </>
         )}
       </div>
+
       <Divider />
+
+      {/* Financial Information */}
       <div className="flex flex-col gap-6">
         <h1 className="field-group-heading">Financial Information</h1>
         <Select
@@ -226,18 +318,16 @@ function FamilyDetailsForm() {
               annualFamilyIncome: e,
             }))
           }
-        />{" "}
+          errorMessage={validationErrors.annualFamilyIncome}
+        />
       </div>
+
       <StepFooter
         step="Step 3 of 4"
         action={
-          <Button
-            children={
-              loading.createParentsDetails ? "Saving..." : "Save & Continue"
-            }
-            fullWidth={false}
-            onClick={handleSubmit}
-          />
+          <Button fullWidth={false} onClick={handleSubmit} type="button">
+            {loading.createParentsDetails ? "Saving..." : "Save & Continue"}
+          </Button>
         }
       />
     </div>

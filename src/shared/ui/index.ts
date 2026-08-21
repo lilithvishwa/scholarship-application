@@ -18,6 +18,7 @@ export { default as OAuthButton } from "./Buttons/OAuthButton.tsx";
 export { default as Button } from "./Buttons/Button.tsx";
 export { default as IconButton } from "./Buttons/IconButton.tsx";
 export { default as ToggleSwitch } from "./Buttons/ToggleSwitch.tsx";
+export { default as SegmentedControl } from "./Buttons/SegmentedControl.tsx";
 
 //Cards
 export { default as Panel } from "./Cards/Panel.tsx";

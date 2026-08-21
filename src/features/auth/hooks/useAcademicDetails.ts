@@ -20,6 +20,7 @@ import type {
 } from "../components/CompleteYourProfile/types/profile.types";
 import { useNavigate } from "react-router-dom";
 import { getApiError } from "@/utils/get-api-error";
+import useProfileCompletion from "./useProfileCompletion";
 
 type LoadingState = {
   createEducationDetails: boolean;
@@ -41,6 +42,8 @@ function useAcademicDetails() {
     getCollege: false,
     updateEducationDetails: false,
   });
+
+  const { fetchProfileCompletionStatus } = useProfileCompletion();
 
   const [error, setError] = useState("");
   const getEducationDetails = useCallback(async () => {
@@ -76,15 +79,16 @@ function useAcademicDetails() {
     try {
       setLoading((prev) => ({ ...prev, getAcademicDetails: true }));
       const response = await getAcademicStatus();
-      console.log("Academics Status");
-      console.log(response);
-      if (response) {
-        navigate("/onboarding/family-finance");
-      }
+      // console.log("Academics Status");
+      // console.log(response);
+      await fetchProfileCompletionStatus();
+      navigate("/onboarding");
     } catch (error: any) {
       const { error_code } = getApiError(error);
       if (error_code === "ACADEMIC_WITH_ENROLLMENTS_NOT_FOUND") {
-        setError("Academic Details with Enrollment not found");
+        setError(
+          "Currently pursuing education details are required. Please mark at least one academic record as currently pursuing.",
+        );
       }
       console.error(error.response);
     } finally {

@@ -8,6 +8,8 @@ function ProfileCompletionGuard() {
   const { fetchingStatus, completionStatus, fetchProfileCompletionStatus } =
     useProfileCompletion();
 
+  console.log("guardStatus...", completionStatus);
+
   useEffect(() => {
     fetchProfileCompletionStatus();
   }, []);
@@ -20,7 +22,7 @@ function ProfileCompletionGuard() {
     { key: "personalDetails", path: "/onboarding/about" },
     { key: "academicDetails", path: "/onboarding/education" },
     { key: "parentalDetails", path: "/onboarding/family-finance" },
-    // { key: "idDetails", path: "/onboarding/identity" },
+    { key: "idUploaded", path: "/onboarding/verify-identity" },
   ] as const;
 
   // finds the next false state key from api reponse state

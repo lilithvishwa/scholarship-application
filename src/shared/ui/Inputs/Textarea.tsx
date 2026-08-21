@@ -8,6 +8,7 @@ interface TextareaProps {
   disabled?: boolean;
   readOnly?: boolean;
   className?: string;
+  errorMessage?: string;
 }
 
 function Textarea({
@@ -18,9 +19,10 @@ function Textarea({
   rows = 2,
   readOnly,
   className,
+  errorMessage,
 }: TextareaProps) {
   return (
-    <div className="flex flex-col space-y-2 action-button">
+    <div className="flex flex-col gap-2 action-button">
       {label && <label className="caption text-ink">{label}</label>}
 
       <textarea
@@ -31,6 +33,9 @@ function Textarea({
         className={`border border-hairline bg-transparent px-4 py-2.5 resize-none focus:outline-none ${className}`}
         readOnly={readOnly}
       />
+      {errorMessage && (
+        <span className="disclaimer-text text-error">{errorMessage}</span>
+      )}
     </div>
   );
 }

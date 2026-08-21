@@ -9,7 +9,7 @@ function VerifyEmail() {
   console.log(token);
   const navigate = useNavigate();
 
-  const { status, retry } = useVerifyEmail(token);
+  const { status } = useVerifyEmail(token);
 
   const renderContent = () => {
     if (status === "verifying") {
@@ -36,12 +36,12 @@ function VerifyEmail() {
           </div>
           <h1 className="application-card-heading">Verification Successful</h1>
           <p className="body text-center  text-[#4D4D4D]">
-            Thank you for confirming your email. Your account is now active  and
+            Thank you for confirming your email. Your account is now active and
             ready to go.
           </p>
           <Button
             children="Continue to Dashboard"
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/onboarding")}
           />
         </div>
       );

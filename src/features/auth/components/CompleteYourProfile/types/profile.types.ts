@@ -1,10 +1,11 @@
+//createProfile
 export interface AboutYouFormData {
   dob: string;
   gender: string;
   nationality: string;
 
   phone: string;
-  alternatePhone: string;
+  alternatePhone?: string | null | undefined;
 
   street: string;
   city: string;
@@ -24,7 +25,7 @@ export interface AcademicRecord {
   boardUniversity: string;
   courseStreamSpecialization: string;
   yearOfPassing: string;
-  currentSemester: number;
+  currentSemester: number | null;
   gradingSystem: GradingSystem;
   score: string;
   currentlyEnrolled: boolean;
@@ -32,9 +33,9 @@ export interface AcademicRecord {
 
 export interface ParentDetails {
   isNotApplicable: boolean;
-  name: string;
-  occupation: string;
-  mobile: string;
+  name?: string;
+  occupation?: string;
+  mobile?: string | null;
 }
 
 export interface GuardianDetails {
@@ -59,4 +60,23 @@ export interface InitializeVerificationPayload {
   filename: string;
   fileSize: number;
   contentType: string;
+}
+export interface CompletionStatusResponse {
+  personalDetails: boolean;
+  academicDetails: boolean;
+  parentalDetails: boolean;
+  idUploaded: boolean;
+}
+
+export interface Address {
+  city: string[];
+  district: string;
+  state: string;
+  pincode: string;
+}
+
+export interface LoadingState {
+  createProfile: boolean;
+  createParentsDetails: boolean;
+  getAddressDetails: boolean;
 }
