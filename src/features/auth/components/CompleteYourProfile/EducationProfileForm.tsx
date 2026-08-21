@@ -7,6 +7,11 @@ import useAcademicDetails from "../../hooks/useAcademicDetails";
 import Autocomplete from "@/shared/ui/Inputs/AutoComplete";
 import { getYearOptions } from "@/utils/getYearOptions";
 
+import {
+  academicDetailsSchema,
+  type AcademicDetailsFormData,
+} from "../../schemas/academicDetails.schema";
+
 interface EducationProfileFormProps {
   initialData?: AcademicRecord | null;
   onSave: (record: AcademicRecord) => void;
@@ -24,7 +29,7 @@ const INITIAL_ACADEMIC_RECORD: AcademicRecord = {
   boardUniversity: "",
   courseStreamSpecialization: "",
   yearOfPassing: "",
-  currentSemester: 0,
+  currentSemester: null,
   gradingSystem: "percentage",
   score: "",
   currentlyEnrolled: false,
@@ -64,60 +69,125 @@ function EducationProfileForm({
   const [formData, setFormData] = useState<AcademicRecord>(
     initialData ?? INITIAL_ACADEMIC_RECORD,
   );
-  // console.log(formData);
+
+  const [validationErrors, setValidationErrors] = useState<
+    Partial<Record<keyof AcademicDetailsFormData, string>>
+  >({});
+
+  const { getCollege, colleges, loading } = useAcademicDetails();
+
+  /**
+   * Update form when editing an existing record.
+   */
+  useEffect(() => {
+    setFormData(initialData ?? INITIAL_ACADEMIC_RECORD);
+    setValidationErrors({});
+  }, [initialData]);
+
+  /**
+   * Filter already selected education levels.
+   */
   const educationLevelOptions = EDUCATION_LEVEL_OPTIONS.filter((option) => {
     if (initialData?.levelOfEducation === option.value) {
       return true;
     }
+
     return !existingRecords.some(
       (record) => record.levelOfEducation === option.value,
     );
   });
 
-  const { getCollege, colleges, loading } = useAcademicDetails();
+  /**
+   * Education levels where college autocomplete is required.
+   */
+  const searchableLevels = ["Undergraduate", "Postgraduate", "Research or PhD"];
+
+  /**
+   * Whether current education is school level.
+   */
+  const isSchool =
+    formData.levelOfEducation === "10th Grade" ||
+    formData.levelOfEducation === "12th or Diploma";
+
+  /**
+   * Search colleges with debounce.
+   */
 
   useEffect(() => {
-    setFormData(initialData ?? INITIAL_ACADEMIC_RECORD);
-  }, [initialData]);
-
-  useEffect(() => {
-    const searchableLevels = [
-      "Undergraduate",
-      "Postgraduate",
-      "Research or PhD",
-    ];
-
-    // Don't search colleges for 10th / 12th
     if (!searchableLevels.includes(formData.levelOfEducation)) {
       return;
     }
 
     const search = formData.institutionName.trim();
+
     if (!search) {
       return;
     }
-    const debounce = setTimeout(() => {
+
+    const timeout = setTimeout(() => {
       getCollege(search);
     }, 500);
-    return () => clearTimeout(debounce);
-  }, [formData.institutionName]);
 
-  const collegeOptions = colleges?.map((college) => ({
-    value: college.name,
-    label: college.name,
-    university: college.university,
-  }));
+    return () => clearTimeout(timeout);
+  }, [formData.institutionName, formData.levelOfEducation]);
+
+  /**
+   * College autocomplete options.
+   */
+  const collegeOptions =
+    colleges?.map((college) => ({
+      value: college.name,
+      label: college.name,
+      university: college.university,
+    })) ?? [];
 
   const yearOptions = getYearOptions();
+
+  /**
+   * Generic form field updater.
+   */
   const updateField = <K extends keyof AcademicRecord>(
     field: K,
     value: AcademicRecord[K],
   ) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+
+    // Clear error for the field being edited
+    setValidationErrors((prev) => ({
+      ...prev,
+      [field]: undefined,
+    }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  /**
+   * Validate and submit.
+   */
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const result = academicDetailsSchema.safeParse(formData);
+
+    if (!result.success) {
+      const errors: Partial<Record<keyof AcademicDetailsFormData, string>> = {};
+
+      result.error.issues.forEach((issue) => {
+        const field = issue.path[0] as keyof AcademicDetailsFormData;
+
+        // Keep only the first error for each field
+        if (!errors[field]) {
+          errors[field] = issue.message;
+        }
+      });
+
+      setValidationErrors(errors);
+
+      return;
+    }
+
+    setValidationErrors({});
 
     const record: AcademicRecord = {
       ...formData,
@@ -127,31 +197,43 @@ function EducationProfileForm({
     await onSave(record);
   };
 
-  const isSchool =
-    formData.levelOfEducation === "10th Grade" ||
-    formData.levelOfEducation === "12th or Diploma";
-
   return (
     <Panel variant="outlined" widthClass="w-full" paddingClass="p-6">
       <form className="space-y-5" onSubmit={handleSubmit}>
+        {/* Education Level */}
         <Select
           label="Level of Education *"
           options={educationLevelOptions}
           value={formData.levelOfEducation}
-          onChange={(e) => updateField("levelOfEducation", e)}
+          onChange={
+            educationLevelOptions[0].value
+              ? (e) =>
+                  updateField(
+                    "levelOfEducation",
+                    educationLevelOptions[0].value,
+                  )
+              : (e) => updateField("levelOfEducation", e)
+          }
+          errorMessage={validationErrors.levelOfEducation}
         />
+
+        {/* Register Number */}
         <Input
           label="Register Number"
           placeholder="e.g., 234228205015"
-          value={formData.registerNumber}
+          value={formData.registerNumber ?? ""}
           onChange={(e) => updateField("registerNumber", e.target.value)}
+          errorMessage={validationErrors.registerNumber}
         />
+
+        {/* Institution */}
         {isSchool ? (
           <Input
             placeholder="Enter school name"
             label="School Name *"
             value={formData.institutionName}
             onChange={(e) => updateField("institutionName", e.target.value)}
+            errorMessage={validationErrors.institutionName}
           />
         ) : (
           <Autocomplete
@@ -167,61 +249,64 @@ function EducationProfileForm({
             }}
           />
         )}
+
+        {/* Board / University */}
         <Input
           label={isSchool ? "Board *" : "University *"}
           placeholder="Enter board or university"
           value={formData.boardUniversity}
           onChange={(e) => updateField("boardUniversity", e.target.value)}
-          required={true}
-          // disabled
           disabled={!isSchool}
+          errorMessage={validationErrors.boardUniversity}
         />
+
+        {/* Course / Stream */}
         <Input
-          label="Course / Stream / Specialization *"
+          label="Course / Stream / Specialization"
           placeholder="e.g., Science, B.Sc Computer Science"
           value={formData.courseStreamSpecialization}
           onChange={(e) =>
             updateField("courseStreamSpecialization", e.target.value)
           }
-          required={true}
+          errorMessage={validationErrors.courseStreamSpecialization}
         />
-        <div className="grid grid-cols-1 gap-5">
+
+        {/* Year of Passing */}
+        <div>
           <Select
             label="Year of Passing *"
             options={yearOptions}
             placeholder="Select Year"
             value={formData.yearOfPassing}
             onChange={(e) => updateField("yearOfPassing", e)}
+            errorMessage={validationErrors.yearOfPassing}
           />
+
+          {/* Current Semester */}
           {!isSchool && (
-            <Input
-              label="Current Semester"
-              placeholder="e.g., 3, 2"
-              value={
-                formData.currentSemester === 0 ? "" : formData.currentSemester
-              }
-              onChange={(e) => {
-                const value = e.target.value;
-
-                if (value === "") {
-                  updateField("currentSemester", 0);
-                  return;
+            <div>
+              <Input
+                label="Current Semester"
+                placeholder="e.g., 3"
+                value={
+                  formData.currentSemester === null
+                    ? ""
+                    : formData.currentSemester
                 }
-
-                if (/^\d+$/.test(value)) {
-                  updateField("currentSemester", Number(value));
-                }
-              }}
-            />
+                onChange={(e) => {
+                  const value = e.target.value;
+                  updateField(
+                    "currentSemester",
+                    value === "" ? null : Number(value),
+                  );
+                }}
+                errorMessage={validationErrors.currentSemester}
+              />
+            </div>
           )}
-          {/*<Input
-            label="Current Semester"
-            placeholder="e.g., 3, 2"
-            value={formData.currentSemester}
-            onChange={(e) => updateField("currentSemester", e.target.value)}
-          />*/}
         </div>
 
+        {/* Grading System + Score */}
         <div className="grid grid-cols-2 gap-5">
           <div>
             <SegmentedControl
@@ -242,14 +327,19 @@ function EducationProfileForm({
               }
             />
           </div>
-          <Input
-            label="Score"
-            placeholder="0.00"
-            rightIcon={formData.gradingSystem === "percentage" ? "%" : "CGPA"}
-            value={formData.score}
-            onChange={(e) => updateField("score", e.target.value)}
-          />
+          <div>
+            <Input
+              label="Score"
+              placeholder="0.00"
+              rightIcon={formData.gradingSystem === "percentage" ? "%" : "CGPA"}
+              value={formData.score ?? ""}
+              onChange={(e) => updateField("score", e.target.value)}
+              errorMessage={validationErrors.score}
+            />
+          </div>
         </div>
+
+        {/* Currently Enrolled */}
         <CheckboxGroup
           label=""
           options={["Currently Pursuing"]}
@@ -269,6 +359,7 @@ function EducationProfileForm({
                 className="border border-hairline py-2 px-6 cursor-pointer"
                 fullWidth={false}
                 onClick={onCancel}
+                type="button"
               />
               <Button
                 children={
@@ -277,6 +368,7 @@ function EducationProfileForm({
                 fullWidth={false}
                 className="cursor-pointer"
                 type="submit"
+                disabled={isUpdating || isCreating}
               />
             </div>
           }

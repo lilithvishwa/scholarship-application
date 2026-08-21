@@ -78,13 +78,13 @@ function useAcademicDetails() {
       const response = await getAcademicStatus();
       console.log("Academics Status");
       console.log(response);
-      if (response) {
-        navigate("/onboarding/family-finance");
-      }
+      navigate("/onboarding");
     } catch (error: any) {
       const { error_code } = getApiError(error);
       if (error_code === "ACADEMIC_WITH_ENROLLMENTS_NOT_FOUND") {
-        setError("Academic Details with Enrollment not found");
+        setError(
+          "Currently pursuing education details are required. Please mark at least one academic record as currently pursuing.",
+        );
       }
       console.error(error.response);
     } finally {

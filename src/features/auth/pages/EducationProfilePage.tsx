@@ -156,6 +156,12 @@ function EducationProfilePage() {
                 fullWidth={false}
                 className="cursor-pointer"
                 onClick={handleContinue}
+                disabled={educationalDetails.length === 0}
+                title={
+                  educationalDetails.length === 0
+                    ? "Add educational details before you submit"
+                    : ""
+                }
               />
             }
           />

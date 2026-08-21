@@ -8,6 +8,12 @@ const OCCUPATION_OPTIONS = [
   { label: "Other", value: "other" },
 ];
 
+interface ParentFieldErrors {
+  name?: string;
+  occupation?: string;
+  mobile?: string | null;
+}
+
 interface ParentFieldsProps {
   parent: "father" | "mother";
   data: ParentDetails;
@@ -16,9 +22,10 @@ interface ParentFieldsProps {
     field: "name" | "occupation" | "mobile",
     value: string,
   ) => void;
+  errors?: ParentFieldErrors;
 }
 
-function ParentFields({ parent, data, onChange }: ParentFieldsProps) {
+function ParentFields({ parent, data, onChange, errors }: ParentFieldsProps) {
   return (
     <>
       <Input
@@ -26,6 +33,7 @@ function ParentFields({ parent, data, onChange }: ParentFieldsProps) {
         placeholder="Enter Full Name"
         value={data.name}
         onChange={(e) => onChange(parent, "name", e.target.value)}
+        errorMessage={errors?.name}
       />
 
       <div className="flex gap-4">
@@ -36,6 +44,7 @@ function ParentFields({ parent, data, onChange }: ParentFieldsProps) {
             options={OCCUPATION_OPTIONS}
             value={data.occupation}
             onChange={(e) => onChange(parent, "occupation", e)}
+            errorMessage={errors?.occupation}
           />
         </div>
 
@@ -47,6 +56,7 @@ function ParentFields({ parent, data, onChange }: ParentFieldsProps) {
             onChange={(e) => onChange(parent, "mobile", e.target.value)}
             leftIcon={<p className="text-black">+91</p>}
             className="rounded-sm pl-12"
+            errorMessage={errors?.mobile}
           />
         </div>
       </div>
