@@ -54,3 +54,9 @@ export interface College {
   name: string;
   university: string;
 }
+
+export interface InitializeVerificationPayload {
+  filename: string;
+  fileSize: number;
+  contentType: string;
+}

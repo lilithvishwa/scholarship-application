@@ -23,6 +23,7 @@ import {
   ScholarshipPage,
 } from "@/features/public/pages";
 import ProfileCompletionGuard from "./ProfileCompletionGuard";
+import VerifyIdentityPage from "@/features/auth/pages/VerifyIdentityPage";
 
 function AppRoutes() {
   return (
@@ -59,6 +60,10 @@ function AppRoutes() {
                 <Route path="about" element={<AboutYouPage />} />
                 <Route path="education" element={<EducationProfilePage />} />
                 <Route path="family-finance" element={<FamilyFinancePage />} />
+                <Route
+                  path="verify-identity"
+                  element={<VerifyIdentityPage />}
+                />
               </Route>
             </Route>
           </Route>

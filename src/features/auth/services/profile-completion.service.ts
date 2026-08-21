@@ -1,10 +1,14 @@
 import { apiClient } from "@/api/apiClient";
-import { PROFILE_COMPLETION_ENDPOINTS } from "@/api/endpoints";
+import {
+  PROFILE_COMPLETION_ENDPOINTS,
+  PROFILE_VERIFICATION_ENDPOINTS,
+} from "@/api/endpoints";
 
 import type {
   AboutYouFormData,
   AcademicRecord,
   FamilyDetails,
+  InitializeVerificationPayload,
 } from "../components/CompleteYourProfile/types/profile.types";
 
 export const createPersonalDetails = async (payload: AboutYouFormData) => {
@@ -91,6 +95,48 @@ export const getLocationPincode = async (pincode: string) => {
 export const getCollegeDetails = async (collegeName: string) => {
   const response = await apiClient.get(
     PROFILE_COMPLETION_ENDPOINTS.COLLEGE_NAME(collegeName),
+  );
+
+  return response.data;
+};
+
+// Verification Services...
+
+export const initializeVerification = async (
+  payload: InitializeVerificationPayload,
+) => {
+  const response = await apiClient.post(
+    PROFILE_VERIFICATION_ENDPOINTS.INITIALIZE_VERIFICATION,
+    payload,
+  );
+  return response.data;
+};
+
+export const completeVerification = async (mediaId: string | null) => {
+  const response = await apiClient.post(
+    PROFILE_VERIFICATION_ENDPOINTS.COMPLETE_VERIFICATION,
+    null,
+    {
+      params: {
+        media_id: mediaId,
+      },
+    },
+  );
+
+  return response.data;
+};
+
+export const markVerificationFailed = async (mediaId: string) => {
+  const response = await apiClient.delete(
+    PROFILE_VERIFICATION_ENDPOINTS.MARK_VERIFICATION_FAILED(mediaId),
+  );
+
+  return response.data;
+};
+
+export const getVerification = async (id: string) => {
+  const response = await apiClient.get(
+    PROFILE_VERIFICATION_ENDPOINTS.GET_VERIFICATION(id),
   );
 
   return response.data;

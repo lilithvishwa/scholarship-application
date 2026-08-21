@@ -23,20 +23,31 @@ export const FORM_BUILDER_ENDPOINTS = {
 // form-id : "d8010c01-a7ee-4fe7-b055-75673e38db08"
 
 export const PROFILE_COMPLETION_ENDPOINTS = {
-  PERSONAL_DETAILS: "/api/profile-completion/personal-details",
+  PERSONAL_DETAILS: "/api/profile/personal/",
 
-  PARENTAL_DETAILS: "/api/profile-completion/parental-details",
+  PARENTAL_DETAILS: "/api/profile/parental/",
 
-  ACADEMIC_STATUS: "/api/profile-completion/academic-details/status",
-  ACADEMIC_DETAILS: "/api/profile-completion/academic-details",
-  CREATE_ACADEMIC: "/api/profile-completion/academic-details/create",
+  ACADEMIC_STATUS: "/api/profile/academic/status",
+  ACADEMIC_DETAILS: "/api/profile/academic/",
+  CREATE_ACADEMIC: "/api/profile/academic/",
   UPDATE_ACADEMIC: (levelOfEducation: string) =>
-    `/api/profile-completion/academic-details/update/${levelOfEducation}`,
+    `/api/profile/academic/${levelOfEducation}`,
   DELETE_ACADEMIC: (levelOfEducation: string) =>
-    `/api/profile-completion/academic-details/delete/${levelOfEducation}`,
-  COMPLETION_STATUS: "/api/profile-completion/status",
+    `/api/profile/academic/${levelOfEducation}`,
+  COMPLETION_STATUS: "/api/profile/status",
   LOCATION_PINCODE: (pincode: string) =>
-    `/api/profile-completion/pincode/${pincode}`,
+    `/api/profile/lookup/pincode/${pincode}`,
   COLLEGE_NAME: (collegeName: string) =>
-    `/api/profile-completion/college/${collegeName}`,
+    `/api/profile/lookup/college/${collegeName}`,
 } as const;
+
+export const PROFILE_VERIFICATION_ENDPOINTS = {
+  INITIALIZE_VERIFICATION: "/api/profile/verification/initialize",
+
+  COMPLETE_VERIFICATION: "/api/profile/verification/complete",
+
+  MARK_VERIFICATION_FAILED: (mediaId: string) =>
+    `/api/profile/verification/failed/${mediaId}`,
+
+  GET_VERIFICATION: (id: string) => `/api/profile/verification/${id}`,
+};
