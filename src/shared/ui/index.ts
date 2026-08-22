@@ -23,6 +23,7 @@ export { default as SegmentedControl } from "./Buttons/SegmentedControl.tsx";
 //Cards
 export { default as Panel } from "./Cards/Panel.tsx";
 export { FileAttachmentCard } from "./Cards/FileAttachmentCard.tsx";
+export { default as ScholarshipCard } from "./Cards/ScholarshipCard.tsx";
 
 // Badge
 export { default as Badge } from "./Badge/Badge.tsx";

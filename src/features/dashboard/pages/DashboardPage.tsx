@@ -6,13 +6,41 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 
 // dummny data imports
 import { dashboardKpiData } from "../dummyData/dashboardKpiData ";
+import useProfileCompletion from "@/features/auth/hooks/useProfileCompletion";
+import { useEffect } from "react";
+import { ScholarshipCard, Select } from "@/shared/ui";
 
 function DashboardPage() {
   const { user } = useAuth();
+  const { completionStatus, fetchProfileCompletionStatus } =
+    useProfileCompletion();
+
+  useEffect(() => {
+    fetchProfileCompletionStatus();
+  }, []);
+  console.log(completionStatus);
+
+  const completedCount = completionStatus
+    ? Object.values(completionStatus).filter(Boolean).length
+    : 0;
+  console.log(completedCount);
+
+  const totalCount = completionStatus
+    ? Object.keys(completionStatus).length
+    : 0;
+  console.log(totalCount);
+
+  const profileCompletion =
+    totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+
+  console.log(profileCompletion);
 
   return (
     <div className="p-8 space-y-4">
-      <WelcomeBanner name={user?.username} profileCompletion={25} />
+      <WelcomeBanner
+        name={user?.username}
+        profileCompletion={profileCompletion}
+      />
       <div className="grid grid-cols-3 gap-6">
         {dashboardKpiData.map((item) => (
           <Kpis
@@ -24,6 +52,27 @@ function DashboardPage() {
             iconColor={item.iconColor}
           />
         ))}
+      </div>
+      <div className="space-y-4">
+        <div className="flex justify-between border-b border-hairline  pb-4 ">
+          <div className="space-y-1">
+            <h3 className="application-card-heading">Recommended for You</h3>
+            <p className="font-public">
+              Based on your status as undergraduate student.
+            </p>
+          </div>
+          <Select
+            placeholder="Sort by Deadline : Soonest "
+            options={[
+              { label: "Soonest", value: "soonest" },
+              { label: "Latest", value: "latest" },
+              { label: "Oldest", value: "oldest" },
+              { label: "A-Z", value: "az" },
+              { label: "Z-A", value: "za" },
+            ]}
+          />
+        </div>
+        <ScholarshipCard />
       </div>
     </div>
   );
