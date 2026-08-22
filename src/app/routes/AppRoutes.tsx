@@ -1,5 +1,5 @@
 import { AppLayout } from "@/layouts";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import {
   AboutYouPage,
@@ -27,49 +27,45 @@ import VerifyIdentityPage from "@/features/auth/pages/VerifyIdentityPage";
 
 function AppRoutes() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* ================= PUBLIC ROUTES ================= */}
-        <Route element={<AppLayout variant="public" />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/scholarship" element={<ScholarshipPage />} />
-          <Route path="/about-us" element={<AboutUsPage />} />
-        </Route>
+    <Routes>
+      {/* ================= PUBLIC ROUTES ================= */}
+      <Route element={<AppLayout variant="public" />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/scholarship" element={<ScholarshipPage />} />
+        <Route path="/about-us" element={<AboutUsPage />} />
+      </Route>
 
-        {/* ================= AUTH ROUTES ================= */}
-        <Route element={<AppLayout variant="default" />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/verify-email" element={<VerifyEmail />} />
-          <Route
-            path="/different-signin-method"
-            element={<SignInMethodPage />}
-          />
-          <Route path="/set-password" element={<SetPasswordPage />} />
-        </Route>
+      {/* ================= AUTH ROUTES ================= */}
+      <Route element={<AppLayout variant="default" />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/different-signin-method" element={<SignInMethodPage />} />
+        <Route path="/set-password" element={<SetPasswordPage />} />
+      </Route>
 
-        {/* ================= PROTECTED ROUTES ================= */}
-        <Route element={<ProtectedRoute />}>
-          <Route element={<AppLayout variant="authenticated" />}>
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/scholarships" element={<p>Scholarship Page...</p>} />
+      {/* ================= PROTECTED ROUTES ================= */}
+      <Route element={<ProtectedRoute />}>
+        <Route element={<AppLayout variant="authenticated" />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/scholarships" element={<p>Scholarship Page...</p>} />
 
-            {/*onBoarding profile completion check @ProfileCompletionGuard */}
-            <Route element={<ProfileCompletionGuard />}>
-              <Route path="/onboarding">
-                <Route path="about" element={<AboutYouPage />} />
-                <Route path="education" element={<EducationProfilePage />} />
-                <Route path="family-finance" element={<FamilyFinancePage />} />
-                <Route
-                  path="verify-identity"
-                  element={<VerifyIdentityPage />}
-                />
-              </Route>
+          {/*onBoarding profile completion check @ProfileCompletionGuard */}
+          <Route element={<ProfileCompletionGuard />}>
+            <Route path="/onboarding">
+              <Route
+                index
+                element={<Navigate to="/onboarding/about" replace />}
+              />
+              <Route path="about" element={<AboutYouPage />} />
+              <Route path="education" element={<EducationProfilePage />} />
+              <Route path="family-finance" element={<FamilyFinancePage />} />
+              <Route path="verify-identity" element={<VerifyIdentityPage />} />
             </Route>
           </Route>
         </Route>
-      </Routes>
-    </BrowserRouter>
+      </Route>
+    </Routes>
   );
 }
 

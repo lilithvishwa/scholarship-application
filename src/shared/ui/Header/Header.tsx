@@ -120,33 +120,36 @@ function Header({ variant = "default" }: HeaderProps) {
       <div>
         <img src="/header_login.svg" alt="logo" />
       </div>
+      {!location.pathname.includes("onboarding") && (
+        <>
+          {variant === "authenticated" && (
+            <div className="w-[483.06px]">
+              <Input
+                leftIcon={<Icon name="material-symbols:search" size={24} />}
+                placeholder="Search here for Scholarships...."
+                className="bg-white"
+              />
+            </div>
+          )}
 
-      {variant === "authenticated" && (
-        <div className="w-[483.06px]">
-          <Input
-            leftIcon={<Icon name="material-symbols:search" size={24} />}
-            placeholder="Search here for Scholarships...."
-            className="bg-white"
-          />
-        </div>
+          {/* Navigation */}
+          <nav className="flex items-center gap-8">
+            {navigation.map((item) => (
+              <NavLink
+                key={item.href}
+                to={item.href}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-cohere-black border-b border-cohere-black"
+                    : "text-body-muted"
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+        </>
       )}
-
-      {/* Navigation */}
-      <nav className="flex items-center gap-8">
-        {navigation.map((item) => (
-          <NavLink
-            key={item.href}
-            to={item.href}
-            className={({ isActive }) =>
-              isActive
-                ? "text-cohere-black border-b border-cohere-black"
-                : "text-body-muted"
-            }
-          >
-            {item.label}
-          </NavLink>
-        ))}
-      </nav>
 
       {/* Right side */}
       <div>{renderHeaderAction()}</div>

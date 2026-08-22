@@ -21,6 +21,7 @@ import type {
 import { useNavigate } from "react-router-dom";
 import { getApiError } from "@/utils/get-api-error";
 import useProfileCompletion from "./useProfileCompletion";
+import { useProfileCompletionContext } from "@/features/auth/context/ProfileCompletionContext";
 
 type LoadingState = {
   createEducationDetails: boolean;
@@ -43,7 +44,7 @@ function useAcademicDetails() {
     updateEducationDetails: false,
   });
 
-  const { fetchProfileCompletionStatus } = useProfileCompletion();
+  const { fetchProfileCompletionStatus } = useProfileCompletionContext();
 
   const [error, setError] = useState("");
   const getEducationDetails = useCallback(async () => {

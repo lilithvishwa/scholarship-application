@@ -60,6 +60,12 @@ export function useSignup() {
       setSuccess(
         "Please verify your email before logging in. Check your inbox for the verification link.",
       );
+      setSignupData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
     } catch (err: unknown) {
       const { status, error_code } = getApiError(err);
       let message = "Unable to signup. Please try again later.";

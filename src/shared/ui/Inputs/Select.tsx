@@ -73,7 +73,7 @@ function Select({
         </button>
 
         {errorMessage && (
-          <span className="absolute left-0 top-full mt-1.5 disclaimer-text text-error">
+          <span className="block left-0 top-full mt-1.5 disclaimer-text text-error">
             {errorMessage}
           </span>
         )}

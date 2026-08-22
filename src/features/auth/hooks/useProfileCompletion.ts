@@ -1,21 +1,20 @@
 // Responsible for:
 // Personal details
 // Parental details
-// Completion status
+// Address lookup
 import { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
+import { useProfileCompletionContext } from "@/features/auth/context/ProfileCompletionContext";
 
 import {
   createParentalDetails,
   createPersonalDetails,
   getLocationPincode,
-  getProfileCompletionStatus,
 } from "../services/profile-completion.service";
 
 import type {
   AboutYouFormData,
   FamilyDetails,
-  CompletionStatusResponse,
   Address,
   LoadingState,
 } from "@/features/auth/components/CompleteYourProfile/types/profile.types";
@@ -24,17 +23,7 @@ import { getApiError } from "@/utils/get-api-error";
 import { ERROR_CODES } from "@/constants/error-codes";
 
 function useProfileCompletion() {
-  const navigate = useNavigate();
-
-  const [completionStatus, setCompletionStatus] =
-    useState<CompletionStatusResponse>({
-      personalDetails: false,
-      academicDetails: false,
-      parentalDetails: false,
-      idUploaded: false,
-    });
-
-  const [fetchingStatus, setFetchingStatus] = useState(true);
+  const { fetchProfileCompletionStatus } = useProfileCompletionContext();
 
   const [loading, setLoading] = useState<LoadingState>({
     createProfile: false,
@@ -58,10 +47,9 @@ function useProfileCompletion() {
 
       await createPersonalDetails(payload);
       await fetchProfileCompletionStatus();
-
-      navigate("/onboarding");
     } catch (error: unknown) {
       console.error("Failed to create personal details:", error);
+      throw error;
     } finally {
       setLoading((prev) => ({
         ...prev,
@@ -79,9 +67,9 @@ function useProfileCompletion() {
 
       await createParentalDetails(payload);
       await fetchProfileCompletionStatus();
-      navigate("/onboarding");
     } catch (error: unknown) {
-      console.error("Failed to create parental details:", error);
+      console.error("Failed to create personal details:", error);
+      throw error;
     } finally {
       setLoading((prev) => ({
         ...prev,
@@ -134,28 +122,10 @@ function useProfileCompletion() {
     }
   }, []);
 
-  const fetchProfileCompletionStatus = useCallback(async () => {
-    try {
-      setFetchingStatus(true);
-
-      const response = await getProfileCompletionStatus();
-
-      setCompletionStatus(response);
-    } catch (error: unknown) {
-      console.error("Failed to fetch profile completion status:", error);
-    } finally {
-      setFetchingStatus(false);
-    }
-  }, []);
-
   return {
     createProfile,
     createParentsDetails,
     getAddressDetails,
-
-    completionStatus,
-    fetchProfileCompletionStatus,
-    fetchingStatus,
 
     address,
     loading,

@@ -239,6 +239,7 @@ function EducationProfileForm({
               updateField("institutionName", option.value);
               updateField("boardUniversity", option.university as string);
             }}
+            errorMessage={validationErrors.institutionName}
           />
         )}
 
@@ -264,7 +265,7 @@ function EducationProfileForm({
         />
 
         {/* Year of Passing */}
-        <div>
+        <div className="space-y-5">
           <Select
             label="Year of Passing *"
             options={yearOptions}
@@ -286,7 +287,7 @@ function EducationProfileForm({
                     : formData.currentSemester
                 }
                 onChange={(e) => {
-                  const value = e.target.value;
+                  const value = e.target.value.replace(/\D/g, "");
                   updateField(
                     "currentSemester",
                     value === "" ? null : Number(value),
@@ -325,7 +326,14 @@ function EducationProfileForm({
               placeholder="0.00"
               rightIcon={formData.gradingSystem === "percentage" ? "%" : "CGPA"}
               value={formData.score ?? ""}
-              onChange={(e) => updateField("score", e.target.value)}
+              onChange={(e) =>
+                updateField(
+                  "score",
+                  e.target.value
+                    .replace(/[^0-9.]/g, "")
+                    .replace(/^(\d{1,2})(\.\d{0,2})?.*$/, "$1$2"),
+                )
+              }
               errorMessage={validationErrors.score}
             />
           </div>

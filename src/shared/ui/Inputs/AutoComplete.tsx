@@ -17,6 +17,7 @@ interface AutocompleteProps {
   loading?: boolean;
   disabled?: boolean;
   className?: string;
+  errorMessage?: string;
 }
 
 function Autocomplete({
@@ -29,6 +30,7 @@ function Autocomplete({
   loading = false,
   disabled = false,
   className = "",
+  errorMessage,
 }: AutocompleteProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -94,6 +96,11 @@ function Autocomplete({
             ${disabled ? "cursor-not-allowed bg-card-border" : ""}
           `}
         />
+        {errorMessage && (
+          <span className="block left-0 top-full mt-1.5 disclaimer-text text-error">
+            {errorMessage}
+          </span>
+        )}
 
         {loading && (
           <span className="absolute right-4 top-1/2 -translate-y-1/2">
