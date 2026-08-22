@@ -4,12 +4,12 @@ import { Icon } from "@shared/ui";
 type BadgeVariant = "postgraduate" | "undergraduate";
 
 interface BadgeProps {
-  tag: BadgeVariant;
+  tag: BadgeVariant | string;
   iconName?: string;
 }
 
 function Badge({ tag, iconName = "mdi:graduation-cap-outline" }: BadgeProps) {
-  const colors: Record<BadgeVariant, string> = {
+  const colors: Record<BadgeVariant | string, string> = {
     postgraduate: "bg-form-focus",
     undergraduate: "bg-soft-coral",
   };

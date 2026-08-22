@@ -6,34 +6,29 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 
 // dummny data imports
 import { dashboardKpiData } from "../dummyData/dashboardKpiData ";
-import useProfileCompletion from "@/features/auth/hooks/useProfileCompletion";
 import { useEffect } from "react";
 import { ScholarshipCard, Select } from "@/shared/ui";
+import { useProfileCompletionContext } from "@/features/auth/context/ProfileCompletionContext";
 
 function DashboardPage() {
   const { user } = useAuth();
-  const { completionStatus, fetchProfileCompletionStatus } =
-    useProfileCompletion();
+  const { fetchProfileCompletionStatus, completionStatus } =
+    useProfileCompletionContext();
 
   useEffect(() => {
     fetchProfileCompletionStatus();
   }, []);
-  console.log(completionStatus);
 
   const completedCount = completionStatus
     ? Object.values(completionStatus).filter(Boolean).length
     : 0;
-  console.log(completedCount);
 
   const totalCount = completionStatus
     ? Object.keys(completionStatus).length
     : 0;
-  console.log(totalCount);
 
   const profileCompletion =
     totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
-
-  console.log(profileCompletion);
 
   return (
     <div className="p-8 space-y-4">
