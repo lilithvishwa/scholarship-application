@@ -2,14 +2,22 @@ import { Button, Icon } from "@/shared/ui";
 import PanelCard from "@/shared/ui/Cards/Panel";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useVerifyEmail } from "../hooks/useVerifyEmail";
+import { useAuth } from "../hooks/useAuth";
 
 function VerifyEmail() {
   const [searchParams] = useSearchParams();
+  const { fetchCurrentUser } = useAuth();
+
   const token = searchParams.get("token");
-  console.log(token);
+
   const navigate = useNavigate();
 
   const { status } = useVerifyEmail(token);
+
+  const handleContinue = async () => {
+    await fetchCurrentUser();
+    navigate("/onboarding");
+  };
 
   const renderContent = () => {
     if (status === "verifying") {
@@ -39,10 +47,7 @@ function VerifyEmail() {
             Thank you for confirming your email. Your account is now active and
             ready to go.
           </p>
-          <Button
-            children="Continue to Dashboard"
-            onClick={() => navigate("/onboarding")}
-          />
+          <Button children="Continue to Dashboard" onClick={handleContinue} />
         </div>
       );
     }

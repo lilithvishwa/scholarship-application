@@ -29,6 +29,7 @@ export const academicDetailsSchema = z
 
     currentSemester: z
       .number()
+      .max(20, "Semester must be less than 20")
       .int("Semester must be a whole number")
       .positive("Semester must be greater than 0")
       .nullable()

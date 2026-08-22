@@ -156,6 +156,7 @@ function AboutYouForm() {
             options={[
               { value: "male", label: "Male" },
               { value: "female", label: "Female" },
+              { value: "other", label: "Others" },
             ]}
             value={formData.gender}
             onChange={(value) => updateField("gender", value)}

@@ -5,7 +5,7 @@ import { Button, FileUpload, Icon } from "@/shared/ui";
 import { StepFooter } from "@/features/scholarship/components";
 import useProfileVerification from "../hooks/useProfileVerification";
 import { useNavigate } from "react-router-dom";
-import useProfileCompletion from "../hooks/useProfileCompletion";
+import { useProfileCompletionContext } from "../context/ProfileCompletionContext";
 
 function VerifyIdentityPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -17,7 +17,7 @@ function VerifyIdentityPage() {
   } = useProfileVerification();
 
   const navigate = useNavigate();
-  const { fetchProfileCompletionStatus } = useProfileCompletion();
+  const { fetchProfileCompletionStatus } = useProfileCompletionContext();
 
   const handleFileChange = (file: File | null) => {
     setSelectedFile(file);
@@ -111,7 +111,6 @@ function VerifyIdentityPage() {
             <p className="disclaimer-text text-body-muted">
               Don’t Have College ID?
               <span className="cursor-pointer text-action-blue">
-                {" "}
                 Need Assistance
               </span>
             </p>

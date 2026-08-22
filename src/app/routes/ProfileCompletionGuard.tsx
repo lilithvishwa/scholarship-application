@@ -1,18 +1,18 @@
 import { useEffect } from "react";
 import { Outlet, useLocation, Navigate } from "react-router-dom";
-import useProfileCompletion from "@/features/auth/hooks/useProfileCompletion";
+import { useProfileCompletionContext } from "@/features/auth/context/ProfileCompletionContext";
 
 function ProfileCompletionGuard() {
   const location = useLocation();
 
   const { fetchingStatus, completionStatus, fetchProfileCompletionStatus } =
-    useProfileCompletion();
+    useProfileCompletionContext();
 
   console.log("guardStatus...", completionStatus);
 
   useEffect(() => {
     fetchProfileCompletionStatus();
-  }, []);
+  }, [fetchProfileCompletionStatus]);
 
   if (fetchingStatus) {
     return <div>loading...</div>;
