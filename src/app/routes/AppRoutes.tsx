@@ -24,6 +24,7 @@ import {
 } from "@/features/public/pages";
 import ProfileCompletionGuard from "./ProfileCompletionGuard";
 import VerifyIdentityPage from "@/features/auth/pages/VerifyIdentityPage";
+import ExploreScholarshipsPage from "@/features/scholarship/pages/ExploreScholarshipsPage";
 
 function AppRoutes() {
   return (
@@ -48,7 +49,7 @@ function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout variant="authenticated" />}>
           <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/scholarships" element={<p>Scholarship Page...</p>} />
+          <Route path="/scholarships" element={<ExploreScholarshipsPage />} />
 
           {/*onBoarding profile completion check @ProfileCompletionGuard */}
           <Route element={<ProfileCompletionGuard />}>

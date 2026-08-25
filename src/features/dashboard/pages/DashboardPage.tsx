@@ -7,11 +7,14 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 // dummny data imports
 import { dashboardKpiData } from "../dummyData/dashboardKpiData ";
 import { useEffect } from "react";
-import { ScholarshipCard, Select } from "@/shared/ui";
+import { Icon, ScholarshipCard, Select } from "@/shared/ui";
 import { useProfileCompletionContext } from "@/features/auth/context/ProfileCompletionContext";
+import { useNavigate } from "react-router-dom";
+import { ScholarshipDetails } from "../dummyData/scholarshipDetailsData";
 
 function DashboardPage() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { fetchProfileCompletionStatus, completionStatus } =
     useProfileCompletionContext();
 
@@ -67,7 +70,18 @@ function DashboardPage() {
             ]}
           />
         </div>
-        <ScholarshipCard />
+        {ScholarshipDetails.slice(0, 3).map((scholarship) => (
+          <ScholarshipCard scholarship={scholarship} key={scholarship.id} />
+        ))}
+        <div className="flex gap-2 items-center justify-center text-action-blue ">
+          <button
+            className="action-button cursor-pointer"
+            onClick={() => navigate("/scholarships")}
+          >
+            View All Recommendations{" "}
+          </button>
+          <Icon name="mdi:arrow-right" size={16} />
+        </div>
       </div>
     </div>
   );
